@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // for Firebase
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
@@ -25,12 +32,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    // FOR FIREBASE
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    // FOR FIREBASE
     compile 'com.google.firebase:firebase-core:11.0.2'
     compile 'com.google.firebase:firebase-auth:11.0.2'
-    testCompile 'junit:junit:4.12'}
+    compile 'com.firebase:firebase-client-android:2.4.0'
+    testCompile 'junit:junit:4.12'
+}
 
 // FOR FIREBASE
 apply plugin: 'com.google.gms.google-services'

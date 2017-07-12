@@ -61,8 +61,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 // create a toast to show that it worked
                 Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(WelcomeActivity.this, ComposeStoryActivity.class);
+                intent.putExtra("userName", mEmailField.getText().toString());
+                startActivity(intent);
             }
         });
+
     }
 
     // does this auto-magically get called?
