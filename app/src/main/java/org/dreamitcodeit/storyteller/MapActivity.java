@@ -34,7 +34,7 @@ import permissions.dispatcher.RuntimePermissions;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener{
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -84,12 +84,19 @@ public class MapActivity extends AppCompatActivity {
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            map.setOnMapLongClickListener(this);
             MapActivityPermissionsDispatcher.getMyLocationWithCheck(this);
             MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);
         } else {
             Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        //TODO: integrate Maria's compose dialog here
+        Toast.makeText(this, "map was long clicked here: " + latLng.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -216,7 +223,7 @@ public class MapActivity extends AppCompatActivity {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
