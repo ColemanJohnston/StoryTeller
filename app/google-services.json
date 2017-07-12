@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "526915925712",
+    "firebase_url": "https://storyteller-af7e6.firebaseio.com",
+    "project_id": "storyteller-af7e6",
+    "storage_bucket": "storyteller-af7e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526915925712:android:148d1da10d292359",
+        "android_client_info": {
+          "package_name": "org.dreamitcodeit.storyteller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526915925712-094s5vquinepnne1mmef9g80vgagh7jv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVXkLsezrPABBI0jCyZbjUg3YLPqXWFcg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -117,7 +117,7 @@ public class MapActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("MapActivity", "Error trying to get last GPS location");
+                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
                         e.printStackTrace();
                     }
                 });
