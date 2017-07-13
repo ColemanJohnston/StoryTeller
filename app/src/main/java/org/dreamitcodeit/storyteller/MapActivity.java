@@ -24,7 +24,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -72,12 +75,21 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 @Override
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
+                    map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
                 }
             });
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void dropMarker(LatLng latLng, String title, String snippet){
+        Marker marker = map.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .title(title)
+                                        .snippet(snippet)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
     protected void loadMap(GoogleMap googleMap) {
@@ -96,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     @Override
     public void onMapLongClick(LatLng latLng) {
         //TODO: integrate Maria's compose dialog here
-        Toast.makeText(this, "map was long clicked here: " + latLng.toString(), Toast.LENGTH_SHORT).show();
+        dropMarker(latLng, "Title", "This text is longer because it is a snippet. Lorem ipsum and delor or however it's goes");
     }
 
     @Override
