@@ -7,7 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
 public class ComposeStoryActivity extends AppCompatActivity {
 
@@ -62,6 +66,47 @@ public class ComposeStoryActivity extends AppCompatActivity {
                 story.setuID(uID);
 
                 ref.child(title).setValue(story);
+            }
+        });
+
+        btFetch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Firebase ref = new Firebase(Config.FIREBASE_URl);
+
+                Query queryRef = ref.orderByChild("title");
+
+                queryRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                      //  for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            Story currentStories = dataSnapshot.getValue(Story.class);
+
+                            String string = dataSnapshot.getKey() + ": TITLE";
+                            tvStories.setText(tvStories.getText() + " " + string);
+                        //}
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
             }
         });
     }
