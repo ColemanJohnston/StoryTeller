@@ -62,9 +62,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
                         Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(WelcomeActivity.this, ComposeStoryActivity.class);
-                intent.putExtra("userName", mEmailField.getText().toString());
-                startActivity(intent);
+
             }
         });
 
@@ -130,6 +128,11 @@ public class WelcomeActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             gotoWelcome(user);
+                            Intent intent = new Intent(WelcomeActivity.this, ComposeStoryActivity.class);
+                            intent.putExtra("userName", mEmailField.getText().toString());
+                            intent.putExtra("password", mPasswordField.getText().toString());
+                            intent.putExtra("uID", user.getUid());
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

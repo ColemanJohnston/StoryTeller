@@ -12,6 +12,7 @@ public class Story {
     private Integer longitude;
     private String userName;
     private String screenName;
+    private String uID;
 
     public Story() {
 
@@ -67,5 +68,11 @@ public class Story {
         this.screenName = screenName;
     }
 
+    public String getuID() {
+        return uID;
+    }
 
+    public void setuID(String uID) {
+        this.uID = uID;
+    }
 }

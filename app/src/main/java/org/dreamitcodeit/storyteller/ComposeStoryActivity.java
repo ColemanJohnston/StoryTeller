@@ -40,31 +40,28 @@ public class ComposeStoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // creating Firebase object
-                Firebase ref = new Firebase(Config.FIREBASE_URl);
+                final Firebase ref = new Firebase(Config.FIREBASE_URl);
 
                 // getting values to store
-                String title = etTitle.getText().toString().trim();
+                final String title = etTitle.getText().toString().trim();
                 String storyBody = etStoryBody.getText().toString().trim();
                 Integer latitude = Integer.valueOf(etLatitude.getText().toString().trim());
                 Integer longitude = Integer.valueOf(etLongitude.getText().toString().trim());
                 String username = getIntent().getStringExtra("userName");
+                String password = getIntent().getStringExtra("password");
+                String uID = getIntent().getStringExtra("uID");
 
                 // creating Story object
-                Story story = new Story();
+                final Story story = new Story();
 
                 // adding values
                 story.setTitle(title);
                 story.setStoryBody(storyBody);
                 story.setLatitude(latitude);
                 story.setLongitude(longitude);
-
-                //if( ref.getAuth().getUid())
-                //userRef.child(title).setValue(story);
-
-              //.  FirebaseUser user = ref.getAuth().getUid();
+                story.setuID(uID);
 
                 ref.child(title).setValue(story);
-
             }
         });
     }
