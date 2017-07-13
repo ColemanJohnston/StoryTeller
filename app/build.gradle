@@ -45,6 +45,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:11.0.2'
     compile 'com.google.firebase:firebase-auth:11.0.2'
     compile 'com.firebase:firebase-client-android:2.4.0'
+    compile 'org.parceler:parceler-api:1.1.6'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
 }

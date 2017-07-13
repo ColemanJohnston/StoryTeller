@@ -112,6 +112,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public void onMapLongClick(LatLng latLng) {
         //TODO: integrate Maria's compose dialog here
         AuthorFragment dialog = new AuthorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("latlong", latLng);
+        dialog.setArguments(bundle);
         dialog.show(getFragmentManager(),"Author dialog");
         dropMarker(latLng, "Title", "This text is longer because it is a snippet. Lorem ipsum and delor or however it's goes");
     }

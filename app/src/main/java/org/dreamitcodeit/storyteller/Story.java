@@ -1,5 +1,7 @@
 package org.dreamitcodeit.storyteller;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by neeharmb on 7/12/17.
  */
@@ -8,11 +10,11 @@ public class Story {
 
     private String title;
     private String storyBody;
-    private Integer latitude;
-    private Integer longitude;
     private String userName;
     private String screenName;
     private String uID;
+
+    private LatLng latLong;
 
     public Story() {
 
@@ -34,22 +36,6 @@ public class Story {
 
     public void setStoryBody(String storyBody) {
         this.storyBody = storyBody;
-    }
-
-    public Integer getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Integer latitude) {
-        this.latitude = latitude;
-    }
-
-    public Integer getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Integer longitude) {
-        this.longitude = longitude;
     }
 
     public String getUserName() {
@@ -74,5 +60,13 @@ public class Story {
 
     public void setuID(String uID) {
         this.uID = uID;
+    }
+
+    public LatLng getLatLong() {
+        return latLong;
+    }
+
+    public void setLatLong(LatLng latLong) {
+        this.latLong = latLong;
     }
 }

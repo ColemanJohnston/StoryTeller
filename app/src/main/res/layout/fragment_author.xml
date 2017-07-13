@@ -11,13 +11,17 @@
         android:text="Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/tvTitle"/>
+        android:id="@+id/tvTitle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitle"/>
+        android:layout_alignTop="@+id/tvTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
 
 
     <TextView
@@ -33,38 +37,38 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvBody"/>
 
-    <TextView
-        android:text="Latitude"
-        android:id="@+id/tvLat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etStoryBody"/>
+    <!--<TextView-->
+        <!--android:text="Latitude"-->
+        <!--android:id="@+id/tvLat"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/etStoryBody"/>-->
 
-    <EditText
-        android:id="@+id/etLatitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvLat"/>
+    <!--<EditText-->
+        <!--android:id="@+id/etLatitude"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/tvLat"/>-->
 
-    <TextView
-        android:text="Longitude"
-        android:id="@+id/tvLong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etLatitude"/>
+    <!--<TextView-->
+        <!--android:text="Longitude"-->
+        <!--android:id="@+id/tvLong"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/etLatitude"/>-->
 
-    <EditText
-        android:id="@+id/etLongitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvLong"/>
+    <!--<EditText-->
+        <!--android:id="@+id/etLongitude"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/tvLong"/>-->
 
     <Button
         android:id="@+id/btSave"
         android:text="Create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etLongitude"/>
+        android:layout_below="@id/etStoryBody"/>
 
     <Button
         android:id="@+id/btFetch"

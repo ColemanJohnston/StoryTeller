@@ -14,6 +14,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by mariadeangelis on 7/12/17.
@@ -34,7 +35,7 @@ public class AuthorFragment extends DialogFragment {
     private Button btFetch;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_author, container, false);
         getDialog().setTitle("Author new story");
 
@@ -67,17 +68,20 @@ public class AuthorFragment extends DialogFragment {
                 String storyBody = etStoryBody.getText().toString().trim();
                 String title = etTitle.getText().toString().trim();
 
+                LatLng latLng = getArguments().getParcelable("latlong");
+                story.setLatLong(latLng);
+
 
                 // adding values
                 // story.setTitle(title);
                 story.setStoryBody(storyBody);
                 story.setTitle(title);
-                story.setLongitude(1);
-                story.setLatitude(1);
                 story.setuID("neehar");
                 //story.setLatitude(latitude); TODO - pass in from map activity
                 //story.setLongitude(longitude);
                 // story.setuID(uID); // TODO - pass in
+
+              //  etLatitude.setText(latLng.toString());
 
                 ref.child(title).setValue(story);
 
