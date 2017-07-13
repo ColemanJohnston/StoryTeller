@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/tvInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Type Story at location here. Eventually will be able to set title, description, and edit with GoogleDrive" />
+
+    <EditText
+        android:id="@+id/etStory"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/tvInstructions"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etStory"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/cancel"
+        android:layout_below="@id/etStory"
+        android:text="Submit" />
+
+</RelativeLayout>

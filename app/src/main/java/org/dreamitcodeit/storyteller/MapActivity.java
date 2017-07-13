@@ -1,6 +1,7 @@
 package org.dreamitcodeit.storyteller;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -37,7 +38,7 @@ import permissions.dispatcher.RuntimePermissions;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener{
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -76,6 +77,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
+
                 }
             });
         } else {
@@ -98,6 +100,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             // Map is ready
             //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setOnMapLongClickListener(this);
+            map.setOnInfoWindowClickListener(this);
             MapActivityPermissionsDispatcher.getMyLocationWithCheck(this);
             MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);
         } else {
@@ -108,7 +111,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     @Override
     public void onMapLongClick(LatLng latLng) {
         //TODO: integrate Maria's compose dialog here
+        AuthorFragment dialog = new AuthorFragment();
+        dialog.show(getFragmentManager(),"Author dialog");
         dropMarker(latLng, "Title", "This text is longer because it is a snippet. Lorem ipsum and delor or however it's goes");
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        startActivity(new Intent(this,ViewStoryActivity.class));
     }
 
     @Override

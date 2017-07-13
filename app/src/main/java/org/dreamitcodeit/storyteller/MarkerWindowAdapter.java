@@ -1,6 +1,5 @@
 package org.dreamitcodeit.storyteller;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -25,12 +24,7 @@ class MarkerWindowAdapter implements GoogleMap.InfoWindowAdapter {
         // Getting view from the layout file
         View v = mInflater.inflate(R.layout.marker_info_window, null);
         // Populate fields
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {//TODO: fix onclick that doesn't seem to be firing
-                v.getContext().startActivity(new Intent(v.getContext(),ViewStoryActivity.class));
-            }
-        });
+
         TextView title = (TextView) v.findViewById(R.id.tv_info_window_title);
         title.setText(marker.getTitle());
 
