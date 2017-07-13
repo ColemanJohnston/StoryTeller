@@ -45,6 +45,7 @@ public class AuthorFragment extends DialogFragment {
         btFetch = (Button) rootView.findViewById(R.id.btFetch);
         etStoryBody = (EditText) rootView.findViewById(R.id.etStoryBody);
         etTitle = (EditText) rootView.findViewById(R.id.etTitle);
+        tvStories = (TextView) rootView.findViewById(R.id.tvStories);
 
         // save this story and close the window
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +98,12 @@ public class AuthorFragment extends DialogFragment {
                 queryRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        //  for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                        Story currentStories = dataSnapshot.getValue(Story.class);
+//                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+//                            Story currentStories = dataSnapshot.getValue(Story.class);
 
-                        String string = "TITLE: " + dataSnapshot.getKey();
-                        tvStories.setText(tvStories.getText() + " " + string);
-                        //}
+                            String string = "TITLE: " + dataSnapshot.getKey();
+                            tvStories.setText(tvStories.getText() + " " + string );
+                      //  }
                     }
 
                     @Override
@@ -125,6 +126,7 @@ public class AuthorFragment extends DialogFragment {
 
                     }
                 });
+//                dismiss();
             }
         });
 
