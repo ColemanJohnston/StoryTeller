@@ -31,6 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_welcome);
 
         mAuth = FirebaseAuth.getInstance();
@@ -59,7 +60,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 // create a toast to show that it worked
-                Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
+                Toast.makeText(WelcomeActivity.this, "WE LOGGED IN.",
                         Toast.LENGTH_SHORT).show();
 
 
@@ -95,7 +96,7 @@ public class WelcomeActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            gotoWelcome(user);
+                            gotoMap(user);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -127,12 +128,8 @@ public class WelcomeActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            gotoWelcome(user);
-                            Intent intent = new Intent(WelcomeActivity.this, ComposeStoryActivity.class);
-                            intent.putExtra("userName", mEmailField.getText().toString());
-                            intent.putExtra("password", mPasswordField.getText().toString());
-                            intent.putExtra("uID", user.getUid());
-                            startActivity(intent);
+                            gotoMap(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -194,10 +191,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     // Go to the map activity once we have logged in
-    public void gotoWelcome(FirebaseUser user) {
+    public void gotoMap(FirebaseUser user) {
         if (user != null) {
             Intent i = new Intent(this, MapActivity.class);
             i.putExtra("email", user.getEmail());
+            i.putExtra("userName", mEmailField.getText().toString());
+            i.putExtra("password", mPasswordField.getText().toString());
+            i.putExtra("uID", user.getUid());
             startActivity(i);
         }
     }

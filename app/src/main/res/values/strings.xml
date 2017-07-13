@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StoryTeller</string>
+        <string name="google_maps_api_key">AIzaSyD7nfqZmgWH64_NykVZVbWzkIC5E4yWgVk</string>
 </resources>
+
