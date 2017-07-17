@@ -62,26 +62,13 @@ public class AuthorFragment extends DialogFragment {
 
                 // creating Story object
 
-                story = new Story();
-
-
                 String storyBody = etStoryBody.getText().toString().trim();
                 String title = etTitle.getText().toString().trim();
 
                 LatLng latLng = getArguments().getParcelable("latlong");
-                story.setLatLong(latLng);
+//                story.setLatLong(latLng);
 
-
-                // adding values
-                // story.setTitle(title);
-                story.setStoryBody(storyBody);
-                story.setTitle(title);
-                story.setuID("neehar");
-                //story.setLatitude(latitude); TODO - pass in from map activity
-                //story.setLongitude(longitude);
-                // story.setuID(uID); // TODO - pass in
-
-              //  etLatitude.setText(latLng.toString());
+                story = new Story(title,storyBody,"neehar","neehar","neehar",latLng.latitude,latLng.longitude);
 
                 ref.child(title).setValue(story);
 

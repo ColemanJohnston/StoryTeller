@@ -11,6 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,6 +45,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 @RuntimePermissions
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
+    Firebase ref;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -59,7 +65,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        Firebase.setAndroidContext(this);
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
         }
@@ -77,7 +83,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
-
+                    populateMap();
                 }
             });
         } else {
@@ -93,6 +99,40 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                                         .snippet(snippet)
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         marker.setTag(0);
+    }
+
+    private void populateMap(){
+        ref = new Firebase(Config.FIREBASE_URl);
+
+        Query queryRef = ref.orderByChild("title");
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Story story = dataSnapshot.getValue(Story.class);
+                dropMarker(new LatLng(story.getLatitude(),story.getLongitude()),story.getTitle(),story.getStoryBody());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     protected void loadMap(GoogleMap googleMap) {
@@ -111,13 +151,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        //TODO: integrate Maria's compose dialog here
         AuthorFragment dialog = new AuthorFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("latlong", latLng);
         dialog.setArguments(bundle);
         dialog.show(getFragmentManager(),"Author dialog");
-        dropMarker(latLng, "Title", "This text is longer because it is a snippet. Lorem ipsum and delor or however it's goes");
+
     }
 
     @Override
