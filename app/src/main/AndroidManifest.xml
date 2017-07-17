@@ -33,7 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MapActivity"
+            android:screenOrientation="portrait" />
 
         <uses-library
             android:name="com.google.android.maps"
@@ -46,7 +48,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ViewStoryActivity"></activity>
+        <activity android:name=".ViewStoryActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
