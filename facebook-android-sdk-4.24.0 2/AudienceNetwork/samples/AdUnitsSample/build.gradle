@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+repositories {
+  flatDir {
+    dirs 'libs'
+  }
+}
+
+dependencies {
+    compile(name: 'AudienceNetwork', ext: 'aar')
+    compile(name: 'DebugSettings', ext: 'aar')
+    compile 'com.android.support:support-v4:21.0.3'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+
+    defaultConfig {
+        applicationId 'com.facebook.samples.AdUnitsSample'
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName '1.0'
+        rootProject.ext.variantRelease = false
+    }
+}
+
