@@ -38,6 +38,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.parceler.Parcels;
 
 import permissions.dispatcher.NeedsPermission;
@@ -55,6 +64,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     Location mCurrentLocation;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
+    String TAG = "DatabaseRefresh";
 
     private final static String KEY_LOCATION = "location";
 
@@ -98,25 +108,34 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         // TODO - right now we will re-popoulate the map everytime anything is changed
         // TODO - in the future we should optimize this
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
+        Firebase.setAndroidContext(this);
+
+
+
+        ref = new Firebase(Config.FIREBASE_URl);
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Firebase myRef = ref.getRoot().getRef();
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever anything in our database is changed
+
+                // Update our UI to reflect these changes
+                populateMap();
+
+                //String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " );
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                // Failed to read value
+                Log.d(TAG, "Failed to read value.");
+            }
+        });
 
     }
 
@@ -178,13 +197,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-
-
-//        AuthorFragment dialog = new AuthorFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("latlong", latLng);
-//        dialog.setArguments(bundle);
-//        dialog.show(getFragmentManager(),"Author dialog");
 
         Intent i = new Intent(this, AuthorActivity.class);
         //i.putExtra("latlong", latLng);

@@ -77,10 +77,6 @@ public class Story {
         this.uID = uID;
     }
 
-//    public LatLng getLatLong() {
-//        return new LatLng(latitude,longitude);
-//    }
-
     public double getLatitude() {
         return latitude;
     }

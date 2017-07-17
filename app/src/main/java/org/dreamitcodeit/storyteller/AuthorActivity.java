@@ -95,12 +95,9 @@ public class AuthorActivity extends AppCompatActivity {
                 queryRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-//                            Story currentStories = dataSnapshot.getValue(Story.class);
 
                         String string = "TITLE: " + dataSnapshot.getKey();
                         tvStories.setText(tvStories.getText() + " " + string );
-                        //  }
                     }
 
                     @Override
