@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.dreamitcodeit.storyteller.AuthorActivity">
+    android:gravity="center"
+    android:padding="10dp"
+    android:weightSum="1">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:text="Title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/tvTitle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
+
+
+    <TextView
+        android:text="Story Body"
+        android:id="@+id/tvBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etTitle"/>
+
+    <EditText
+        android:id="@+id/etStoryBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvBody"/>
+
+    <Button
+        android:id="@+id/btSave"
+        android:text="Create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etStoryBody"/>
+
+    <Button
+        android:id="@+id/btFetch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fetch Data"
+        android:layout_below="@id/btSave"/>
+
+    <TextView
+        android:id="@+id/tvStoriesLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stories"
+        android:textStyle="bold"
+        android:layout_below="@id/btFetch"/>
+
+    <TextView
+        android:id="@+id/tvStories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvStoriesLabel"/>
+
+</RelativeLayout>

@@ -1,9 +1,12 @@
 package org.dreamitcodeit.storyteller;
 
+import org.parceler.Parcel;
+
 /**
  * Created by neeharmb on 7/12/17.
  */
 
+@Parcel
 public class Story {
 
     private String title;
@@ -16,9 +19,11 @@ public class Story {
 
     //private LatLng latLong;
 
-    private Story() {
+    // TODO - needs to be public for parcelable and private for firebase :(
+    public Story() {
 
     }
+
 
     public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude){
         this.title = title;

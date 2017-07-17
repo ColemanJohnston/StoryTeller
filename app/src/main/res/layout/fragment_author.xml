@@ -37,32 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvBody"/>
 
-    <!--<TextView-->
-        <!--android:text="Latitude"-->
-        <!--android:id="@+id/tvLat"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/etStoryBody"/>-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/etLatitude"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/tvLat"/>-->
-
-    <!--<TextView-->
-        <!--android:text="Longitude"-->
-        <!--android:id="@+id/tvLong"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/etLatitude"/>-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/etLongitude"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/tvLong"/>-->
-
     <Button
         android:id="@+id/btSave"
         android:text="Create"

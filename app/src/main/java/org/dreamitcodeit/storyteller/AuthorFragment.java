@@ -76,7 +76,7 @@ public class AuthorFragment extends DialogFragment {
             }
         });
 
-        // discard this story and close the window
+        // fetch data (for
         btFetch.setOnClickListener(new View.OnClickListener() {
 
             @Override

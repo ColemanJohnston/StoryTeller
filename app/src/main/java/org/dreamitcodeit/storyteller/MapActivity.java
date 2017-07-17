@@ -16,6 +16,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,6 +37,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.parceler.Parcels;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -89,6 +92,31 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+
+
+        // TODO - code to listen for real time refresh
+        // TODO - right now we will re-popoulate the map everytime anything is changed
+        // TODO - in the future we should optimize this
+
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("message");
+//
+//        // Read from the database
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d(TAG, "Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
     }
 
@@ -150,12 +178,30 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        AuthorFragment dialog = new AuthorFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("latlong", latLng);
-        dialog.setArguments(bundle);
-        dialog.show(getFragmentManager(),"Author dialog");
 
+
+//        AuthorFragment dialog = new AuthorFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("latlong", latLng);
+//        dialog.setArguments(bundle);
+//        dialog.show(getFragmentManager(),"Author dialog");
+
+        Intent i = new Intent(this, AuthorActivity.class);
+        //i.putExtra("latlong", latLng);
+        i.putExtra("lat", latLng.latitude);
+        i.putExtra("long", latLng.longitude);
+        startActivityForResult(i, 20);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == 20) {
+
+            // TODO - Grab story object and extract location from it
+            // TODO - drop pin and fill it with story object
+        }
     }
 
     @Override
@@ -282,7 +328,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
 
         // Report to the UI that the location was updated
-
         mCurrentLocation = location;
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
