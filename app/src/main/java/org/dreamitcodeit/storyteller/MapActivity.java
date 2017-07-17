@@ -92,6 +92,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                                         .title(title)
                                         .snippet(snippet)
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        marker.setTag(0);
     }
 
     protected void loadMap(GoogleMap googleMap) {
@@ -121,7 +122,20 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        startActivity(new Intent(this,ViewStoryActivity.class));
+        Integer clickCount = (Integer) marker.getTag();
+
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+            Intent intent = new Intent(this, ViewStoryActivity.class);
+            intent.putExtra("title", marker.getTitle());
+            startActivity(intent);
+            //startActivity(intentMapActivity.this, ViewStoryActivity.class);
+        }
+      //  Intent intent = new Intent();
+       // intent.putExtra("title", marker.getTitle(title);
+        //intent.putExtra("storyBody", )
+      //  startActivity(new Intent(this,ViewStoryActivity.class));
     }
 
     @Override
