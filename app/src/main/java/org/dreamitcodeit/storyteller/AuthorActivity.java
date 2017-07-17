@@ -3,6 +3,7 @@ package org.dreamitcodeit.storyteller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ public class AuthorActivity extends AppCompatActivity {
                 // creating Story object
 
                 String storyBody = etStoryBody.getText().toString().trim();
+                etStoryBody.setMovementMethod(new ScrollingMovementMethod());
                 String title = etTitle.getText().toString().trim();
 
                 double latitude = getIntent().getDoubleExtra("lat", 0);
