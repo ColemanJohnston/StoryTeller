@@ -168,6 +168,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(clickCount);
             Intent intent = new Intent(this, ViewStoryActivity.class);
             intent.putExtra("title", marker.getTitle());
+            intent.putExtra("storyBody", marker.getSnippet());
             startActivity(intent);
             //startActivity(intentMapActivity.this, ViewStoryActivity.class);
         }

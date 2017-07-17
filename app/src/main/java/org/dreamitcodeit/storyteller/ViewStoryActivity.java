@@ -17,6 +17,7 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
 
-        tvTitle.setText("hello");//(getIntent().getStringExtra("title"));
+        tvTitle.setText(getIntent().getStringExtra("title"));
+        tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
     }
 }
