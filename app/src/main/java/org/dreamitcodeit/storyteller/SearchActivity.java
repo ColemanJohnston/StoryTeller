@@ -1,6 +1,5 @@
 package org.dreamitcodeit.storyteller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -34,13 +33,13 @@ public class SearchActivity extends AppCompatActivity {
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent i = new Intent(SearchActivity.this, MapActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
-    }
+    }*/
 
 }
