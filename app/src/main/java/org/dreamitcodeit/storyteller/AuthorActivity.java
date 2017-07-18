@@ -14,7 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ import com.firebase.client.utilities.Base64;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.parceler.Parcels;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,9 +69,6 @@ public class AuthorActivity extends AppCompatActivity {
     private ImageView ivPreview;
 
     // for taking photos
-    public final String APP_TAG = "StoryTeller";
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-    public String photoFileName = "photo.jpg";
     public Uri file;
 
     @Override
@@ -104,6 +103,7 @@ public class AuthorActivity extends AppCompatActivity {
                 // creating Story object
 
                 String storyBody = etStoryBody.getText().toString().trim();
+                etStoryBody.setMovementMethod(new ScrollingMovementMethod());
                 String title = etTitle.getText().toString().trim();
 
                 double latitude = getIntent().getDoubleExtra("lat", 0);

@@ -6,9 +6,16 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.support.v7.widget.SearchView;
+
+
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -26,8 +33,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -37,17 +42,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.parceler.Parcels;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -97,6 +91,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
                     populateMap();
+                    map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
         } else {
@@ -137,6 +132,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
+    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_map,menu);
+//        return true;
+//    }
+
+    public void onProfileIconClick(MenuItem mi){
+        this.startActivity(new Intent(this, ProfileActivity.class));
     }
 
     private void dropMarker(LatLng latLng, String title, String snippet){
@@ -314,15 +319,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         // Display the connection status
 
-        if (mCurrentLocation != null) {
-            Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            map.animateCamera(cameraUpdate);
-        } else {
-            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-        }
-        MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);
+        //TODO: think about if this needs to happen, but we decided that it's annoying
+//        if (mCurrentLocation != null) {
+//            Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
+//            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+//            map.animateCamera(cameraUpdate);
+//        } else {
+//            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+//        }
+        MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//Pretty sure this is needed, but still don't know
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
@@ -390,5 +396,73 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             return mDialog;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // perform query here
+
+                ref = new Firebase(Config.FIREBASE_URl);
+
+                Query queryRef = ref.orderByChild("title");
+
+                queryRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Story story = dataSnapshot.getValue(Story.class);
+
+                       // String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
+
+                        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                        intent.putExtra("title", story.getTitle());
+                        intent.putExtra("body", story.getStoryBody());
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
 }

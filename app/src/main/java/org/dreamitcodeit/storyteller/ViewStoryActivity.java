@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public class ViewStoryActivity extends AppCompatActivity {
@@ -19,5 +20,6 @@ public class ViewStoryActivity extends AppCompatActivity {
 
         tvTitle.setText(getIntent().getStringExtra("title"));
         tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
+        tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.dreamitcodeit.storyteller.ProfileActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlProfileInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray">
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@color/colorPrimary"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="12dp"/>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_toEndOf="@id/ivProfileImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jane Doe"
+            android:textSize="18sp"
+            android:paddingTop="12dp" />
+
+        <ImageView
+            android:layout_below="@id/tvName"
+            android:layout_toEndOf="@id/ivProfileImage"
+            android:id="@+id/ivLocationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_on_black_24dp"/>
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="Menlo Park, CA"
+            android:layout_below="@id/tvName"
+            android:layout_toEndOf="@id/ivLocationIcon"
+            android:textSize="9sp"/>
+
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/ivProfileImage"/>
+
+    </RelativeLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
+
+
+</LinearLayout>
