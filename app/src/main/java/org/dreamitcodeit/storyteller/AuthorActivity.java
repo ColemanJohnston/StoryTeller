@@ -26,12 +26,15 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.utilities.Base64;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -185,12 +188,45 @@ public class AuthorActivity extends AppCompatActivity {
                 // set the data and type. Get all image types
                 photoPickerIntent.setDataAndType(data, "image/*");
 
+                // We will invoke this activity and get something back from it
                 startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
 
 
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK)
+        {
+            // if we are here, we are hearing back from the image gallery.
+            // we get back a Uri in a third parameter data
+
+            // the address of the image on the SD card
+            Uri imageUri = data.getData();
+
+            // declare a stream to read the image data from the SD card
+            InputStream inputStream;
+
+            // we are gett ing an input stream based on the Uri of the image
+            try {
+                inputStream = getContentResolver().openInputStream(imageUri);
+
+                // get a bitmap from the stream
+                Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+                // show the preview image to the user
+                ivPreview.setImageBitmap(image);
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void takePicture(View view) throws IOException {
@@ -328,75 +364,5 @@ public class AuthorActivity extends AppCompatActivity {
         // mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
-
-    // START CAMERA CODE
-
-//    public void onLaunchCamera(View view) {
-//        // create Intent to take a picture and return control to the calling application
-////        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-////        //intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
-////
-////        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-////        // So as long as the result is not null, it's safe to use the intent.
-////        if (intent.resolveActivity(getPackageManager()) != null) {
-////            // Start the image capture intent to take photo
-////            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-////        }
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-//            if (resultCode == RESULT_OK) {
-////                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
-////                // by this point we have the camera photo on disk
-////                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-////                // RESIZE BITMAP, see section below
-////                // Load the taken image into a preview
-////                ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
-////                ivPreview.setImageBitmap(takenImage);
-//            } else { // Result was a failure
-//                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-
-//    // Returns the Uri for a photo stored on disk given the fileName
-//    public Uri getPhotoFileUri(String fileName) {
-//        // Only continue if the SD Card is mounted
-//        if (isExternalStorageAvailable()) {
-//            // Get safe storage directory for photos
-//            // Use `getExternalFilesDir` on Context to access package-specific directories.
-//            // This way, we don't need to request external read/write runtime permissions.
-//            File mediaStorageDir = new File(
-//                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
-//
-//            // Create the storage directory if it does not exist
-//            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-//                Log.d(APP_TAG, "failed to create directory");
-//            }
-//
-//            // Return the file target for the photo based on filename
-//            File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
-//
-//            // wrap File object into a content provider
-//            // required for API >= 24
-//            // See https://guides.codepath.com/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-//
-//            Uri uri = FileProvider.getUriForFile(AuthorActivity.this, this.getPackageName() + ".share", file);
-//            return uri;
-//
-//            //return FileProvider.getUriForFile(AuthorActivity.this, "org.dreamitcodeit.fileprovider", file);
-//        }
-//        return null;
-//    }
-
-//    // Returns true if external storage for photos is available
-//    private boolean isExternalStorageAvailable() {
-//        String state = Environment.getExternalStorageState();
-//        return state.equals(Environment.MEDIA_MOUNTED);
-//    }
-
-    // END CAMERA CODE
 
 }
