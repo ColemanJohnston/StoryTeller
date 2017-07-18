@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.jar.*;
+import java.util.jar.Manifest;
 
 import permissions.dispatcher.NeedsPermission;
 
@@ -47,6 +50,8 @@ import static java.security.AccessController.getContext;
 public class AuthorActivity extends AppCompatActivity {
 
     public static final int IMAGE_GALLERY_REQUEST = 20;
+    public static final int CAMERA_REQUEST = 10;
+    public static final int CAMERA_REQUEST_CODE = 111;
     Story story;
     Firebase ref;
 
@@ -58,6 +63,7 @@ public class AuthorActivity extends AppCompatActivity {
     private Button btSave;
     private Button btFetch;
     private Button btTakePhoto;
+    private Button btImportPhoto;
     private ImageView ivPreview;
 
     // for taking photos
@@ -81,6 +87,7 @@ public class AuthorActivity extends AppCompatActivity {
         tvStories = (TextView) findViewById(R.id.tvStories);
         btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
+        btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
 
         // save this story and return to MapView Activity
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -167,14 +174,33 @@ public class AuthorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // stuff
-                // onLaunchCamera(v);
+                //onLaunchCamera(v);
 //                try {
 //                   takePicture(v);
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
 
+                // if we have permission, just go for it!
+                if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    takePhoto();
+                }
+                // means we have to first get permission
+                else
+                {
+                    String [] permissionRequested = {android.Manifest.permission.CAMERA};
+                    requestPermissions(permissionRequested, CAMERA_REQUEST_CODE);
+                }
+            }
+        });
+
+        // Open the gallery and chose a picture.
+        // Save the image to be later inputted into Firebase storage
+        btImportPhoto.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
                 // invoke the image gallery using an implicit intent
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
@@ -190,16 +216,31 @@ public class AuthorActivity extends AppCompatActivity {
 
                 // We will invoke this activity and get something back from it
                 startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
-
-
             }
         });
 
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                takePhoto();
+            }
+            else
+            {
+                Toast.makeText(this, "Unable to invoke camera without permissions", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        // for picking an image from the gallery
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK)
         {
             // if we are here, we are hearing back from the image gallery.
@@ -227,142 +268,20 @@ public class AuthorActivity extends AppCompatActivity {
                 Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
             }
         }
-    }
 
-    public void takePicture(View view) throws IOException {
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        //File f = createImageFile();
-        //File f = getOutputMediaFile();
-        // file = Uri.fromFile(f); Not supported if your target version is above 24 shit
-
-        // File f = new File(getExternalFilesDir((Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png"));
-        //File f = new File(Environment.getExternalStorageDirectory(), "images");
-
-
-       intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-//        if (f != null){
-//            try{
-//                file = FileProvider.getUriForFile(AuthorActivity.this, "org.dreamitcodeit.fileprovider", f);
-//            }
-//            catch (IllegalArgumentException e)
-//            {
-//                e.printStackTrace();
-//            }
-//
-//        }
-
-//        if (hasPermissionInManifest(getApplicationContext(), "CAMERA"))
-//        {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri("hi.jpg"));
-
-        if (intent.resolveActivity(getPackageManager())!= null)
+        // For taking a photo in app
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
         {
-            startActivityForResult(intent, 100);
+            // Now we have the image from the camera
+            Bitmap cameraImage = (Bitmap) data.getExtras().get("Data");
+            ivPreview.setImageBitmap(cameraImage);
         }
-//        }
     }
 
-    // Returns the Uri for a photo stored on disk given the fileName
-    public Uri getPhotoFileUri(String fileName) {
-        // Only continue if the SD Card is mounted
-        if (isExternalStorageAvailable()) {
-            // Get safe storage directory for photos
-            // Use `getExternalFilesDir` on Context to access package-specific directories.
-            // This way, we don't need to request external read/write runtime permissions.
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
-
-            // Create the storage directory if it does not exist
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-                Log.d(APP_TAG, "failed to create directory");
-            }
-
-            // Return the file target for the photo based on filename
-            File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
-
-            // wrap File object into a content provider
-            // required for API >= 24
-            // See https://guides.codepath.com/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-            return FileProvider.getUriForFile(AuthorActivity.this, "org.dreamitcodeit.fileprovider", file);
-        }
-        return null;
-    }
-
-    // Returns true if external storage for photos is available
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-
-    public boolean hasPermissionInManifest(Context context, String permissionName) {
-        final String packageName = context.getPackageName();
-        try {
-            final PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-            final String[] declaredPermisisons = packageInfo.requestedPermissions;
-            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
-                for (String p : declaredPermisisons) {
-                    if (p.equals(permissionName)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
-        return false;
-    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        if (requestCode == 100 && resultCode == RESULT_OK)
-//        {
-//            ivPreview.setImageURI(file);
-//        }
-//    }
-
-//    private static File getOutputMediaFile()
-//    {
-//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Camera");
-//
-//        if (!mediaStorageDir.exists())
-//        {
-//            if (!mediaStorageDir.mkdirs())
-//            {
-//                return null;
-//            }
-//        }
-//
-//        // Name the file something different each time so you can't have overlaps
-//        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//
-//        return new File (mediaStorageDir.getPath() + File.separator + "IMG_" + timestamp + ".jpg");
-//
-//    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
-//                Environment.DIRECTORY_DCIM), "Camera");
-        //File storageDir = Environment.getExternalStorageDirectory();
-        File storageDir = this.getFilesDir(); // TODO - is this the problem?
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        // mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
+    public void takePhoto()
+    {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
 }

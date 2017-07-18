@@ -82,4 +82,12 @@
         android:layout_below="@+id/bTakePhoto"
         app:srcCompat="@color/colorAccent" />
 
+    <Button
+        android:id="@+id/btImportPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bTakePhoto"
+        android:layout_toEndOf="@+id/bTakePhoto"
+        android:text="Import Photo" />
+
 </RelativeLayout>
