@@ -36,7 +36,6 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //moveTaskToBack(true);
         super.onBackPressed();
         Intent i = new Intent(SearchActivity.this, MapActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
