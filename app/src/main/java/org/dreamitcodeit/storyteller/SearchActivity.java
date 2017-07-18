@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private TextView tvSearchResults;
+    private TextView tvTitle;
+    private TextView tvStoryBody;
+    String title;
     String body;
 
     @Override
@@ -21,11 +23,15 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        tvSearchResults = (TextView) findViewById(R.id.tvSearchResults);
+        tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        title = getIntent().getStringExtra("title");
         body = getIntent().getStringExtra("body");
 
-        tvSearchResults.setText(body);
-        tvSearchResults.setMovementMethod(new ScrollingMovementMethod());
+        tvTitle.setText(title);
+        tvStoryBody.setText(body);
+        tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override

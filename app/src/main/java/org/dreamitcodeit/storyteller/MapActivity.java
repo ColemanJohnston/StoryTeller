@@ -407,10 +407,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Story story = dataSnapshot.getValue(Story.class);
 
-                        String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
+                       // String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
 
                         Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                        intent.putExtra("body", body);
+                        intent.putExtra("title", story.getTitle());
+                        intent.putExtra("body", story.getStoryBody());
                         startActivity(intent);
 
                     }
