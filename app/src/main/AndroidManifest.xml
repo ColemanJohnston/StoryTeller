@@ -49,7 +49,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ViewStoryActivity" />
+
         <activity android:name=".AuthorActivity"></activity>
+
+        <activity android:name=".ProfileActivity"></activity>
+
     </application>
 
 </manifest>

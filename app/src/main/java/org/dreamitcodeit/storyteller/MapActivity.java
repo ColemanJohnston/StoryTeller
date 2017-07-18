@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -137,6 +139,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_map,menu);
+        return true;
+    }
+
+    public void onProfileIconClick(MenuItem mi){
+        this.startActivity(new Intent(this, ProfileActivity.class));
     }
 
     private void dropMarker(LatLng latLng, String title, String snippet){
