@@ -50,7 +50,8 @@
 
         <activity android:name=".ViewStoryActivity" />
         <activity android:name=".AuthorActivity"></activity>
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity"
+         android:parentActivityName="org.dreamitcodeit.storyteller.SearchActivity" ></activity>
     </application>
 
 </manifest>
