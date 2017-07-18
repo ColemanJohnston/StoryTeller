@@ -63,9 +63,11 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
+
+
                 story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
 
-                ref.child(title).setValue(story);
+                ref.push().setValue(story);//send data to database with unique id
 
                 // TODO - go back to the map activity
                 // TODO - pass back parcelable story object
@@ -123,10 +125,5 @@ public class AuthorActivity extends AppCompatActivity {
         });
 
        // etStoryBody.setMovementMethod(new ScrollingMovementMethod());
-
-
-
     }
-
-
 }
