@@ -398,6 +398,45 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             public boolean onQueryTextSubmit(String query) {
                 // perform query here
 
+                ref = new Firebase(Config.FIREBASE_URl);
+
+                Query queryRef = ref.orderByChild("title");
+
+                queryRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Story story = dataSnapshot.getValue(Story.class);
+
+                        String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
+
+                        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                        intent.putExtra("body", body);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();

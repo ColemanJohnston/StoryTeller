@@ -1,0 +1,32 @@
+package org.dreamitcodeit.storyteller;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
+
+
+/**
+ * Created by neeharmb on 7/18/17.
+ */
+
+public class SearchActivity extends AppCompatActivity {
+
+    private TextView tvSearchResults;
+    String body;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+
+        tvSearchResults = (TextView) findViewById(R.id.tvSearchResults);
+        body = getIntent().getStringExtra("body");
+
+        tvSearchResults.setText(body);
+        tvSearchResults.setMovementMethod(new ScrollingMovementMethod());
+
+
+    }
+
+}

@@ -50,6 +50,7 @@
 
         <activity android:name=".ViewStoryActivity" />
         <activity android:name=".AuthorActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
