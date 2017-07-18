@@ -59,6 +59,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
+    String query = "";
 
     private final static String KEY_LOCATION = "location";
 
@@ -405,7 +406,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
                 // perform query here
 
                 ref = new Firebase(Config.FIREBASE_URl);
@@ -418,11 +419,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         Story story = dataSnapshot.getValue(Story.class);
 
                        // String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
-
-                        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                        intent.putExtra("title", story.getTitle());
-                        intent.putExtra("body", story.getStoryBody());
-                        startActivity(intent);
+                        for (DataSnapshot currSnapshot : dataSnapshot.getChildren()) {
+                            if (currSnapshot.getKey().equals(query)) {
+                                Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                                intent.putExtra("title", story.getTitle());
+                                intent.putExtra("body", story.getStoryBody());
+                                startActivity(intent);
+                            }
+                        }
 
                     }
 
