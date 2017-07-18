@@ -30,10 +30,16 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.utilities.Base64;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.parceler.Parcels;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,9 +73,11 @@ public class AuthorActivity extends AppCompatActivity {
     private Button btTakePhoto;
     private Button btImportPhoto;
     private ImageView ivPreview;
+    private String title;
 
     // for taking photos
     public Uri file;
+    InputStream inputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +112,7 @@ public class AuthorActivity extends AppCompatActivity {
 
                 String storyBody = etStoryBody.getText().toString().trim();
                 etStoryBody.setMovementMethod(new ScrollingMovementMethod());
-                String title = etTitle.getText().toString().trim();
+                title = etTitle.getText().toString().trim();
 
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
@@ -112,9 +120,6 @@ public class AuthorActivity extends AppCompatActivity {
                 story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
 
                 ref.child(title).setValue(story);
-
-                // TODO - go back to the map activity
-                // TODO - pass back parcelable story object
 
                 Intent data = new Intent();
 
@@ -249,10 +254,7 @@ public class AuthorActivity extends AppCompatActivity {
             // the address of the image on the SD card
             Uri imageUri = data.getData();
 
-            // declare a stream to read the image data from the SD card
-            InputStream inputStream;
-
-            // we are gett ing an input stream based on the Uri of the image
+            // we are getting an input stream based on the Uri of the image
             try {
                 inputStream = getContentResolver().openInputStream(imageUri);
 
@@ -261,6 +263,9 @@ public class AuthorActivity extends AppCompatActivity {
 
                 // show the preview image to the user
                 ivPreview.setImageBitmap(image);
+
+                // Now store the image in Firebase Cloud Storage
+                storeImageCloud();
 
 
             } catch (FileNotFoundException e) {
@@ -275,6 +280,10 @@ public class AuthorActivity extends AppCompatActivity {
             // Now we have the image from the camera
             Bitmap cameraImage = (Bitmap) data.getExtras().get("Data");
             ivPreview.setImageBitmap(cameraImage);
+
+            // TODO - eventually convert to a bitmap so it can be pushed into cloud storage
+            // Now store the image in Firebase Cloud Storage
+            // storeImageCloud();
         }
     }
 
@@ -282,6 +291,42 @@ public class AuthorActivity extends AppCompatActivity {
     {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
+    }
+
+    // Stores image in our Firebase Cloud Storage, backed by Google. Thanks Google!
+    public void storeImageCloud()
+    {
+        // get a reference to the storage bucket!
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+
+        // Create a child reference
+        // imagesRef now points to "images"
+        // TODO - bring up an alert dialogue saying "Hey, after this you won't be able to change your title anymore"
+
+        title = etTitle.getText().toString().trim();
+        StorageReference imagesRef = storageRef.child("images/" + title + "/");
+
+        // Uploading as a stream
+
+        UploadTask uploadTask = imagesRef.putStream(inputStream);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getApplicationContext(), "Unable to upload image", Toast.LENGTH_LONG).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Toast.makeText(getApplicationContext(), "Successfully loaded image", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
