@@ -24,6 +24,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -400,7 +401,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 ref = new Firebase(Config.FIREBASE_URl);
 
-                Query queryRef = ref.orderByChild("title");
+                Query queryRef = ref.orderByChild("title").equalTo(query);
 
                 queryRef.addChildEventListener(new ChildEventListener() {
                     @Override
