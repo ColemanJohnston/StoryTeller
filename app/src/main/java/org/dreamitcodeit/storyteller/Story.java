@@ -1,6 +1,9 @@
 package org.dreamitcodeit.storyteller;
 
+
 import org.parceler.Parcel;
+
+import java.util.Date;
 
 /**
  * Created by neeharmb on 7/12/17.
@@ -16,6 +19,8 @@ public class Story {
     private String uID;
     private double latitude;
     private double longitude;
+    private String timestamp;
+    private Date date;
 
     public Story() {
 
@@ -30,6 +35,7 @@ public class Story {
         this.uID = uID;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.timestamp = timestamp;
     }
 
     // getters and setters
@@ -88,5 +94,21 @@ public class Story {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

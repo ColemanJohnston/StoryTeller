@@ -36,6 +36,9 @@ public class StoryListFragment extends Fragment {
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(storyAdapter);
 
+        for(int i = 0;i < stories.size(); ++i){
+
+        }
         return v;
     }
 }

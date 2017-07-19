@@ -6,14 +6,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.support.v7.widget.SearchView;
-
-
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,6 +42,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -53,6 +56,7 @@ import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 @RuntimePermissions
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
+    HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -76,6 +80,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
+        latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
         }
@@ -93,7 +98,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
-                    populateMap();
+//                    populateMap();
+                    setMarkerClickListener(map);
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
@@ -123,9 +129,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 // Update our UI to reflect these changes
                 populateMap();
-
-                //String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " );
             }
 
             @Override
@@ -147,13 +150,38 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         this.startActivity(new Intent(this, ProfileActivity.class));
     }
 
-    private void dropMarker(LatLng latLng, String title, String snippet){
-        Marker marker = map.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(title)
-                                        .snippet(snippet)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        marker.setTag(0);
+    private void dropMarker(Story story, String key){//TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
+        LatLng location = new LatLng(story.getLatitude(),story.getLongitude());
+        Marker marker = latLngMarkerHashMap.get(location);
+        if(marker == null){
+            marker = map.addMarker(new MarkerOptions()
+                    .position(location)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            HashMap<String,Story> tag = new HashMap<>();
+            tag.put(key,story);
+            marker.setTag( tag );//put an array with a story in the new marker
+        }
+        else {
+            HashMap<String,Story> stories = (HashMap<String,Story>) marker.getTag();
+            stories.put(key,story);
+            marker.setTag(stories);
+        }
+
+        latLngMarkerHashMap.put(location,marker);
+    }
+
+    private void setMarkerClickListener(GoogleMap map){
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                HashMap<String,Story> tag = (HashMap<String, Story>) marker.getTag();
+                FragmentManager fm = getSupportFragmentManager();
+                StoriesDialogFragment storiesDialogFragment = StoriesDialogFragment.newInstance(new ArrayList<Story>(tag.values()));
+                storiesDialogFragment.show(fm,"fragment_dialog_fragment");
+
+                return true;
+            }
+        });
     }
 
     private void populateMap(){
@@ -164,8 +192,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Story story = dataSnapshot.getValue(Story.class);
-                dropMarker(new LatLng(story.getLatitude(),story.getLongitude()),story.getTitle(),story.getStoryBody());
+                try{//check in case there are some objects in the db that don't match my current story object
+                    Story story = dataSnapshot.getValue(Story.class);
+                    dropMarker(story,dataSnapshot.getKey());
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -423,8 +457,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                             intent.putExtra("title", story.getTitle());
                             intent.putExtra("body", story.getStoryBody());
                             startActivity(intent);
-
-
                     }
 
                     @Override
