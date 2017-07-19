@@ -179,14 +179,7 @@ public class AuthorActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                //onLaunchCamera(v);
-//                try {
-//                   takePicture(v);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
+                
                 // if we have permission, just go for it!
                 if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
                 {
@@ -310,25 +303,6 @@ public class AuthorActivity extends AppCompatActivity {
 
         title = etTitle.getText().toString().trim();
         StorageReference imagesRef = storageRef.child("images/" + title + "/");
-
-//        // Uploading as a stream
-//
-//        UploadTask uploadTask = imagesRef.putStream(inputStream);
-//        uploadTask.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle unsuccessful uploads
-//                Toast.makeText(getApplicationContext(), "Unable to upload image", Toast.LENGTH_LONG).show();
-//
-//            }
-//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-//                // Uri downloadUrl = taskSnapshot.getDownloadUrl();
-//                Toast.makeText(getApplicationContext(), "Successfully loaded image", Toast.LENGTH_LONG).show();
-//            }
-//        });
 
         // Uploading as a compressed bitmap
 
