@@ -23,11 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,11 +53,7 @@ public class AuthorActivity extends AppCompatActivity {
 
     private EditText etTitle;
     private EditText etStoryBody;
-    private EditText etLatitude;
-    private EditText etLongitude;
-    private TextView tvStories;
     private Button btSave;
-    private Button btFetch;
     private Button btTakePhoto;
     private Button btImportPhoto;
     private ImageView ivPreview;
@@ -91,12 +83,9 @@ public class AuthorActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userName = currentUser.getEmail();
 
-        // Button cancel = (Button) rootView.findViewById(R.id.cancel);
         btSave = (Button) findViewById(R.id.btSave);
-        btFetch = (Button) findViewById(R.id.btFetch);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
         etTitle = (EditText) findViewById(R.id.etTitle);
-        tvStories = (TextView) findViewById(R.id.tvStories);
         btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
@@ -114,7 +103,6 @@ public class AuthorActivity extends AppCompatActivity {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "DatePicker");
             }
-
         });
 
         // save this story and return to MapView Activity
@@ -153,7 +141,7 @@ public class AuthorActivity extends AppCompatActivity {
         });
 
         // fetch data for testing purposes
-        btFetch.setOnClickListener(new View.OnClickListener() {
+     /*   btFetch.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -191,7 +179,7 @@ public class AuthorActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
 
         // Open the camera and take a picture.
