@@ -66,7 +66,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
-    String query = "";
 
     private final static String KEY_LOCATION = "location";
 
@@ -272,12 +271,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             intent.putExtra("title", marker.getTitle());
             intent.putExtra("storyBody", marker.getSnippet());
             startActivity(intent);
-            //startActivity(intentMapActivity.this, ViewStoryActivity.class);
         }
-      //  Intent intent = new Intent();
-       // intent.putExtra("title", marker.getTitle(title);
-        //intent.putExtra("storyBody", )
-      //  startActivity(new Intent(this,ViewStoryActivity.class));
     }
 
     @Override
