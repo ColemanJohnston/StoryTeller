@@ -29,7 +29,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         populateSetDate(yy, mm+1, dd);
     }
     public void populateSetDate(int year, int month, int day) {
-        TextView dob = (TextView)getActivity().findViewById(R.id.dob);
+        TextView dob = (TextView)getActivity().findViewById(R.id.tvDate);
         dob.setText(month+"/"+day+"/"+year);
     }
 

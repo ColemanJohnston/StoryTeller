@@ -42,6 +42,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -76,7 +78,7 @@ public class AuthorActivity extends AppCompatActivity {
     private ListView lvContainer;
     DatePickerFragment datePickerFragment;
 
-    private TextView dob;
+    private TextView tvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,11 @@ public class AuthorActivity extends AppCompatActivity {
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
-        dob = (TextView) findViewById(R.id.dob);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
+        String today = dateFormat.format(Calendar.getInstance().getTime());
+        tvDate.setText(today);
 
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +138,7 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, dob.getText().toString());
+                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString());
 
                 ref.push().setValue(story);//send data to database with unique id
 
