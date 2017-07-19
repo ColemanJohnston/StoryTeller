@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -32,6 +33,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -247,7 +250,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
         startActivityForResult(i, 20);
-
     }
 
     @Override
@@ -271,6 +273,20 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             intent.putExtra("title", marker.getTitle());
             intent.putExtra("storyBody", marker.getSnippet());
             startActivity(intent);
+        }
+    }
+
+    public void onFabComposeCurrentLocationClick(View v){
+        if (mCurrentLocation != null) {
+            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            map.animateCamera(cameraUpdate);
+            Intent i = new Intent(this,AuthorActivity.class);
+            i.putExtra("lat", latLng.latitude);
+            i.putExtra("long", latLng.longitude);
+            startActivityForResult(i, 20);
+        } else {
+            Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
         }
     }
 
