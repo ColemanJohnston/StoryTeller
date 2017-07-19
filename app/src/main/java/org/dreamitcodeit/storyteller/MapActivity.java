@@ -6,9 +6,16 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -38,26 +45,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
-import org.parceler.Parcels;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
+    HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
+
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -79,6 +83,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
+        latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
         }
@@ -96,7 +101,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
-                    populateMap();
+//                    populateMap();
+                    setMarkerClickListener(map);
+                    map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
         } else {
@@ -116,6 +123,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
 
+
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -125,9 +133,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 // Update our UI to reflect these changes
                 populateMap();
-
-                //String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " );
             }
 
             @Override
@@ -139,13 +144,48 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     }
 
-    private void dropMarker(LatLng latLng, String title, String snippet){
-        Marker marker = map.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(title)
-                                        .snippet(snippet)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        marker.setTag(0);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_map,menu);
+//        return true;
+//    }
+
+    public void onProfileIconClick(MenuItem mi){
+        this.startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private void dropMarker(Story story, String key){//TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
+        LatLng location = new LatLng(story.getLatitude(),story.getLongitude());
+        Marker marker = latLngMarkerHashMap.get(location);
+        if(marker == null){
+            marker = map.addMarker(new MarkerOptions()
+                    .position(location)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            HashMap<String,Story> tag = new HashMap<>();
+            tag.put(key,story);
+            marker.setTag( tag );//put an array with a story in the new marker
+        }
+        else {
+            HashMap<String,Story> stories = (HashMap<String,Story>) marker.getTag();
+            stories.put(key,story);
+            marker.setTag(stories);
+        }
+
+        latLngMarkerHashMap.put(location,marker);
+    }
+
+    private void setMarkerClickListener(GoogleMap map){
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                HashMap<String,Story> tag = (HashMap<String, Story>) marker.getTag();
+                FragmentManager fm = getSupportFragmentManager();
+                StoriesDialogFragment storiesDialogFragment = StoriesDialogFragment.newInstance(new ArrayList<Story>(tag.values()));
+                storiesDialogFragment.show(fm,"fragment_dialog_fragment");
+
+                return true;
+            }
+        });
     }
 
     private void populateMap(){
@@ -156,8 +196,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Story story = dataSnapshot.getValue(Story.class);
-                dropMarker(new LatLng(story.getLatitude(),story.getLongitude()),story.getTitle(),story.getStoryBody());
+                try{//check in case there are some objects in the db that don't match my current story object
+                    Story story = dataSnapshot.getValue(Story.class);
+                    dropMarker(story,dataSnapshot.getKey());
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -204,7 +250,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
         startActivityForResult(i, 20);
-
     }
 
     @Override
@@ -228,12 +273,21 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             intent.putExtra("title", marker.getTitle());
             intent.putExtra("storyBody", marker.getSnippet());
             startActivity(intent);
-            //startActivity(intentMapActivity.this, ViewStoryActivity.class);
         }
-      //  Intent intent = new Intent();
-       // intent.putExtra("title", marker.getTitle(title);
-        //intent.putExtra("storyBody", )
-      //  startActivity(new Intent(this,ViewStoryActivity.class));
+    }
+
+    public void onFabComposeCurrentLocationClick(View v){
+        if (mCurrentLocation != null) {
+            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            map.animateCamera(cameraUpdate);
+            Intent i = new Intent(this,AuthorActivity.class);
+            i.putExtra("lat", latLng.latitude);
+            i.putExtra("long", latLng.longitude);
+            startActivityForResult(i, 20);
+        } else {
+            Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -314,15 +368,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         // Display the connection status
 
-        if (mCurrentLocation != null) {
-            Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            map.animateCamera(cameraUpdate);
-        } else {
-            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-        }
-        MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);
+        //TODO: think about if this needs to happen, but we decided that it's annoying
+//        if (mCurrentLocation != null) {
+//            Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
+//            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+//            map.animateCamera(cameraUpdate);
+//        } else {
+//            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+//        }
+        MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//Pretty sure this is needed, but still don't know
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
@@ -390,5 +445,71 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             return mDialog;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(search_menu, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                // perform query here
+
+                ref = new Firebase(Config.FIREBASE_URl);
+
+                Query queryRef = ref.orderByChild("title").equalTo(query);
+
+                queryRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Story story = dataSnapshot.getValue(Story.class);
+                            Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                            intent.putExtra("title", story.getTitle());
+                            intent.putExtra("body", story.getStoryBody());
+                            startActivity(intent);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
+
+                searchItem.collapseActionView();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
 }

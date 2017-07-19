@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+
 import org.parceler.Parcel;
 
 /**
@@ -16,6 +17,7 @@ public class Story {
     private String uID;
     private double latitude;
     private double longitude;
+    private String date;
 
     //private LatLng latLong;
 
@@ -25,7 +27,7 @@ public class Story {
     }
 
 
-    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude){
+    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date){
         this.title = title;
         this.storyBody = storyBody;
         this.userName = userName;
@@ -33,6 +35,7 @@ public class Story {
         this.uID = uID;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.date = date;
     }
 
     // getters and setters
@@ -91,5 +94,13 @@ public class Story {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

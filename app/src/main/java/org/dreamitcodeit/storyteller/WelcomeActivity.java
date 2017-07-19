@@ -48,8 +48,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 // create a toast to show that it worked
-                Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
+                  //      Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -60,8 +60,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 // create a toast to show that it worked
-                Toast.makeText(WelcomeActivity.this, "WE LOGGED IN.",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WelcomeActivity.this, "WE LOGGED IN.",
+                  //      Toast.LENGTH_SHORT).show();
 
 
             }
