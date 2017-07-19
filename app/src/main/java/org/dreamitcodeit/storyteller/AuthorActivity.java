@@ -1,6 +1,8 @@
 package org.dreamitcodeit.storyteller;
 
+
 import android.content.Context;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,8 +20,11 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +60,8 @@ import permissions.dispatcher.NeedsPermission;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 import static java.security.AccessController.getContext;
 
+import org.dreamitcodeit.storyteller.fragments.DatePickerFragment;
+
 public class AuthorActivity extends AppCompatActivity {
 
     public static final int IMAGE_GALLERY_REQUEST = 20;
@@ -79,6 +86,12 @@ public class AuthorActivity extends AppCompatActivity {
     public Uri file;
     InputStream inputStream;
     Bitmap bity;
+    private DatePicker dpCompose;
+    private ImageButton ibCalendar;
+    private ListView lvContainer;
+    DatePickerFragment datePickerFragment;
+
+    private TextView dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +109,19 @@ public class AuthorActivity extends AppCompatActivity {
         btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
+       // dpCompose = (DatePicker) findViewById(R.id.dpCompose);
+        ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
+        dob = (TextView) findViewById(R.id.dob);
+       // lvContainer = (ListView) findViewById(R.id.lvContainer);
+
+        ibCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), "DatePicker");
+            }
+
+        });
 
         // save this story and return to MapView Activity
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +144,16 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
+                //Date now = new Date();
+
+               // now.setMonth(dpCompose.getMonth());
+                //now.setYear(dpCompose.getYear());
+                //now.setDate(dpCompose.getDayOfMonth());
 
 
                 story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
+                //story.setDate(now);
+                story.setTimestamp(dob.getText().toString());
 
                 ref.push().setValue(story);//send data to database with unique id
 

@@ -457,8 +457,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                             intent.putExtra("title", story.getTitle());
                             intent.putExtra("body", story.getStoryBody());
                             startActivity(intent);
-
-
                     }
 
                     @Override
