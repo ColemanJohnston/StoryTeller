@@ -118,9 +118,11 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
+
+
                 story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
 
-                ref.child(title).setValue(story);
+                ref.push().setValue(story);//send data to database with unique id
 
                 Intent data = new Intent();
 
@@ -172,6 +174,7 @@ public class AuthorActivity extends AppCompatActivity {
                 });
             }
         });
+
 
         // Open the camera and take a picture.
         // Save the image to be later inputted into Firebase storage

@@ -24,6 +24,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,6 +48,7 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
@@ -59,6 +61,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
+    String query = "";
 
     private final static String KEY_LOCATION = "location";
 
@@ -400,29 +403,27 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        inflater.inflate(search_menu, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
                 // perform query here
 
                 ref = new Firebase(Config.FIREBASE_URl);
 
-                Query queryRef = ref.orderByChild("title");
+                Query queryRef = ref.orderByChild("title").equalTo(query);
 
                 queryRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Story story = dataSnapshot.getValue(Story.class);
+                            Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                            intent.putExtra("title", story.getTitle());
+                            intent.putExtra("body", story.getStoryBody());
+                            startActivity(intent);
 
-                       // String body = dataSnapshot.getKey() + " , " + story.getStoryBody();
-
-                        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                        intent.putExtra("title", story.getTitle());
-                        intent.putExtra("body", story.getStoryBody());
-                        startActivity(intent);
 
                     }
 
@@ -451,6 +452,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
+
+                searchItem.collapseActionView();
 
                 return true;
             }
