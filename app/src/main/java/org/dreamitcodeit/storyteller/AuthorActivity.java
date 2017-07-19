@@ -53,7 +53,7 @@ public class AuthorActivity extends AppCompatActivity {
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
         etTitle = (EditText) findViewById(R.id.etTitle);
         tvStories = (TextView) findViewById(R.id.tvStories);
-        dpCompose = (DatePicker) findViewById(R.id.dpCompose);
+       // dpCompose = (DatePicker) findViewById(R.id.dpCompose);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         dob = (TextView) findViewById(R.id.dob);
        // lvContainer = (ListView) findViewById(R.id.lvContainer);
