@@ -17,9 +17,6 @@ public class Story {
     private double latitude;
     private double longitude;
 
-    //private LatLng latLong;
-
-    // TODO - needs to be public for parcelable and private for firebase :(
     public Story() {
 
     }
