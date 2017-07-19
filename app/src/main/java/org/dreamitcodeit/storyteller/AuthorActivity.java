@@ -1,29 +1,24 @@
 package org.dreamitcodeit.storyteller;
 
 
-import android.content.Context;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,34 +28,20 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.utilities.Base64;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.parceler.Parcels;
-
+import org.dreamitcodeit.storyteller.fragments.DatePickerFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.jar.*;
-import java.util.jar.Manifest;
-
-import permissions.dispatcher.NeedsPermission;
-
-import static android.os.Environment.getExternalStoragePublicDirectory;
-import static java.security.AccessController.getContext;
-
-import org.dreamitcodeit.storyteller.fragments.DatePickerFragment;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -69,6 +50,8 @@ public class AuthorActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST_CODE = 111;
     Story story;
     Firebase ref;
+    private FirebaseAuth mAuth;
+
 
     private EditText etTitle;
     private EditText etStoryBody;
@@ -81,6 +64,8 @@ public class AuthorActivity extends AppCompatActivity {
     private Button btImportPhoto;
     private ImageView ivPreview;
     private String title;
+    private String userName;
+
 
     // for taking photos
     public Uri file;
@@ -100,6 +85,10 @@ public class AuthorActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        userName = currentUser.getEmail();
+
         // Button cancel = (Button) rootView.findViewById(R.id.cancel);
         btSave = (Button) findViewById(R.id.btSave);
         btFetch = (Button) findViewById(R.id.btFetch);
@@ -109,10 +98,9 @@ public class AuthorActivity extends AppCompatActivity {
         btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
-       // dpCompose = (DatePicker) findViewById(R.id.dpCompose);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         dob = (TextView) findViewById(R.id.dob);
-       // lvContainer = (ListView) findViewById(R.id.lvContainer);
+
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,16 +132,7 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
-                //Date now = new Date();
-
-               // now.setMonth(dpCompose.getMonth());
-                //now.setYear(dpCompose.getYear());
-                //now.setDate(dpCompose.getDayOfMonth());
-
-
-                story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
-                //story.setDate(now);
-                story.setTimestamp(dob.getText().toString());
+                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, dob.getText().toString());
 
                 ref.push().setValue(story);//send data to database with unique id
 

@@ -58,6 +58,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
+
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -119,6 +120,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         ref = new Firebase(Config.FIREBASE_URl);
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
+
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {

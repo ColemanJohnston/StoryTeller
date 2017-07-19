@@ -35,7 +35,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvTitle.setText(story.getTitle());
         holder.tvStoryBody.setText(story.getStoryBody());
         holder.tvAuthorName.setText(String.format("By %s",story.getScreenName()));//TODO: optimize for i18n with string resource
-        holder.tvDate.setText(story.getTimestamp());
+        holder.tvDate.setText(story.getDate());
     }
 
     @Override

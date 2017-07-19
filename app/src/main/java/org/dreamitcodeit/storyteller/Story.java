@@ -3,8 +3,6 @@ package org.dreamitcodeit.storyteller;
 
 import org.parceler.Parcel;
 
-import java.util.Date;
-
 /**
  * Created by neeharmb on 7/12/17.
  */
@@ -19,8 +17,7 @@ public class Story {
     private String uID;
     private double latitude;
     private double longitude;
-    private String timestamp;
-    private Date date;
+    private String date;
 
     //private LatLng latLong;
 
@@ -30,7 +27,7 @@ public class Story {
     }
 
 
-    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude){
+    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date){
         this.title = title;
         this.storyBody = storyBody;
         this.userName = userName;
@@ -38,7 +35,7 @@ public class Story {
         this.uID = uID;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.timestamp = timestamp;
+        this.date = date;
     }
 
     // getters and setters
@@ -99,19 +96,11 @@ public class Story {
         this.longitude = longitude;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
