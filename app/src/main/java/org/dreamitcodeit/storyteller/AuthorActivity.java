@@ -21,8 +21,6 @@ import com.firebase.client.Query;
 
 import org.dreamitcodeit.storyteller.fragments.DatePickerFragment;
 
-import java.util.Date;
-
 public class AuthorActivity extends AppCompatActivity {
 
     Story story;
@@ -40,6 +38,8 @@ public class AuthorActivity extends AppCompatActivity {
     private ListView lvContainer;
     DatePickerFragment datePickerFragment;
 
+    private TextView dob;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +55,7 @@ public class AuthorActivity extends AppCompatActivity {
         tvStories = (TextView) findViewById(R.id.tvStories);
         dpCompose = (DatePicker) findViewById(R.id.dpCompose);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
+        dob = (TextView) findViewById(R.id.dob);
        // lvContainer = (ListView) findViewById(R.id.lvContainer);
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
@@ -87,16 +88,16 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
 
-                Date now = new Date();
+                //Date now = new Date();
 
-                now.setMonth(dpCompose.getMonth());
-                now.setYear(dpCompose.getYear());
-                now.setDate(dpCompose.getDayOfMonth());
+               // now.setMonth(dpCompose.getMonth());
+                //now.setYear(dpCompose.getYear());
+                //now.setDate(dpCompose.getDayOfMonth());
 
 
                 story = new Story(title,storyBody,"Neehar","Neehar","Neehar",latitude, longitude);
-                story.setDate(now);
-                story.setTimestamp(now.toString());
+                //story.setDate(now);
+                story.setTimestamp(dob.getText().toString());
 
                 ref.push().setValue(story);//send data to database with unique id
 
