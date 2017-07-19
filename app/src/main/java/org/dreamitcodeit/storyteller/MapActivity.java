@@ -272,10 +272,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             startActivity(intent);
             //startActivity(intentMapActivity.this, ViewStoryActivity.class);
         }
-      //  Intent intent = new Intent();
-       // intent.putExtra("title", marker.getTitle(title);
-        //intent.putExtra("storyBody", )
-      //  startActivity(new Intent(this,ViewStoryActivity.class));
     }
 
     @Override

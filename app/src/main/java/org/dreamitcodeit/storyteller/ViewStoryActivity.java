@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +34,7 @@ public class ViewStoryActivity extends AppCompatActivity {
     private ImageView ivImage;
     String TAG = "LoadImage";
     StorageReference pathReference;
+    private RatingBar rbRating;
 
 
     @Override
@@ -42,6 +45,7 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
+        rbRating = (RatingBar) findViewById(R.id.rbRating);
 
         tvTitle.setText(getIntent().getStringExtra("title"));
         tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
@@ -75,5 +79,19 @@ public class ViewStoryActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+
+        // Listener for rating bar
+        rbRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // get rating
+                Float rating = rbRating.getRating();
+
+                // add it to the corresponding story object in the database
+
+            }
+        });
+
     }
 }
