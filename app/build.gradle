@@ -62,9 +62,14 @@ dependencies {
     compile 'com.google.firebase:firebase-database:10.2.6'
     compile 'com.google.firebase:firebase-storage:11.0.2'
     compile 'org.parceler:parceler-api:1.1.6'
+    compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
+    //compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.android.support:support-v4:25.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    // compile 'com.firebaseui:firebase-ui:2.1.0'
 }
 
-// FOR FIREBASE
 apply plugin: 'com.google.gms.google-services'

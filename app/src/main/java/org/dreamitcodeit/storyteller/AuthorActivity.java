@@ -78,6 +78,7 @@ public class AuthorActivity extends AppCompatActivity {
     // for taking photos
     public Uri file;
     InputStream inputStream;
+    Bitmap bity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,6 +261,7 @@ public class AuthorActivity extends AppCompatActivity {
 
                 // get a bitmap from the stream
                 Bitmap image = BitmapFactory.decodeStream(inputStream);
+                bity = image;
 
                 // show the preview image to the user
                 ivPreview.setImageBitmap(image);
@@ -309,24 +311,46 @@ public class AuthorActivity extends AppCompatActivity {
         title = etTitle.getText().toString().trim();
         StorageReference imagesRef = storageRef.child("images/" + title + "/");
 
-        // Uploading as a stream
+//        // Uploading as a stream
+//
+//        UploadTask uploadTask = imagesRef.putStream(inputStream);
+//        uploadTask.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                // Handle unsuccessful uploads
+//                Toast.makeText(getApplicationContext(), "Unable to upload image", Toast.LENGTH_LONG).show();
+//
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+//                // Uri downloadUrl = taskSnapshot.getDownloadUrl();
+//                Toast.makeText(getApplicationContext(), "Successfully loaded image", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
-        UploadTask uploadTask = imagesRef.putStream(inputStream);
+        // Uploading as a compressed bitmap
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bity.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] dataBAOS = baos.toByteArray();
+
+        UploadTask uploadTask = imagesRef.putBytes(dataBAOS);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Toast.makeText(getApplicationContext(), "Unable to upload image", Toast.LENGTH_LONG).show();
-
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Toast.makeText(getApplicationContext(), "Successfully loaded image", Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
 
 }

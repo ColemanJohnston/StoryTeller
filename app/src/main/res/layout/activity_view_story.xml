@@ -25,4 +25,14 @@
         android:scrollbars="vertical"
         android:layout_below="@+id/tvTitle"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvStoryBody"
+        app:srcCompat="@color/colorAccent" />
+
+
 </RelativeLayout>
