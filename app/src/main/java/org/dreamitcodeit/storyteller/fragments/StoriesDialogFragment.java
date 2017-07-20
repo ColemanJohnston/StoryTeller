@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.dreamitcodeit.storyteller.AuthorActivity;
+import org.dreamitcodeit.storyteller.MapActivity;
 import org.dreamitcodeit.storyteller.R;
 import org.dreamitcodeit.storyteller.Story;
 import org.dreamitcodeit.storyteller.StoryAdapter;
@@ -58,10 +61,17 @@ public class StoriesDialogFragment extends DialogFragment {
         ibPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), AuthorActivity.class);
-                i.putExtra("lat", stories.get(0).getLatitude());
-                i.putExtra("long", stories.get(0).getLongitude());
-                getContext().startActivity(i);
+                if(getContext() instanceof MapActivity){//making sure that this dialog box was started by mapActivity TODO: find out if this is bad style
+                    MapActivity mapActivity = (MapActivity) getContext();
+                    mapActivity.startAuthorActivity(new LatLng(stories.get(0).getLatitude(), stories.get(0).getLongitude()));
+                }
+                else{
+                    //TODO: check if we still need this
+                    Intent i = new Intent(getContext(), AuthorActivity.class);
+                    i.putExtra("lat", stories.get(0).getLatitude());
+                    i.putExtra("long", stories.get(0).getLongitude());
+                    getContext().startActivity(i);
+                }
             }
         });
     }

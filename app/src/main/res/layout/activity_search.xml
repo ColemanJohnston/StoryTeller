@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.dreamitcodeit.storyteller.SearchActivity">
+    tools:context="org.dreamitcodeit.storyteller.ViewStoryActivity">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -21,9 +21,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="TextView"
-        android:maxLines="40"
+        android:maxLines="25"
         android:scrollbars="vertical"
         android:layout_below="@+id/tvTitle"
         android:layout_alignParentStart="true" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvStoryBody"
+        app:srcCompat="@color/colorAccent" />
+
+</RelativeLayout>

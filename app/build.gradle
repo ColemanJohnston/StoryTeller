@@ -33,7 +33,6 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
-
 }
 
 
@@ -51,7 +50,6 @@ dependencies {
     //for Design Support Library (TabLayout)
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
-
 
     //for RecyclerView
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
@@ -79,10 +77,16 @@ dependencies {
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.17.0'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     compile 'com.google.firebase:firebase-messaging:11.0.2'
 
 
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 }
+
 
 apply plugin: 'com.google.gms.google-services'

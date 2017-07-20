@@ -14,6 +14,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvStoryBody;
+    //StoriesPagerAdapter adapterViewPager;
+
     String title;
     String body;
 
@@ -29,8 +31,14 @@ public class SearchActivity extends AppCompatActivity {
         body = getIntent().getStringExtra("body");
 
         tvTitle.setText(title);
-        tvStoryBody.setText(body);
+        tvStoryBody.setText("hello" + body);
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
+
+       /* ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
+        adapterViewPager = new StoriesPagerAdapter(getSupportFragmentManager(), this);
+        vPager.setAdapter(adapterViewPager);
+        TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tablayout.setupWithViewPager(vPager);*/
     }
 
     /*@Override

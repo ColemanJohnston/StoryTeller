@@ -38,4 +38,13 @@
         android:layout_marginTop="24dp"
         android:text="Sign In!" />
 
+    <Button
+        android:id="@+id/Facebook_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Sign In with Facebook!" />
+
 </RelativeLayout>

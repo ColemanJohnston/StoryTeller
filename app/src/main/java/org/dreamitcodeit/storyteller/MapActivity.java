@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -32,6 +33,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -58,6 +61,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
+
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -65,7 +69,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
-    String query = "";
 
     private final static String KEY_LOCATION = "location";
 
@@ -120,6 +123,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
 
+
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,6 +169,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             HashMap<String,Story> stories = (HashMap<String,Story>) marker.getTag();
             stories.put(key,story);
             marker.setTag(stories);
+        }
+        if(story.getIsCheckedIn()){
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         }
 
         latLngMarkerHashMap.put(location,marker);
@@ -238,15 +245,37 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
     }
 
-    @Override
-    public void onMapLongClick(LatLng latLng) {
+    private boolean isCloseToCurrentLocation(LatLng latLng){
+        if(mCurrentLocation == null){
+            Toast.makeText(this,"Could not verify location",Toast.LENGTH_SHORT).show();
+            return false;//
+        }
 
+        Location markerLocation = new Location(mCurrentLocation);//construct location with current location to make sure altitude and things are same
+        markerLocation.setLatitude(latLng.latitude);
+        markerLocation.setLongitude(latLng.longitude);//set lat and long to match marker
+
+        if(mCurrentLocation.distanceTo(markerLocation) <= 300){
+            return true;
+        }
+
+        return false;
+    }
+
+    public void startAuthorActivity(LatLng latLng){
         Intent i = new Intent(this, AuthorActivity.class);
-        //i.putExtra("latlong", latLng);
+
+        if(isCloseToCurrentLocation(latLng)){
+            i.putExtra("isCheckedIn",true);// Not putting else because default value in AuthorActivity is false.
+        }
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
-        startActivityForResult(i, 20);
+        startActivityForResult(i, 20);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
+    }
 
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        startAuthorActivity(latLng);
     }
 
     @Override
@@ -260,7 +289,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(Marker marker) {//I Don't think this function is being used anymore.
         Integer clickCount = (Integer) marker.getTag();
 
         if (clickCount != null) {
@@ -270,12 +299,18 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             intent.putExtra("title", marker.getTitle());
             intent.putExtra("storyBody", marker.getSnippet());
             startActivity(intent);
-            //startActivity(intentMapActivity.this, ViewStoryActivity.class);
         }
-      //  Intent intent = new Intent();
-       // intent.putExtra("title", marker.getTitle(title);
-        //intent.putExtra("storyBody", )
-      //  startActivity(new Intent(this,ViewStoryActivity.class));
+    }
+
+    public void onFabComposeCurrentLocationClick(View v){
+        if (mCurrentLocation != null) {
+            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+            map.animateCamera(cameraUpdate);
+            startAuthorActivity(latLng);
+        } else {
+            Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -440,6 +475,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryRefinementEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {

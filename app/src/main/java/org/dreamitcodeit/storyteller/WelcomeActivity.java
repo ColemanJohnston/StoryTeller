@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,11 +30,12 @@ public class WelcomeActivity extends AppCompatActivity {
     private EditText mPasswordField;
     private Button signUpButton;
     private Button signInButton;
+    private Button Facebook_sign_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_welcome);
 
         mAuth = FirebaseAuth.getInstance();
@@ -41,6 +45,8 @@ public class WelcomeActivity extends AppCompatActivity {
         mPasswordField = (EditText) findViewById(R.id.password_input);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
         signInButton = (Button) findViewById(R.id.sign_in_button);
+        Facebook_sign_in = (Button) findViewById(R.id.Facebook_sign_in);
+
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +54,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 // create a toast to show that it worked
-                Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WelcomeActivity.this, "WE SIGNED UP.",
+                  //      Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -60,13 +66,38 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 // create a toast to show that it worked
-                Toast.makeText(WelcomeActivity.this, "WE LOGGED IN.",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WelcomeActivity.this, "WE LOGGED IN.",
+                  //      Toast.LENGTH_SHORT).show();
 
 
             }
         });
 
+        Facebook_sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something when the fb sign up button is clicked
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    goLoginScreen();
+                }
+                else{
+                    gotoMap(null);
+                }
+
+            }
+        });
+
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, FacebookLoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void logout(View view) {
+        LoginManager.getInstance().logOut();
+        goLoginScreen();
     }
 
     // does this auto-magically get called?
@@ -75,7 +106,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
     public void createAccount(String email, String password){
@@ -95,7 +125,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             Toast.makeText(WelcomeActivity.this, "createUserWithEmail:success",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
                             gotoMap(user);
 
                         } else {
@@ -103,7 +132,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(WelcomeActivity.this, "Authentication failed. Meh.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
                     }
                 });
@@ -127,7 +155,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             Toast.makeText(WelcomeActivity.this, "signInWithEmail:success",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
                             gotoMap(user);
 
                         } else {
@@ -135,7 +162,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(WelcomeActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
                     }
                 });
@@ -183,28 +209,19 @@ public class WelcomeActivity extends AppCompatActivity {
         return valid;
     }
 
-
-    // TODO - after we have a UI
-    public void updateUI(FirebaseUser user) {
-//        if (user != null) {
-//        }
-    }
-
     // Go to the map activity once we have logged in
     public void gotoMap(FirebaseUser user) {
+        Intent i = new Intent(this, MapActivity.class);
         if (user != null) {
-            Intent i = new Intent(this, MapActivity.class);
             i.putExtra("email", user.getEmail());
             i.putExtra("userName", mEmailField.getText().toString());
             i.putExtra("password", mPasswordField.getText().toString());
             i.putExtra("uID", user.getUid());
-            startActivity(i);
         }
+        startActivity(i);
     }
 
     private void signOut() {
         mAuth.signOut();
-        updateUI(null);
     }
-
 }

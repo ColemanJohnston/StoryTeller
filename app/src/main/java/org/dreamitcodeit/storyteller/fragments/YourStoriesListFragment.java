@@ -10,6 +10,8 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.dreamitcodeit.storyteller.Config;
 import org.dreamitcodeit.storyteller.Story;
@@ -31,8 +33,11 @@ public class YourStoriesListFragment extends StoryListFragment {
     public void fetchUserData(){
 
         Firebase ref = new Firebase(Config.FIREBASE_URl);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = currentUser.getEmail();
 
-        ref.orderByChild("uID").equalTo("Neehar").addChildEventListener(new ChildEventListener() {
+        ref.orderByChild("userName").equalTo(userName).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Story story = dataSnapshot.getValue(Story.class);
