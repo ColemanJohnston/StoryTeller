@@ -13,20 +13,24 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="This is A Title"
         android:layout_toEndOf="@id/ivStoryImage"
-        android:textSize="28sp"
-        android:layout_marginTop="16dp"/>
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/tvAuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="By John Doe"
-        android:layout_toEndOf="@id/tvTitle"
-        android:layout_alignBottom="@id/tvTitle"
+        android:layout_toEndOf="@id/ivProfileImage"
+        android:layout_below="@id/tvTitle"
+        android:layout_alignStart="@id/tvTitle"
         android:textSize="12sp"
         android:paddingLeft="8dp"/>
 
@@ -63,18 +67,41 @@
         android:id="@+id/tvFavorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
         android:text="422"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"/>
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/ivFavoriteIcon"
+        android:layout_alignBottom="@id/tvRating"/>
 
     <ImageView
         android:id="@+id/ivFavoriteIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/tvFavorites"
         android:src="@drawable/ic_star_black_24dp"
-        android:paddingTop="11dp"/>
+        android:paddingBottom="2dp"
+        android:paddingLeft="8dp"
+        android:layout_alignBottom="@+id/ivStoryImage"
+        android:layout_toEndOf="@+id/tvRating"
+        android:tint="#D4AF37"/>
+
+    <ImageView
+        android:id="@+id/ivIsCheckedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_circle_black_24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:tint="#03c91e"/>
+
+    <TextView
+        android:id="@+id/tvIsCheckedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verified Location"
+        android:layout_toStartOf="@id/ivIsCheckedIn"
+        android:layout_marginTop="21dp"
+        android:textSize="12sp"
+        />
 
 </RelativeLayout>
