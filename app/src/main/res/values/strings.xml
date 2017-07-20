@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">StoryTeller</string>
+    <string name="facebook_app_id">251058322063208</string>
+    <string name="fb_login_protocol_scheme">fb251058322063208</string>
 
 </resources>
 
