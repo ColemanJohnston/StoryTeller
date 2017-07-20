@@ -43,10 +43,10 @@
             android:id="@+id/tvLocation"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:text="Menlo Park, CA"
-            android:textSize="9sp"
             android:layout_alignBottom="@+id/ivLocationIcon"
-            android:layout_toEndOf="@+id/ivLocationIcon" />
+            android:layout_toEndOf="@+id/ivLocationIcon"
+            android:text="Menlo Park, CA"
+            android:textSize="9sp" />
 
 
         <RatingBar
