@@ -8,17 +8,6 @@
     android:padding="10dp"
     android:weightSum="1">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:layout_below="@+id/ivPreview"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="41dp"
-        android:layout_marginTop="44dp" />
-
     <TextView
         android:text="Title"
         android:layout_width="match_parent"
@@ -116,5 +105,36 @@
         android:layout_alignParentStart="true"
         android:ems="10"
         android:inputType="textPersonName" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/ivPreview"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
+            android:id="@+id/rPersonal"
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="Personal" />
+
+        <RadioButton
+            android:id="@+id/rHistorical"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="Historical" />
+
+        <RadioButton android:id="@+id/rFictional"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Fictional"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
 
 </RelativeLayout>

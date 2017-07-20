@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,10 @@ public class AuthorActivity extends AppCompatActivity {
     private String title;
     private String userName;
 
+    private RadioButton rPersonal;
+    private RadioButton rHistorical;
+    private RadioButton rFictional;
+
 
     // for taking photos
     public Uri file;
@@ -91,6 +96,9 @@ public class AuthorActivity extends AppCompatActivity {
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        rPersonal = (RadioButton) findViewById(R.id.rPersonal);
+        rHistorical = (RadioButton) findViewById(R.id.rHistorical);
+        rFictional = (RadioButton) findViewById(R.id.rFictional);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
         String today = dateFormat.format(Calendar.getInstance().getTime());
@@ -228,6 +236,29 @@ public class AuthorActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // is any radio button checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.rPersonal:
+                if (checked) {
+                    Toast.makeText(this, "personal", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.rHistorical:
+                if (checked) {
+                    Toast.makeText(this, "historical", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.rFictional:
+                if (checked) {
+                    Toast.makeText(this, "fictional", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     @Override
