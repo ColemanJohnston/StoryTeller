@@ -245,14 +245,37 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
     }
 
-    @Override
-    public void onMapLongClick(LatLng latLng) {
+    private boolean isCloseToCurrentLocation(LatLng latLng){
+        if(mCurrentLocation == null){
+            Toast.makeText(this,"Could not verify location",Toast.LENGTH_SHORT).show();
+            return false;//
+        }
 
+        Location markerLocation = new Location(mCurrentLocation);//construct location with current location to make sure altitude and things are same
+        markerLocation.setLatitude(latLng.latitude);
+        markerLocation.setLongitude(latLng.longitude);//set lat and long to match marker
+
+        if(mCurrentLocation.distanceTo(markerLocation) <= 300){
+            return true;
+        }
+
+        return false;
+    }
+
+    public void startAuthorActivity(LatLng latLng){
         Intent i = new Intent(this, AuthorActivity.class);
-        //i.putExtra("latlong", latLng);
+
+        if(isCloseToCurrentLocation(latLng)){
+            i.putExtra("isCheckedIn",true);// Not putting else because default value in AuthorActivity is false.
+        }
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
-        startActivityForResult(i, 20);
+        startActivityForResult(i, 20);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        startAuthorActivity(latLng);
     }
 
     @Override
@@ -284,11 +307,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
-            Intent i = new Intent(this,AuthorActivity.class);
-            i.putExtra("lat", latLng.latitude);
-            i.putExtra("long", latLng.longitude);
-            i.putExtra("isCheckedIn",true);
-            startActivityForResult(i, 20);
+            startAuthorActivity(latLng);
         } else {
             Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
         }
