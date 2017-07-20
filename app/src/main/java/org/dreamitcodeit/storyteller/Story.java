@@ -18,6 +18,7 @@ public class Story {
     private double latitude;
     private double longitude;
     private String date;
+    private boolean isCheckedIn;
 
     //private LatLng latLong;
 
@@ -27,7 +28,7 @@ public class Story {
     }
 
 
-    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date){
+    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date, boolean isCheckedIn){
         this.title = title;
         this.storyBody = storyBody;
         this.userName = userName;
@@ -36,6 +37,7 @@ public class Story {
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;
+        this.isCheckedIn = isCheckedIn;
     }
 
     // getters and setters
@@ -102,5 +104,13 @@ public class Story {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean getIsCheckedIn(){
+        return isCheckedIn;
+    }
+
+    public void setIsCheckedIn(boolean isCheckedIn){
+        this.isCheckedIn = isCheckedIn;
     }
 }

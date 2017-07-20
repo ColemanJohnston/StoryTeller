@@ -36,6 +36,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvStoryBody.setText(story.getStoryBody());
         holder.tvAuthorName.setText(String.format("By %s",story.getScreenName()));//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
+
+        if(story.getIsCheckedIn()){
+            holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
+            holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
+            holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -58,6 +67,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         public TextView tvStoryBody;
         public TextView tvFavorites;
         public ImageView ivFavoriteIcon;
+        public ImageView ivIsCheckedIn;
+        public TextView tvIsCheckedIn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +80,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             tvStoryBody = (TextView) itemView.findViewById(R.id.tvStoryBody);
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
+            ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
+            tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

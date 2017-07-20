@@ -170,6 +170,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             stories.put(key,story);
             marker.setTag(stories);
         }
+        if(story.getIsCheckedIn()){
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        }
 
         latLngMarkerHashMap.put(location,marker);
     }
@@ -263,7 +266,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(Marker marker) {//I Don't think this function is being used anymore.
         Integer clickCount = (Integer) marker.getTag();
 
         if (clickCount != null) {
@@ -284,6 +287,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             Intent i = new Intent(this,AuthorActivity.class);
             i.putExtra("lat", latLng.latitude);
             i.putExtra("long", latLng.longitude);
+            i.putExtra("isCheckedIn",true);
             startActivityForResult(i, 20);
         } else {
             Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
