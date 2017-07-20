@@ -123,7 +123,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
 
-
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -475,47 +474,22 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryRefinementEnabled(true);
+
+        //Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+
+        //startActivity(intent);
+
+        //this.startActivity(new Intent(this, SearchActivity.class));
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
                 // perform query here
 
-                ref = new Firebase(Config.FIREBASE_URl);
+                Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                intent.putExtra("query", query);
 
-                Query queryRef = ref.orderByChild("title").equalTo(query);
-
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Story story = dataSnapshot.getValue(Story.class);
-                            Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                            intent.putExtra("title", story.getTitle());
-                            intent.putExtra("body", story.getStoryBody());
-                            startActivity(intent);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-
+                startActivity(intent);
 
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599

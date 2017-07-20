@@ -34,7 +34,7 @@ public class StoriesPagerAdapter extends SmartFragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            return  new YourStoriesListFragment();
+            return new YourStoriesListFragment();
         }
         if(position == 1){
             return new YourStoriesListFragment();//TODO: replace with Favorites when feature is added
