@@ -53,22 +53,31 @@ public class ProfileActivity extends AppCompatActivity {
     // Facebook user variables
     private String userId;
     private String fbName;
+    private String fbLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         Firebase.setAndroidContext(this);
+
+
+        tvName = (TextView) findViewById(R.id.tvName);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
 
         if (AccessToken.getCurrentAccessToken() != null)
         {
             // means that the user is actually logged in with FB and not just email
             fetchFacebookUserData();
         }
+        else
+        {
+            tvName.setText(userName);
+        }
 
-//        fetchUserData();
-        tvName = (TextView) findViewById(R.id.tvName);
-        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        // fetchUserData();
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -82,9 +91,6 @@ public class ProfileActivity extends AppCompatActivity {
         TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tablayout.setupWithViewPager(vPager);
 
-
-        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
-        tvName.setText(userName);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -122,11 +128,13 @@ public class ProfileActivity extends AppCompatActivity {
                             JSONObject object,
                             GraphResponse response) {
 
-                        // get the name  and the UID from the JSON object
+                        // get stuff from the JSON object
                         try {
                             fbName = response.getJSONObject().get("name").toString();
                             userId = response.getJSONObject().get("id").toString();
+                            //fbLocation = response.getJSONObject().get("location").toString();
                             tvName.setText(fbName);
+                            //tvLocation.setText(fbLocation);
                             setFBProfileImage();
 
                         } catch (JSONException e) {
@@ -135,7 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
+        parameters.putString("fields", "id,name,link,location");
         request.setParameters(parameters);
         request.executeAsync();
 
