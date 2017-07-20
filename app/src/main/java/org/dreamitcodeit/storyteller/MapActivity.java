@@ -456,6 +456,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryRefinementEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
