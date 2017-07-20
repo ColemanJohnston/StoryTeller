@@ -36,6 +36,8 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     //return the fragment to use depending on the position
     @Override
     public Fragment getItem(int position) {
+
+        // search "by title" tab is selected
         if(position == 0){
             SearchStoriesListFragment fragment = new SearchStoriesListFragment();
             Bundle bundle = new Bundle();
@@ -43,20 +45,18 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
             fragment.setArguments(bundle);
             return fragment;
         }
+
+        // search "by users" tab is selected
         if(position == 1){
             SearchUsersListFragment fragment = new SearchUsersListFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
             fragment.setArguments(bundle);
-           // Toast.makeText(context, "Here", Toast.LENGTH_SHORT).show();
-            return fragment; //TODO: replace with User when feature is added
+            return fragment;
         }
+
+        // search fails
         return null;
     }
 
-
-
-    public String getQuery() {
-        return query;
-    }
 }
