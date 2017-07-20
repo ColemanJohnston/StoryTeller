@@ -27,12 +27,12 @@
         android:id="@+id/tvAuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By John Doe"
-        android:layout_toEndOf="@id/ivProfileImage"
-        android:layout_below="@id/tvTitle"
         android:layout_alignStart="@id/tvTitle"
-        android:textSize="12sp"
-        android:paddingLeft="8dp"/>
+        android:layout_below="@id/tvTitle"
+        android:layout_toEndOf="@id/ivProfileImage"
+        android:text="By John Doe"
+        android:textAlignment="viewStart"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tvRating"

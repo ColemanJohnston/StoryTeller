@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 
 import org.dreamitcodeit.storyteller.fragments.SearchPagerAdapter;
-import org.dreamitcodeit.storyteller.fragments.SearchStoriesListFragment;
 
 
 /**
@@ -22,6 +21,7 @@ public class SearchActivity extends AppCompatActivity {
     private TextView tvStoryBody;
     Firebase ref;
     SearchPagerAdapter adapterViewPager;
+    TabLayout tablayout;
 
     String title;
     String query;
@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"));
         //adapterViewPager.
         vPager.setAdapter(adapterViewPager);
-        TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tablayout.setupWithViewPager(vPager);
 
        /* tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
@@ -62,6 +62,9 @@ public class SearchActivity extends AppCompatActivity {
         TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tablayout.setupWithViewPager(vPager);*/
     }
+
+
+    //tablayout.set
 
 
 

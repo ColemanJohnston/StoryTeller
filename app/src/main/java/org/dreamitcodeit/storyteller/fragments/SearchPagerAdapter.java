@@ -44,14 +44,17 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
             return fragment;
         }
         if(position == 1){
-            SearchStoriesListFragment fragment = new SearchStoriesListFragment();
+            SearchUsersListFragment fragment = new SearchUsersListFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
             fragment.setArguments(bundle);
+           // Toast.makeText(context, "Here", Toast.LENGTH_SHORT).show();
             return fragment; //TODO: replace with User when feature is added
         }
         return null;
     }
+
+
 
     public String getQuery() {
         return query;
