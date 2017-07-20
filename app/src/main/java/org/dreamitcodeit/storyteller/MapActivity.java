@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.dreamitcodeit.storyteller.fragments.SearchStoriesListFragment;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
 import java.util.ArrayList;
@@ -122,7 +123,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         ref = new Firebase(Config.FIREBASE_URl);
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
-
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -456,7 +456,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryRefinementEnabled(true);
+
+        //this.startActivity(new Intent(this, SearchActivity.class));
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
@@ -470,10 +472,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Story story = dataSnapshot.getValue(Story.class);
-                            Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                            intent.putExtra("title", story.getTitle());
-                            intent.putExtra("body", story.getStoryBody());
-                            startActivity(intent);
+                        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                        intent.putExtra("title", story.getTitle());
+                        intent.putExtra("body", story.getStoryBody());
+                        intent.putExtra("query", query);
+
+                        startActivity(intent);
                     }
 
                     @Override
