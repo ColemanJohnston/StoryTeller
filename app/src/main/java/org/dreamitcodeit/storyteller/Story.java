@@ -10,22 +10,20 @@ import org.parceler.Parcel;
 @Parcel
 public class Story {
 
-    private String title;
-    private String storyBody;
-    private String userName;
-    private String screenName;
-    private String uID;
-    private double latitude;
-    private double longitude;
-    private String date;
-    private boolean isCheckedIn;
+    String title;
+    String storyBody;
+    String userName;
+    String screenName;
+    String uID;
+    double latitude;
+    double longitude;
+    String date;
+    boolean isCheckedIn;
 
     //private LatLng latLong;
 
     // TODO - needs to be public for parcelable and private for firebase :(
-    public Story() {
-
-    }
+    public Story(){}
 
 
     public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date, boolean isCheckedIn){

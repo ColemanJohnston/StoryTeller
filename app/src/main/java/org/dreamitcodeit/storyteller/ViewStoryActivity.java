@@ -1,32 +1,21 @@
 package org.dreamitcodeit.storyteller;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
-import com.firebase.client.utilities.Base64;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StreamDownloadTask;
 
-import java.io.InputStream;
-import java.net.URL;
+import org.parceler.Parcels;
 
 public class ViewStoryActivity extends AppCompatActivity {
 
+    private Story story;
     private TextView tvTitle;
     private TextView tvStoryBody;
     private ImageView ivImage;
@@ -39,12 +28,14 @@ public class ViewStoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_story);
 
+        story = Parcels.unwrap(getIntent().getParcelableExtra("story"));
+
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
 
-        tvTitle.setText(getIntent().getStringExtra("title"));
-        tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
+        tvTitle.setText(story.getTitle());
+        tvStoryBody.setText(story.getStoryBody());
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
         try
