@@ -1,6 +1,9 @@
 package org.dreamitcodeit.storyteller;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -49,6 +52,7 @@ import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -142,6 +146,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
+
     }
 
 //    @Override
@@ -154,7 +159,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         this.startActivity(new Intent(this, ProfileActivity.class));
     }
 
-    private void dropMarker(Story story, String key){//TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
+    private void dropMarker(Story story, String key){ //TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
         LatLng location = new LatLng(story.getLatitude(),story.getLongitude());
         Marker marker = latLngMarkerHashMap.get(location);
         if(marker == null){
@@ -166,6 +171,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag( tag );//put an array with a story in the new marker
         }
         else {
+            // add a story to an existing location
             HashMap<String,Story> stories = (HashMap<String,Story>) marker.getTag();
             stories.put(key,story);
             marker.setTag(stories);
@@ -289,7 +295,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {//I Don't think this function is being used anymore.
+    public void onInfoWindowClick(Marker marker) { // I Don't think this function is being used anymore. TODO - remove?
         Integer clickCount = (Integer) marker.getTag();
 
         if (clickCount != null) {
@@ -437,7 +443,59 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        closeToStory(location);
+    }
+
+    // checks if you are close to a story and sends you a push notification if you are
+    // should get called when location is changed AND when a new story is added or modified.
+    public void closeToStory(Location location)
+    {
+        // Get all the locations from the hash map
+        List<LatLng> listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
+
+        if (listy.size() == 0) // not efficient
+        {
+            populateMap();
+        }
+
+        listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
+
+        int closeStories = 0;
+
+        // check if you are close to a story, if so, count the number of stories you are close to
+        for (int i = 0; i< listy.size() ; i++)
+        {
+            float [] results = new float[3];
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                    listy.get(i).latitude, listy.get(i).longitude, results);
+
+            // check if distance between them is less than a threshold number of meters
+            if (results[0] <= 300 && results[0] > 0) // TODO - think about this magic number!!!
+            {
+                closeStories++;
+            }
+
+            // TODO -maybe make listy global and remove from listy to prevent lots of spam notifications
+        }
+
+        // send a push notification saying so!
+        if (closeStories > 0)
+        {
+            NotificationManager notif =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification notify=new Notification.Builder
+                    (getApplicationContext())
+                    .setContentTitle("There are " + closeStories + " stories near your location!")
+                    .setContentText("Click here to see and read them.")
+                    .setSmallIcon(R.drawable.com_facebook_button_icon) // TODO - replace once we have a logo
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+            notif.notify(0, notify);
+        }
+
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
