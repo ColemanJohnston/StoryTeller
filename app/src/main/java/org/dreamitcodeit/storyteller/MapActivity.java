@@ -12,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -59,7 +61,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener, GestureDetector.OnGestureListener {
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
@@ -73,6 +75,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
 
+    GestureDetector gestureScanner;
+
     private final static String KEY_LOCATION = "location";
 
     /*
@@ -81,6 +85,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
      */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +93,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         Firebase.setAndroidContext(this);
 
         sMapList = (Switch) findViewById(R.id.sMapList);
+        gestureScanner = new GestureDetector(this);
 
         latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
@@ -530,6 +536,53 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        return gestureScanner.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                           float velocityY) {
+        // TODO Auto-generated method stub
+        Log.i("Test", "On Fling");
+        Toast.makeText(this, "whee", Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                            float distanceY) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 
 
 

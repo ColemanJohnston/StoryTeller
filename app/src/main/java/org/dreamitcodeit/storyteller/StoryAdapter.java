@@ -83,6 +83,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
 
+           // ivStoryImage.setClipToOutline(true);
+
+            ivStoryImage.setImageResource(R.drawable.ocean);
+            ivStoryImage.setAdjustViewBounds(true);
+            ivStoryImage.setScaleType(ImageView.ScaleType.FIT_XY);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

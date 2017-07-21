@@ -28,11 +28,10 @@ android:layout_height="match_parent">
         android:id="@+id/sMapList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="bottom|right"
         android:text="Map or List?"
         app:layout_anchor="@+id/map"
-        app:layout_anchorGravity="bottom|left" />
-
+        app:layout_anchorGravity="top|left" />
 
 
 </android.support.design.widget.CoordinatorLayout>
