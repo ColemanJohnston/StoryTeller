@@ -9,7 +9,7 @@ android:layout_height="match_parent">
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="590dp"
         android:layout_alignParentTop="true" />
 
     <android.support.design.widget.FloatingActionButton
@@ -24,6 +24,15 @@ android:layout_height="match_parent">
     app:backgroundTint="@color/colorPrimary"
     android:onClick="onFabComposeCurrentLocationClick"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:text="Swipe up for stories"
+        app:layout_anchor="@+id/map"
+        app:layout_anchorGravity="bottom|left" />
+
     <Switch
         android:id="@+id/sMapList"
         android:layout_width="wrap_content"
@@ -32,6 +41,8 @@ android:layout_height="match_parent">
         android:text="Map or List?"
         app:layout_anchor="@+id/map"
         app:layout_anchorGravity="top|left" />
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

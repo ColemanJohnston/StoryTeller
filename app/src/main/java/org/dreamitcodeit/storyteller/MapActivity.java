@@ -554,8 +554,15 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                            float velocityY) {
         // TODO Auto-generated method stub
         Log.i("Test", "On Fling");
-        Toast.makeText(this, "whee", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+        startActivity(intent);
         return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
@@ -571,11 +578,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         return false;
     }
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-        // TODO Auto-generated method stub
 
-    }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
