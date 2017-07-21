@@ -19,6 +19,8 @@ public class Story {
     double longitude;
     String date;
     boolean isCheckedIn;
+    String storyId;
+    int favCount;
 
     //private LatLng latLong;
 
@@ -110,5 +112,21 @@ public class Story {
 
     public void setIsCheckedIn(boolean isCheckedIn){
         this.isCheckedIn = isCheckedIn;
+    }
+
+    public String getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(String storyId) {
+        this.storyId = storyId;
+    }
+
+    public int getFavCount() {
+        return favCount;
+    }
+
+    public void setFavCount(int favCount) {
+        this.favCount = favCount;
     }
 }

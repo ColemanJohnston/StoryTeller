@@ -3,6 +3,8 @@ package org.dreamitcodeit.storyteller;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import org.parceler.Parcels;
 public class ViewStoryActivity extends AppCompatActivity {
 
     private Story story;
+    private Button btnFavorite;
     private TextView tvTitle;
     private TextView tvStoryBody;
     private ImageView ivImage;
@@ -33,6 +36,7 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
+        btnFavorite = (Button) findViewById(R.id.btnFavorite);
 
         tvTitle.setText(story.getTitle());
         tvStoryBody.setText(story.getStoryBody());
@@ -66,5 +70,12 @@ public class ViewStoryActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: make favorite happen here... Hopefully
+            }
+        });
     }
 }
