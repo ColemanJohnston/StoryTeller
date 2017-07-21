@@ -1,7 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
 
-import android.media.Image;
 import android.net.Uri;
 
 import android.content.pm.PackageManager;
@@ -22,7 +21,6 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -88,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
         adapterViewPager = new StoriesPagerAdapter(getSupportFragmentManager(), this);
         vPager.setAdapter(adapterViewPager);
-        TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
 

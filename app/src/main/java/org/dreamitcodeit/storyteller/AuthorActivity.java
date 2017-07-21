@@ -65,6 +65,10 @@ public class AuthorActivity extends AppCompatActivity {
     private RadioButton rHistorical;
     private RadioButton rFictional;
 
+    private boolean isPersonal = false;
+    private boolean isHistorical = false;
+    private boolean isFictional = false;
+
 
     // for taking photos
     public Uri file;
@@ -135,7 +139,7 @@ public class AuthorActivity extends AppCompatActivity {
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn);
+                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn, isPersonal, isHistorical, isFictional);
 
                 ref.push().setValue(story);//send data to database with unique id
 
@@ -148,47 +152,6 @@ public class AuthorActivity extends AppCompatActivity {
                 finish(); // closes the activity, pass data to parent
             }
         });
-
-        // fetch data for testing purposes
-     /*   btFetch.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                ref = new Firebase(Config.FIREBASE_URl);
-
-                Query queryRef = ref.orderByChild("title");
-
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                        String string = "TITLE: " + dataSnapshot.getKey();
-                        tvStories.setText(tvStories.getText() + " " + string );
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-            }
-        });*/
 
 
         // Open the camera and take a picture.
@@ -245,17 +208,17 @@ public class AuthorActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.rPersonal:
                 if (checked) {
-                    Toast.makeText(this, "personal", Toast.LENGTH_SHORT).show();
+                    isPersonal = true;
                 }
                 break;
             case R.id.rHistorical:
                 if (checked) {
-                    Toast.makeText(this, "historical", Toast.LENGTH_SHORT).show();
+                    isHistorical = true;
                 }
                 break;
             case R.id.rFictional:
                 if (checked) {
-                    Toast.makeText(this, "fictional", Toast.LENGTH_SHORT).show();
+                    isFictional = true;
                 }
                 break;
         }

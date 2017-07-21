@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -66,6 +68,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private GoogleMap map;
     private LocationRequest mLocationRequest;
     Location mCurrentLocation;
+    private Switch sMapList;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
@@ -83,6 +86,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
+
+        sMapList = (Switch) findViewById(R.id.sMapList);
+
         latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
@@ -109,6 +115,23 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+
+
+        // SWitCH STUFF
+
+        sMapList.setChecked(false);
+        sMapList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        sMapList.setChecked(false);
+                    }
+                }
+        });
 
 
         // TODO - code to listen for real time refresh

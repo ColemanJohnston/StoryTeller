@@ -64,12 +64,17 @@
         <activity
             android:name=".SearchActivity"
             android:parentActivityName=".SearchActivity" />
-
         <activity android:name=".FacebookLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-            </intent-filter> </activity>
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".AllStoriesActivity"></activity>
     </application>
 
 </manifest>
