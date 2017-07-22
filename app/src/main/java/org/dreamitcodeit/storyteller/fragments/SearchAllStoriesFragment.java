@@ -44,34 +44,68 @@ public class SearchAllStoriesFragment extends StoryListFragment {
 
         // TODO: FIX POPULATING ALL TAB once database is restored
 
-        ref.orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Story story = dataSnapshot.getValue(Story.class);
-                storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
-            }
+        if (!tag.equals("all")) {
+            ref.orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                    Story story = dataSnapshot.getValue(Story.class);
+                    storyAdapter.add(0, story);//TODO: make sure this is the best way to add these
+                }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
 
-            }
+                }
 
 
-        });
+            });
+        }
+        else {
+            ref.child("stories").orderByChild("title").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                    Story story = dataSnapshot.getValue(Story.class);
+                    storyAdapter.add(0, story);//TODO: make sure this is the best way to add these
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+
+
+            });
+        }
+
     }
 }
