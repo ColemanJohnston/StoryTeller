@@ -34,7 +34,7 @@ android:layout_height="match_parent">
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="540dp"
+            android:layout_height="545dp"
             android:layout_alignParentTop="true" />
 
         <android.support.design.widget.FloatingActionButton
@@ -45,7 +45,6 @@ android:layout_height="match_parent">
             android:onClick="onFabComposeCurrentLocationClick"
             android:src="@drawable/ic_edit_location_black_24dp"
             app:backgroundTint="@color/colorPrimary"
-            app:layout_anchorGravity="bottom|right|end"
             app:layout_anchor="@+id/map" />
     </android.support.design.widget.CoordinatorLayout>
 
