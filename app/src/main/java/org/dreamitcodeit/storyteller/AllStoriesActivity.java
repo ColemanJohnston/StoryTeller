@@ -11,7 +11,6 @@ import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 
 public class AllStoriesActivity extends AppCompatActivity {
 
-    Firebase ref;
     AllStoriesPagerAdapter adapterViewPager;
 
     TabLayout tablayout;
@@ -20,7 +19,7 @@ public class AllStoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_stories);
+        setContentView(R.layout.activity_map);
 
         Firebase.setAndroidContext(this);
 

@@ -11,8 +11,8 @@ import android.support.v4.app.FragmentManager;
 
 public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
 
-    private String tabTitles[] = new String[]{"All Stories","Personal Stories", "Historical Stories"
-    , "Fictional Stories"};
+    private String tabTitles[] = new String[]{"All","Personal", "Historical"
+    , "Fictional"};
     Context context;
     String query;
 

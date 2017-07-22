@@ -6,17 +6,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -48,7 +48,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
+import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
 import java.util.ArrayList;
@@ -61,10 +64,15 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener, GestureDetector.OnGestureListener {
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
+
+    AllStoriesPagerAdapter adapterViewPager;
+
+    TabLayout tablayout;
+
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -75,7 +83,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
 
-    GestureDetector gestureScanner;
+   // GestureDetector gestureScanner;
+    private SlidingUpPanelLayout mLayout;
+
 
     private final static String KEY_LOCATION = "location";
 
@@ -93,7 +103,69 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         Firebase.setAndroidContext(this);
 
         sMapList = (Switch) findViewById(R.id.sMapList);
-        gestureScanner = new GestureDetector(this);
+        //gestureScanner = new GestureDetector(this);
+
+        //setSupportActionBar((Toolbar) findViewById(R.id.main_toolbar));
+
+
+        ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
+
+        adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), MapActivity.this, "");
+        //adapterViewPager.
+        vPager.setAdapter(adapterViewPager);
+        tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
+        tablayout.setupWithViewPager(vPager);
+
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        //mLayout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+        mLayout.setAnchorPoint(0.3f);
+        mLayout.addPanelSlideListener(new PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+
+                /*Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                if (slideOffset < 0.2) {
+                    /*if (getActionBar().isShowing()) {
+                        getActionBar().hide();
+                    }
+                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+
+                } else {
+                   /* if (!getActionBar().isShowing()) {
+                        getActionBar().show();
+                    }
+                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+
+                }*/
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                //Toast.makeText(MapActivity.this, "yo", Toast.LENGTH_SHORT).show();
+               // Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+                //startActivityForResult(intent, 20);
+
+            }
+
+            public void onPanelExpanded(View panel) {
+
+                Log.i(TAG, "onPanelExpanded");
+
+            }
+
+            public void onPanelCollapsed(View panel) {
+                Log.i(TAG, "onPanelCollapsed");
+
+            }
+
+            public void onPanelAnchored(View panel) {
+                Log.i(TAG, "onPanelAnchored");
+
+            }
+        });
+
 
         latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
@@ -537,7 +609,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
+
+   /* @Override
     public boolean onTouchEvent(MotionEvent event) {
         // TODO Auto-generated method stub
         return gestureScanner.onTouchEvent(event);
@@ -584,9 +657,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public boolean onSingleTapUp(MotionEvent e) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-
-
+    }*/
 
 }
