@@ -6,33 +6,37 @@
     android:layout_height="match_parent"
     tools:context="org.dreamitcodeit.storyteller.ViewStoryActivity">
 
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@color/colorAccent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/round_outline"/>
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="17dp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/ivImage"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvStoryBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:text="TextView"
         android:maxLines="40"
         android:scrollbars="vertical"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvStoryBody"
-        app:srcCompat="@color/colorAccent" />
+
 
 
 </RelativeLayout>

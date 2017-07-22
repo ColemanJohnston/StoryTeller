@@ -30,13 +30,6 @@ android:layout_height="match_parent">
             app:layout_anchorGravity="top|left" />
 
 
-        <fragment
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="545dp"
-            android:layout_alignParentTop="true" />
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabComposeCurrentLocation"
             android:layout_width="wrap_content"
@@ -46,6 +39,13 @@ android:layout_height="match_parent">
             android:src="@drawable/ic_edit_location_black_24dp"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@+id/map" />
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="545dp"
+            android:layout_alignParentTop="true" />
     </android.support.design.widget.CoordinatorLayout>
 
             <!-- SLIDING LAYOUT -->
