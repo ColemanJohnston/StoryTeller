@@ -24,7 +24,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,13 +37,16 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.dreamitcodeit.storyteller.fragments.DatePickerFragment;
+import org.dreamitcodeit.storyteller.models.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -78,6 +84,7 @@ public class AuthorActivity extends AppCompatActivity {
     private ImageButton ibCalendar;
     private ListView lvContainer;
     DatePickerFragment datePickerFragment;
+    private FirebaseUser currentUser;
 
     private TextView tvDate;
 
@@ -89,7 +96,7 @@ public class AuthorActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         userName = currentUser.getEmail();
 
         btSave = (Button) findViewById(R.id.btSave);
@@ -138,10 +145,12 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn, isPersonal, isHistorical, isFictional);
-
-                ref.push().setValue(story);//send data to database with unique id
+                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional);//zero for no favorites
+                Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
+                newStoryRef.setValue(story);//send new story to its spot in the database
+                addToUserStoriesList(newStoryRef.getKey());//TODO: test to make sure key goes to the correct place...
 
                 Intent data = new Intent();
 
@@ -329,6 +338,37 @@ public class AuthorActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void addToUserStoriesList(final String newStoryId){
+        String uid = currentUser.getUid();
+
+        ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    User userObject = dataSnapshot.getValue(User.class);
+                    List<String> storyList = userObject.getUserStoryIDs();
+                    if(storyList == null){
+                        storyList = new ArrayList<String>();
+                        storyList.add(newStoryId);
+                    }
+                    else{
+                        storyList.add(0,newStoryId);
+                    }
+                    ref.child("users").child(currentUser.getUid()).child("userStoryIDs").setValue(storyList);
+
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
 }

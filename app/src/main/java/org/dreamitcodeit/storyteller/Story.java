@@ -10,15 +10,16 @@ import org.parceler.Parcel;
 @Parcel
 public class Story {
 
-    private String title;
-    private String storyBody;
-    private String userName;
-    private String screenName;
-    private String uID;
-    private double latitude;
-    private double longitude;
-    private String date;
-    private boolean isCheckedIn;
+    String title;
+    String storyBody;
+    String uID;
+    double latitude;
+    double longitude;
+    String date;
+    double rating;
+    boolean isCheckedIn;
+    String storyId;
+    int favCount;
 
     private boolean isPersonal;
     private boolean isHistorical;
@@ -26,17 +27,21 @@ public class Story {
 
     //private LatLng latLong;
 
-    // TODO - needs to be public for parcelable and private for firebase :(
-    public Story() {
+    // TODO - needs to be public for parcelable and private for firebase 😞
+    public Story(){}
 
+    public double getRating() {
+        return rating;
     }
 
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
-    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date, boolean isCheckedIn, boolean isPersonal, boolean isHistorical, boolean isFictional){
+    public Story(String title, String storyBody, String uID, double latitude, double longitude, String date, boolean isCheckedIn, int favCount, boolean isPersonal, boolean isHistorical, boolean isFictional){
+
         this.title = title;
         this.storyBody = storyBody;
-        this.userName = userName;
-        this.screenName = screenName;
         this.uID = uID;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -45,6 +50,7 @@ public class Story {
         this.isPersonal = isPersonal;
         this.isHistorical = isHistorical;
         this.isFictional = isFictional;
+        this.favCount = favCount;
     }
 
     // getters and setters
@@ -63,22 +69,6 @@ public class Story {
 
     public void setStoryBody(String storyBody) {
         this.storyBody = storyBody;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getScreenName() {
-        return screenName;
-    }
-
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
     }
 
     public String getuID() {
@@ -152,4 +142,21 @@ public class Story {
     public void setFictional(boolean fictional) {
         isFictional = fictional;
     }
+
+    public String getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(String storyId) {
+        this.storyId = storyId;
+    }
+
+    public int getFavCount() {
+        return favCount;
+    }
+
+    public void setFavCount(int favCount) {
+        this.favCount = favCount;
+    }
 }
+
