@@ -11,44 +11,44 @@ android:layout_height="match_parent">
         android:layout_height="match_parent"
         android:gravity="bottom"
         app:umanoDragView="@+id/dragView"
-        app:umanoOverlay="false"
+        app:umanoOverlay="true"
         app:umanoPanelHeight="60dp"
         app:umanoShadowHeight="4dp">
 
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Switch
-            android:id="@+id/sMapList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:text="Map or List?"
-            app:layout_anchor="@+id/map"
-            app:layout_anchorGravity="top|left" />
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabComposeCurrentLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onFabComposeCurrentLocationClick"
-            android:src="@drawable/ic_edit_location_black_24dp"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_anchor="@+id/map" />
-
-        <fragment
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:layout_alignParentTop="true" />
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent">
 
-            <!-- SLIDING LAYOUT -->
+            <Switch
+                android:id="@+id/sMapList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:text="Map or List?"
+                app:layout_anchor="@+id/map"
+                app:layout_anchorGravity="top|left" />
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabComposeCurrentLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:onClick="onFabComposeCurrentLocationClick"
+                android:src="@drawable/ic_edit_location_black_24dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:layout_anchor="@+id/map" />
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:layout_alignParentTop="true" />
+        </android.support.design.widget.CoordinatorLayout>
+
+        <!-- SLIDING LAYOUT -->
         <LinearLayout
             android:id="@+id/dragView"
             android:layout_width="match_parent"
@@ -73,6 +73,6 @@ android:layout_height="match_parent">
                 android:background="@android:color/white" />
         </LinearLayout>
 
-        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </android.support.design.widget.CoordinatorLayout>

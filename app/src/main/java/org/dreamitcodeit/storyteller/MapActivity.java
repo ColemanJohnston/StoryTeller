@@ -107,16 +107,18 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
         adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), MapActivity.this, "");
-        //adapterViewPager.
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        //mLayout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
-        //mLayout.setAnchorPoint(0.3f);
-        mLayout.setAnchorPoint(1);
+
+        mLayout.setAnchorPoint(0.3f);
+
+        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
         mLayout.addPanelSlideListener(new PanelSlideListener() {
+
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
 
@@ -124,9 +126,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                //Toast.makeText(MapActivity.this, "yo", Toast.LENGTH_SHORT).show();
-               // Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
-                //startActivityForResult(intent, 20);
 
             }
 
@@ -232,10 +231,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private void dropMarker(Story story, String key){//TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
         LatLng location = new LatLng(story.getLatitude(),story.getLongitude());
         Marker marker = latLngMarkerHashMap.get(location);
+
         if(marker == null){
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(55)));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
@@ -246,7 +247,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(stories);
         }
         if(story.getIsCheckedIn()){
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(89));
         }
 
         latLngMarkerHashMap.put(location,marker);

@@ -73,7 +73,7 @@ public class SearchAllStoriesFragment extends StoryListFragment {
             });
         }
         else {
-            ref.orderByChild("title").addChildEventListener(new ChildEventListener() {
+            ref.child("stories").orderByChild("title").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Story story = dataSnapshot.getValue(Story.class);
