@@ -308,6 +308,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 try{//check in case there are some objects in the db that don't match my current story object
                     Story story = dataSnapshot.getValue(Story.class);
                     dropMarker(story,dataSnapshot.getKey());
+                    closeToStory(mCurrentLocation);
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -354,7 +355,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private boolean isCloseToCurrentLocation(LatLng latLng){
         if(mCurrentLocation == null){
             Toast.makeText(this,"Could not verify location",Toast.LENGTH_SHORT).show();
-            return false;//
+            return false;
         }
 
         Location markerLocation = new Location(mCurrentLocation);//construct location with current location to make sure altitude and things are same
@@ -548,7 +549,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     // checks if you are close to a story and sends you a push notification if you are
-    // should get called when location is changed AND when a new story is added or modified.
+    // should get called when location is changed TODO - AND when a new story is added or modified.
     public void closeToStory(Location location)
     {
         // Get all the locations from the hash map
