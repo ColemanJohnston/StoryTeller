@@ -126,10 +126,12 @@ public class AuthorActivity extends AppCompatActivity {
                 double latitude = getIntent().getDoubleExtra("lat", 0);
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn);
+                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0);//zero for no favorites
 
-                ref.push().setValue(story);//send data to database with unique id
+                ref.child("stories").push().setValue(story);//send data to database with unique id
+
 
                 Intent data = new Intent();
 

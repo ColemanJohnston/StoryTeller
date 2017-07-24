@@ -35,13 +35,16 @@ public class YourStoriesListFragment extends StoryListFragment {
         Firebase ref = new Firebase(Config.FIREBASE_URl);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userName = currentUser.getEmail();
+        final String uid = currentUser.getUid();
 
-        ref.orderByChild("userName").equalTo(userName).addChildEventListener(new ChildEventListener() {
+        ref.child("stories")/*.child("uID").equalTo(uid)*/.addChildEventListener(new ChildEventListener() {//TODO: Fix this shit
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Story story = dataSnapshot.getValue(Story.class);
-                storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+                if(story.getuID().equals(uid)){
+                    story.setStoryId(dataSnapshot.getKey());
+                    storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+                }
             }
 
             @Override

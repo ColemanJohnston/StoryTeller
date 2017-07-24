@@ -37,7 +37,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
         holder.tvStoryBody.setText(story.getStoryBody());
-        holder.tvAuthorName.setText(String.format("By %s",story.getScreenName()));//TODO: optimize for i18n with string resource
+        holder.tvAuthorName.setText(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
 
         if(story.getIsCheckedIn()){

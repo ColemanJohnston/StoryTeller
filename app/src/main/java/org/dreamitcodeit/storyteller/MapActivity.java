@@ -194,7 +194,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private void populateMap(){
         ref = new Firebase(Config.FIREBASE_URl);
 
-        Query queryRef = ref.orderByChild("title");
+        Query queryRef = ref.child("stories");
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
