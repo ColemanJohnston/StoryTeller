@@ -127,7 +127,11 @@ public class AuthorActivity extends AppCompatActivity {
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn);
+                // get unique user id from the database
+
+                String uid = "haha";
+
+                // story = new Story(title,storyBody, uid, latitude, longitude, tvDate.getText().toString(), isCheckedIn);
 
                 ref.push().setValue(story);//send data to database with unique id
 
