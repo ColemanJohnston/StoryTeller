@@ -123,22 +123,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
 
-
-                /*Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-                if (slideOffset < 0.2) {
-                    /*if (getActionBar().isShowing()) {
-                        getActionBar().hide();
-                    }
-                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-
-                } else {
-                   /* if (!getActionBar().isShowing()) {
-                        getActionBar().show();
-                    }
-                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-
-                }*/
             }
 
             @Override

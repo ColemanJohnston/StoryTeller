@@ -11,6 +11,9 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+
 public class ViewStoryActivity extends AppCompatActivity {
 
     private TextView tvTitle;
@@ -54,6 +57,9 @@ public class ViewStoryActivity extends AppCompatActivity {
             // Load the image using Glide
             Glide.with(this /* context */).using(new FirebaseImageLoader())
                     .load(pathReference)
+                    .error(R.drawable.ocean)
+                    .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
+                    .centerCrop()
                     .into(ivImage);
 
         }
@@ -64,9 +70,9 @@ public class ViewStoryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ivImage.setImageResource(R.drawable.ocean);
+        /*ivImage.setImageResource(R.drawable.ocean);
         ivImage.setAdjustViewBounds(true);
-        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
     }
 
 

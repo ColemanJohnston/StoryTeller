@@ -26,7 +26,6 @@ public class AllStoriesActivity extends AppCompatActivity {
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
         adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), this, "");
-        //adapterViewPager.
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);

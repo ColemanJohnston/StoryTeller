@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/round_outline"/>
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/tvTitle"
