@@ -42,7 +42,7 @@ public class SearchAllStoriesFragment extends StoryListFragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (!tag.equals("all")) {
-            ref.orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
+            ref.child("stories").orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Story story = dataSnapshot.getValue(Story.class);

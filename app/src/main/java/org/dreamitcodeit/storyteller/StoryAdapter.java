@@ -14,6 +14,8 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -46,9 +48,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
         Story story = stories.get(position);
+        holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
         holder.tvStoryBody.setText(story.getStoryBody());
-        holder.tvAuthorName.setText(String.format("By %s",story.getScreenName()));//TODO: optimize for i18n with string resource
+        holder.tvAuthorName.setText(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
 
         if(story.getIsCheckedIn()){
@@ -83,6 +86,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         public ImageView ivFavoriteIcon;
         public ImageView ivIsCheckedIn;
         public TextView tvIsCheckedIn;
+        public Story currentStory;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -133,8 +137,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ViewStoryActivity.class);
-                    intent.putExtra("title", tvTitle.getText().toString());
-                    intent.putExtra("storyBody", tvStoryBody.getText().toString());
+                    intent.putExtra("story", Parcels.wrap(currentStory));
                     v.getContext().startActivity(intent);
                 }
             });

@@ -2,9 +2,9 @@ package org.dreamitcodeit.storyteller;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +14,20 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.LoggingBehavior;
 import com.facebook.login.LoginManager;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.dreamitcodeit.storyteller.models.User;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -31,6 +39,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button signUpButton;
     private Button signInButton;
     private Button Facebook_sign_in;
+    String fbName;
+    String fbUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +118,7 @@ public class WelcomeActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+    //Non-Facebook
     public void createAccount(String email, String password){
 
         Log.d(TAG, "createAccount:" + email);
@@ -124,8 +135,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             Toast.makeText(WelcomeActivity.this, "createUserWithEmail:success",
                                     Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            gotoMap(user);
+                            fetchFacebookUserData();//we might have asynch issue here
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -138,6 +148,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
+    //Non-Facebook
     public void signIn(String email, String password){
 
         Log.d(TAG, "signIn:" + email);
@@ -223,5 +234,44 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void signOut() {
         mAuth.signOut();
+    }
+
+
+
+    public void fetchFacebookUserData()
+    {
+        // Line to let us see why it's not working
+        FacebookSdk.addLoggingBehavior(LoggingBehavior.REQUESTS);
+
+        // calls the /user/me endpoint to fetch the user data for the given access token.
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(), // TODO - eventually this won't be only our user, but the current user!
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+
+                        // get stuff from the JSON object
+                        try {
+                            Firebase.setAndroidContext(WelcomeActivity.this);
+                            Firebase ref = new Firebase(Config.FIREBASE_URl);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String fbName = response.getJSONObject().get("name").toString();
+                            String fbUserID = response.getJSONObject().get("id").toString();
+                            User newUser = new User(user.getUid(), null, null, fbName, fbUserID);
+                            ref.child("users").child(newUser.getUid()).setValue(newUser);
+                            gotoMap(user);
+                            //fbLocation = response.getJSONObject().get("location").toString();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,location");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 }
