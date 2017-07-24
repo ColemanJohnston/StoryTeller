@@ -146,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void fetchUserData(){
+    public void fetchUserData(){ //TODO: check if this method is still necessary.
         ref = new Firebase(Config.FIREBASE_URl);
 
         ref.orderByChild("userName").equalTo(userName).addChildEventListener(new ChildEventListener() {

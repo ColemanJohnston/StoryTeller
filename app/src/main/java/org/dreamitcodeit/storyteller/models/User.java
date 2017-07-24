@@ -14,6 +14,7 @@ public class User {
 
     String uid;
     List<String> favoriteIDs;
+    List<String> userStoryIDs;
     String fbName;
     String fbUserID;
 
@@ -21,7 +22,7 @@ public class User {
 
     }
 
-    public User(String uid, List<String> favoriteIDs, String fbName, String fbUserID) {
+    public User(String uid, List<String> userStoryIDs, List<String> favoriteIDs, String fbName, String fbUserID) {
         this.uid = uid;
         this.favoriteIDs = favoriteIDs;
         this.fbName = fbName;
@@ -58,5 +59,13 @@ public class User {
 
     public void setFbUserID(String fbUserID) {
         this.fbUserID = fbUserID;
+    }
+
+    public List<String> getUserStoryIDs() {
+        return userStoryIDs;
+    }
+
+    public void setUserStoryIDs(List<String> userStoryIDs) {
+        this.userStoryIDs = userStoryIDs;
     }
 }

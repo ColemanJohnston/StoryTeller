@@ -259,7 +259,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String fbName = response.getJSONObject().get("name").toString();
                             String fbUserID = response.getJSONObject().get("id").toString();
-                            User newUser = new User(user.getUid(), null, fbName, fbUserID);
+                            User newUser = new User(user.getUid(), null, null, fbName, fbUserID);
                             ref.child("users").child(newUser.getUid()).setValue(newUser);
                             gotoMap(user);
                             //fbLocation = response.getJSONObject().get("location").toString();

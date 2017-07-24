@@ -29,7 +29,6 @@ import org.dreamitcodeit.storyteller.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FacebookLoginActivity extends AppCompatActivity {
@@ -140,9 +139,7 @@ public class FacebookLoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String fbName = response.getJSONObject().get("name").toString();
                             String fbUserID = response.getJSONObject().get("id").toString();
-                            ArrayList<String> dummyList = new ArrayList<String>();
-                            dummyList.add("hello");
-                            User newUser = new User(user.getUid(), dummyList, fbName, fbUserID);
+                            User newUser = new User(user.getUid(), null, null, fbName, fbUserID);
                             ref.child("users").child(newUser.getUid()).setValue(newUser);
                             goMainScreen();
                             //fbLocation = response.getJSONObject().get("location").toString();
