@@ -103,10 +103,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         Firebase.setAndroidContext(this);
 
         sMapList = (Switch) findViewById(R.id.sMapList);
-        //gestureScanner = new GestureDetector(this);
-
-        //setSupportActionBar((Toolbar) findViewById(R.id.main_toolbar));
-
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -118,7 +114,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         //mLayout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
-        mLayout.setAnchorPoint(0.3f);
+        //mLayout.setAnchorPoint(0.3f);
+        mLayout.setAnchorPoint(1);
         mLayout.addPanelSlideListener(new PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -227,12 +224,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_map,menu);
-//        return true;
-//    }
 
     public void onProfileIconClick(MenuItem mi){
         this.startActivity(new Intent(this, ProfileActivity.class));
@@ -592,55 +583,5 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
         return super.onCreateOptionsMenu(menu);
     }
-
-
-   /* @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
-        return gestureScanner.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                           float velocityY) {
-        // TODO Auto-generated method stub
-        Log.i("Test", "On Fling");
-        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
-        startActivity(intent);
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                            float distanceY) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        // TODO Auto-generated method stub
-        return false;
-    }*/
 
 }

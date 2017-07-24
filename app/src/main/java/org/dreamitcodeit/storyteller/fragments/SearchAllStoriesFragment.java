@@ -40,9 +40,6 @@ public class SearchAllStoriesFragment extends StoryListFragment {
         Firebase ref = new Firebase(Config.FIREBASE_URl);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userName = currentUser.getEmail();
-
-        // TODO: FIX POPULATING ALL TAB once database is restored
 
         if (!tag.equals("all")) {
             ref.orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
@@ -76,7 +73,7 @@ public class SearchAllStoriesFragment extends StoryListFragment {
             });
         }
         else {
-            ref.child("stories").orderByChild("title").addChildEventListener(new ChildEventListener() {
+            ref.orderByChild("title").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Story story = dataSnapshot.getValue(Story.class);
@@ -102,8 +99,6 @@ public class SearchAllStoriesFragment extends StoryListFragment {
                 public void onCancelled(FirebaseError firebaseError) {
 
                 }
-
-
             });
         }
 

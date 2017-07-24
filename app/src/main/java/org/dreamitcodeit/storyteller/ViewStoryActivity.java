@@ -36,8 +36,6 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
-
-
         try
         {
             // get a reference to the storage bucket!

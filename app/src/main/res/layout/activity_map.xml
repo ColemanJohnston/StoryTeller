@@ -12,7 +12,7 @@ android:layout_height="match_parent">
         android:gravity="bottom"
         app:umanoDragView="@+id/dragView"
         app:umanoOverlay="false"
-        app:umanoPanelHeight="68dp"
+        app:umanoPanelHeight="60dp"
         app:umanoShadowHeight="4dp">
 
 
@@ -44,7 +44,7 @@ android:layout_height="match_parent">
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="545dp"
+            android:layout_height="550dp"
             android:layout_alignParentTop="true" />
     </android.support.design.widget.CoordinatorLayout>
 
