@@ -1,10 +1,14 @@
 package org.dreamitcodeit.storyteller;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -85,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
-
+    private Marker newMarker;
 
     private final static String KEY_LOCATION = "location";
 
@@ -261,6 +266,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            newMarker = marker;
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
@@ -299,7 +305,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                try{//check in case there are some objects in the db that don't match my current story object
+                try{  //check in case there are some objects in the db that don't match my current story object. Used for testing.
                     Story story = dataSnapshot.getValue(Story.class);
                     dropMarker(story,dataSnapshot.getKey());
                 }
@@ -373,9 +379,68 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         startActivityForResult(i, 20);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
     }
 
+    private void dropPinEffect(final Marker marker, final LatLng latLng) {
+        // Handler allows us to repeat a code block after a specified delay
+        final android.os.Handler handler = new android.os.Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 1500;
+
+        // Use the bounce interpolator
+        final android.view.animation.Interpolator interpolator =
+                new BounceInterpolator();
+
+        // Animate marker with a bounce updating its position every 15ms
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                // Calculate t for bounce based on elapsed time
+                float t = Math.max(
+                        1 - interpolator.getInterpolation((float) elapsed
+                                / duration), 0);
+                // Set the anchor
+                marker.setAnchor(0.5f, 1.0f + 14 * t);
+
+                if (t > 0.0) {
+                    // Post this event again 15ms from now.
+                    handler.postDelayed(this, 15);
+                } else { // done elapsing, show window
+                    // marker.showInfoWindow();
+                }
+
+            }
+        });
+
+//        android.view.animation.Interpolator interpolator = new BounceInterpolator();
+//
+//        final AnimatorSet bounce = new AnimatorSet();
+//
+//        bounce.play(ObjectAnimator.OfObject(marker, "position", latLng)
+//                .SetDuration (1000)
+//                .SetInterpolator (interpolator)
+//                .Start ());
+
+
+
+    }
+
     @Override
-    public void onMapLongClick(LatLng latLng) {
-        startAuthorActivity(latLng);
+    public void onMapLongClick(final LatLng latLng) {
+
+        if (newMarker != null)
+        {
+            dropPinEffect(newMarker, latLng);
+            newMarker = null;
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Do something after 3000ms
+                    startAuthorActivity(latLng);
+                }
+            }, 3000);
+        }
     }
 
     @Override
@@ -407,7 +472,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
-            startAuthorActivity(latLng);
+            if (newMarker != null)
+            {
+                dropPinEffect(newMarker, latLng);
+                newMarker = null;
+                startAuthorActivity(latLng);
+            }
         } else {
             Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
         }
