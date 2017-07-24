@@ -9,8 +9,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -19,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -47,7 +51,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
+import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
 import java.util.ArrayList;
@@ -61,18 +68,28 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
+
+    AllStoriesPagerAdapter adapterViewPager;
+
+    TabLayout tablayout;
+
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
     Location mCurrentLocation;
+    private Switch sMapList;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
+
+   // GestureDetector gestureScanner;
+    private SlidingUpPanelLayout mLayout;
+
 
     private final static String KEY_LOCATION = "location";
 
@@ -82,11 +99,78 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
      */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
+
+        sMapList = (Switch) findViewById(R.id.sMapList);
+        //gestureScanner = new GestureDetector(this);
+
+        //setSupportActionBar((Toolbar) findViewById(R.id.main_toolbar));
+
+
+        ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
+
+        adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), MapActivity.this, "");
+        //adapterViewPager.
+        vPager.setAdapter(adapterViewPager);
+        tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
+        tablayout.setupWithViewPager(vPager);
+
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        //mLayout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+        mLayout.setAnchorPoint(0.3f);
+        mLayout.addPanelSlideListener(new PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+
+                /*Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                if (slideOffset < 0.2) {
+                    /*if (getActionBar().isShowing()) {
+                        getActionBar().hide();
+                    }
+                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+
+                } else {
+                   /* if (!getActionBar().isShowing()) {
+                        getActionBar().show();
+                    }
+                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
+
+                }*/
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                //Toast.makeText(MapActivity.this, "yo", Toast.LENGTH_SHORT).show();
+               // Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+                //startActivityForResult(intent, 20);
+
+            }
+
+            public void onPanelExpanded(View panel) {
+
+                Log.i(TAG, "onPanelExpanded");
+
+            }
+
+            public void onPanelCollapsed(View panel) {
+                Log.i(TAG, "onPanelCollapsed");
+
+            }
+
+            public void onPanelAnchored(View panel) {
+                Log.i(TAG, "onPanelAnchored");
+
+            }
+        });
+
+
         latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
@@ -115,6 +199,23 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
 
 
+        // SWitCH STUFF
+
+        sMapList.setChecked(false);
+        sMapList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        sMapList.setChecked(false);
+                    }
+                }
+        });
+
+
         // TODO - code to listen for real time refresh
         // TODO - right now we will re-popoulate the map everytime anything is changed
         // TODO - in the future we should optimize this
@@ -126,7 +227,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         ref = new Firebase(Config.FIREBASE_URl);
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
-
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -533,47 +633,22 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryRefinementEnabled(true);
+
+        //Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+
+        //startActivity(intent);
+
+        //this.startActivity(new Intent(this, SearchActivity.class));
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
                 // perform query here
 
-                ref = new Firebase(Config.FIREBASE_URl);
+                Intent intent = new Intent(MapActivity.this, SearchActivity.class);
+                intent.putExtra("query", query);
 
-                Query queryRef = ref.orderByChild("title").equalTo(query);
-
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Story story = dataSnapshot.getValue(Story.class);
-                            Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-                            intent.putExtra("title", story.getTitle());
-                            intent.putExtra("body", story.getStoryBody());
-                            startActivity(intent);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-
+                startActivity(intent);
 
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
@@ -593,5 +668,53 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
 
+   /* @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        return gestureScanner.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                           float velocityY) {
+        // TODO Auto-generated method stub
+        Log.i("Test", "On Fling");
+        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+        startActivity(intent);
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                            float distanceY) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        // TODO Auto-generated method stub
+        return false;
+    }*/
 
 }

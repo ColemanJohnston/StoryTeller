@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,14 @@ public class AuthorActivity extends AppCompatActivity {
     private String title;
     private String userName;
 
+    private RadioButton rPersonal;
+    private RadioButton rHistorical;
+    private RadioButton rFictional;
+
+    private boolean isPersonal = false;
+    private boolean isHistorical = false;
+    private boolean isFictional = false;
+
 
     // for taking photos
     public Uri file;
@@ -91,6 +100,9 @@ public class AuthorActivity extends AppCompatActivity {
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        rPersonal = (RadioButton) findViewById(R.id.rPersonal);
+        rHistorical = (RadioButton) findViewById(R.id.rHistorical);
+        rFictional = (RadioButton) findViewById(R.id.rFictional);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
         String today = dateFormat.format(Calendar.getInstance().getTime());
@@ -127,7 +139,7 @@ public class AuthorActivity extends AppCompatActivity {
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
 
-                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn);
+                story = new Story(title,storyBody, userName,"Neehar","Neehar",latitude, longitude, tvDate.getText().toString(), isCheckedIn, isPersonal, isHistorical, isFictional);
 
                 ref.push().setValue(story);//send data to database with unique id
 
@@ -140,47 +152,6 @@ public class AuthorActivity extends AppCompatActivity {
                 finish(); // closes the activity, pass data to parent
             }
         });
-
-        // fetch data for testing purposes
-     /*   btFetch.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                ref = new Firebase(Config.FIREBASE_URl);
-
-                Query queryRef = ref.orderByChild("title");
-
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                        String string = "TITLE: " + dataSnapshot.getKey();
-                        tvStories.setText(tvStories.getText() + " " + string );
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-            }
-        });*/
 
 
         // Open the camera and take a picture.
@@ -228,6 +199,29 @@ public class AuthorActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // is any radio button checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.rPersonal:
+                if (checked) {
+                    isPersonal = true;
+                }
+                break;
+            case R.id.rHistorical:
+                if (checked) {
+                    isHistorical = true;
+                }
+                break;
+            case R.id.rFictional:
+                if (checked) {
+                    isFictional = true;
+                }
+                break;
+        }
     }
 
     @Override

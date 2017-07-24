@@ -1,29 +1,15 @@
 package org.dreamitcodeit.storyteller;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
-import com.firebase.client.utilities.Base64;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StreamDownloadTask;
-
-import java.io.InputStream;
-import java.net.URL;
 
 public class ViewStoryActivity extends AppCompatActivity {
 
@@ -46,6 +32,8 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle.setText(getIntent().getStringExtra("title"));
         tvStoryBody.setText(getIntent().getStringExtra("storyBody"));
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
+
+
 
         try
         {
@@ -75,5 +63,11 @@ public class ViewStoryActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+
+        ivImage.setImageResource(R.drawable.ocean);
+        ivImage.setAdjustViewBounds(true);
+        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
     }
+
+
 }

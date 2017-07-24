@@ -19,13 +19,17 @@ public class Story {
     private double longitude;
     private String date;
     private boolean isCheckedIn;
+    private boolean isPersonal;
+    private boolean isHistorical;
+    private boolean isFictional;
+
+    //private LatLng latLong;
 
     public Story() {
 
     }
 
-
-    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date, boolean isCheckedIn){
+    public Story(String title, String storyBody, String userName, String screenName, String uID, double latitude, double longitude, String date, boolean isCheckedIn, boolean isPersonal, boolean isHistorical, boolean isFictional){
         this.title = title;
         this.storyBody = storyBody;
         this.userName = userName;
@@ -35,6 +39,9 @@ public class Story {
         this.longitude = longitude;
         this.date = date;
         this.isCheckedIn = isCheckedIn;
+        this.isPersonal = isPersonal;
+        this.isHistorical = isHistorical;
+        this.isFictional = isFictional;
     }
 
     // getters and setters
@@ -109,5 +116,37 @@ public class Story {
 
     public void setIsCheckedIn(boolean isCheckedIn){
         this.isCheckedIn = isCheckedIn;
+    }
+
+    public boolean isCheckedIn() {
+        return isCheckedIn;
+    }
+
+    public void setCheckedIn(boolean checkedIn) {
+        isCheckedIn = checkedIn;
+    }
+
+    public boolean isPersonal() {
+        return isPersonal;
+    }
+
+    public void setPersonal(boolean personal) {
+        isPersonal = personal;
+    }
+
+    public boolean isHistorical() {
+        return isHistorical;
+    }
+
+    public void setHistorical(boolean historical) {
+        isHistorical = historical;
+    }
+
+    public boolean isFictional() {
+        return isFictional;
+    }
+
+    public void setFictional(boolean fictional) {
+        isFictional = fictional;
     }
 }

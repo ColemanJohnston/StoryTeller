@@ -32,9 +32,7 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
-
 }
-
 
 ext {
     supportLibVersion = '25.3.1'  // variable that can be referenced to keep support libs consistent
@@ -56,7 +54,7 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'org.parceler:parceler-api:1.1.6'
 
@@ -75,18 +73,17 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
+    compile 'com.sothree.slidinguppanel:library:3.3.1'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.facebook.android:facebook-android-sdk:4.17.0'
+    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     compile 'com.google.firebase:firebase-messaging:11.0.2'
 
-
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-
 }
-
 
 apply plugin: 'com.google.gms.google-services'
