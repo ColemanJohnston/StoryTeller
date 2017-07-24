@@ -45,7 +45,7 @@ public class SearchAllStoriesFragment extends StoryListFragment {
         // TODO: FIX POPULATING ALL TAB once database is restored
 
         if (!tag.equals("all")) {
-            ref.orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
+            ref.child("stories").orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Story story = dataSnapshot.getValue(Story.class);
