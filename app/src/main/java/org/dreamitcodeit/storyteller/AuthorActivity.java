@@ -147,10 +147,10 @@ public class AuthorActivity extends AppCompatActivity {
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional);//zero for no favorites
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
+                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, newStoryRef.getKey());//zero for no favorites
                 newStoryRef.setValue(story);//send new story to its spot in the database
-                addToUserStoriesList(newStoryRef.getKey());//TODO: test to make sure key goes to the correct place...
+                addToUserStoriesList(story.getStoryId());//give the id from the story to the user for easy access.
 
                 Intent data = new Intent();
 
