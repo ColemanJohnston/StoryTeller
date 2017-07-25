@@ -72,7 +72,6 @@ public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
             return fragment;
         }
 
-
         // search fails
         return null;
     }

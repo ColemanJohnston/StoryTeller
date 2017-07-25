@@ -64,6 +64,8 @@ dependencies {
     compile 'org.parceler:parceler-api:1.1.6'
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'com.sothree.slidinguppanel:library:3.3.1'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.facebook.android:facebook-android-sdk:4.17.0'

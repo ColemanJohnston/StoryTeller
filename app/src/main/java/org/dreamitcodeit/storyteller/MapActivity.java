@@ -112,49 +112,29 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         Firebase.setAndroidContext(this);
 
         sMapList = (Switch) findViewById(R.id.sMapList);
-        //gestureScanner = new GestureDetector(this);
-
-        //setSupportActionBar((Toolbar) findViewById(R.id.main_toolbar));
-
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
         adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), MapActivity.this, "");
-        //adapterViewPager.
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        //mLayout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+
         mLayout.setAnchorPoint(0.3f);
+
+        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
         mLayout.addPanelSlideListener(new PanelSlideListener() {
+
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
 
-
-                /*Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-                if (slideOffset < 0.2) {
-                    /*if (getActionBar().isShowing()) {
-                        getActionBar().hide();
-                    }
-                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-
-                } else {
-                   /* if (!getActionBar().isShowing()) {
-                        getActionBar().show();
-                    }
-                    Toast.makeText(MapActivity.this, "here", Toast.LENGTH_SHORT).show();
-
-                }*/
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                //Toast.makeText(MapActivity.this, "yo", Toast.LENGTH_SHORT).show();
-               // Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
-                //startActivityForResult(intent, 20);
 
             }
 
@@ -196,7 +176,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
 //                    populateMap();
                     setMarkerClickListener(map);
-                    map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    //map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
         } else {
@@ -253,12 +234,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_map,menu);
-//        return true;
-//    }
-
     public void onProfileIconClick(MenuItem mi){
         this.startActivity(new Intent(this, ProfileActivity.class));
     }
@@ -266,10 +241,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private void dropMarker(Story story, String key){//TODO: check method for setting things redundantly, and review if storing things in the markers is efficient
         LatLng location = new LatLng(story.getLatitude(),story.getLongitude());
         Marker marker = latLngMarkerHashMap.get(location);
+
         if(marker == null){
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(55)));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
@@ -280,7 +257,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(stories);
         }
         if(story.getIsCheckedIn()){
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
         }
 
         latLngMarkerHashMap.put(location,marker);
@@ -697,12 +674,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        //Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-
-        //startActivity(intent);
-
-        //this.startActivity(new Intent(this, SearchActivity.class));
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
@@ -729,55 +700,5 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
         return super.onCreateOptionsMenu(menu);
     }
-
-
-   /* @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
-        return gestureScanner.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                           float velocityY) {
-        // TODO Auto-generated method stub
-        Log.i("Test", "On Fling");
-        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
-        startActivity(intent);
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                            float distanceY) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        // TODO Auto-generated method stub
-        return false;
-    }*/
 
 }

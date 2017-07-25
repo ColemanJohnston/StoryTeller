@@ -5,7 +5,7 @@
 
     <ImageView
         android:id="@+id/ivStoryImage"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
@@ -13,9 +13,9 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:background="@drawable/round_outline" />
+        android:adjustViewBounds="false"
+        android:background="@drawable/round_outline"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -27,6 +27,7 @@
         android:maxLines="1"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="3dp"
+        android:textColor="@color/colorWhite"
         android:text="This is A Very Long Title to Demonstrate What Happens with Long Titles"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -39,6 +40,7 @@
         android:layout_below="@id/tvTitle"
         android:layout_toEndOf="@id/ivProfileImage"
         android:text="By John Doe"
+        android:textColor="@color/colorWhite"
         android:textAlignment="viewStart"
         android:textSize="12sp" />
 
@@ -49,6 +51,7 @@
         android:text="Rating: 4.2"
         android:layout_marginLeft="3dp"
         android:layout_centerVertical="true"
+        android:textColor="@color/colorWhite"
         android:layout_alignStart="@+id/ivStoryImage" />
 
     <TextView
@@ -58,6 +61,7 @@
         android:text="Created 12/25/0000"
         android:layout_marginRight="3dp"
         android:layout_centerVertical="true"
+        android:textColor="@color/colorWhite"
         android:layout_alignEnd="@+id/ivStoryImage" />
 
     <TextView
@@ -71,6 +75,7 @@
         android:maxLines="3"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
+        android:textColor="@color/colorWhite"
         android:text="This is an example of longer text to demonstrate that it can be cut of at some point, but I'm done with thinking of new things to write so I'm just going to continue griping until this text gets to the end."
         android:textSize="12sp" />
 
@@ -81,6 +86,7 @@
         android:text="422"
         android:layout_marginTop="3dp"
         android:layout_marginRight="3dp"
+        android:textColor="@color/colorWhite"
         android:layout_alignTop="@+id/ivStoryImage"
         android:layout_alignEnd="@+id/ivStoryImage" />
 
@@ -100,6 +106,7 @@
         android:layout_height="wrap_content"
         android:text="Verified Location"
         android:textSize="12sp"
+        android:textColor="@color/colorWhite"
         android:layout_below="@+id/tvTitle"
         android:layout_toStartOf="@+id/ivIsCheckedIn" />
 
