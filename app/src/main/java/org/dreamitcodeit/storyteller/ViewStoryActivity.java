@@ -68,7 +68,6 @@ public class ViewStoryActivity extends AppCompatActivity {
                     .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
                     .centerCrop()
                     .into(ivImage);
-
         }
         // an error will be thrown when a story has no picture
         // a little jank but good for now I guess

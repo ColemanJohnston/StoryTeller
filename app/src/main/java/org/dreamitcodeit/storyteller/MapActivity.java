@@ -167,7 +167,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
 //                    populateMap();
                     setMarkerClickListener(map);
-                    map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    //map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
         } else {
@@ -247,7 +248,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(stories);
         }
         if(story.getIsCheckedIn()){
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(89));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
         }
 
         latLngMarkerHashMap.put(location,marker);
@@ -552,12 +553,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        //Intent intent = new Intent(MapActivity.this, SearchActivity.class);
-
-        //startActivity(intent);
-
-        //this.startActivity(new Intent(this, SearchActivity.class));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

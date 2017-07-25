@@ -62,6 +62,40 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
             holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
+
+        try
+        {
+            // get a reference to the storage bucket!
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
+
+            // Create a reference with an initial file path and name of title.
+            // This is hopefully where your file will be found in cloud storage
+            pathReference = storageRef.child("images/" + story.getTitle());
+
+            // temp path just to test
+            //pathReference = storageRef.child("images/" + "download.jpg");
+
+
+            // Load the image using Glide
+            Glide.with(context /* context*/).using(new FirebaseImageLoader())
+                    .load(pathReference)
+                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 0))
+                    .error(R.drawable.ocean)
+                    .centerCrop()
+                    .into(holder.ivStoryImage);
+        }
+        // an error will be thrown when a story has no picture
+        // a little jank but good for now I guess
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
     }
 
     @Override
@@ -102,37 +136,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
 
 
-            try
-            {
-                // get a reference to the storage bucket!
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-
-                // Create a storage reference from our app
-                StorageReference storageRef = storage.getReference();
-
-                // Create a reference with an initial file path and name of title.
-                // This is hopefully where your file will be found in cloud storage
-                pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
-
-                // temp path just to test
-                //pathReference = storageRef.child("images/" + "download.jpg");
-
-
-                // Load the image using Glide
-                Glide.with(context /* context */).using(new FirebaseImageLoader())
-                        .load(pathReference)
-                        .error(R.drawable.ocean)
-                        .bitmapTransform(new RoundedCornersTransformation(context, 15, 0))
-                        .centerCrop()
-                        .into(ivStoryImage);
-            }
-            // an error will be thrown when a story has no picture
-            // a little jank but good for now I guess
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -141,6 +144,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                     v.getContext().startActivity(intent);
                 }
             });
+
         }
 
 
