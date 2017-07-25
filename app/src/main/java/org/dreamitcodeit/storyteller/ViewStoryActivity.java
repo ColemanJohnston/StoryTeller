@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -44,6 +45,10 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle.setText(story.getTitle());
         tvStoryBody.setText(story.getStoryBody());
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Regular.ttf");
+
+        tvStoryBody.setTypeface(typeface);
 
         try
         {
