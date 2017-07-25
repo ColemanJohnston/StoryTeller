@@ -413,7 +413,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             // TODO -maybe make listy global and remove from listy to prevent lots of spam notifications
         }
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, MapActivity.class); // TODO - can we deliver the intent to the same class we called it from?
         // use System.currentTimeMillis() to have a unique ID for the pending intent
         intent.putExtra("notification", "zoom_to_current_location");
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
