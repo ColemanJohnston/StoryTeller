@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by colemanmav on 7/17/17.
@@ -18,6 +26,11 @@ import java.util.List;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     private List<Story> stories;
+
+    StorageReference pathReference;
+
+    Context context;
+
 
     public StoryAdapter(List<Story> stories){
         this.stories = stories;
@@ -28,6 +41,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View storyView = inflater.inflate(R.layout.item_story, parent, false);
         ViewHolder viewHolder = new ViewHolder(storyView);
+        context = parent.getContext();
         return viewHolder;
     }
 
@@ -49,6 +63,40 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
             holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
+
+        try
+        {
+            // get a reference to the storage bucket!
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
+
+            // Create a reference with an initial file path and name of title.
+            // This is hopefully where your file will be found in cloud storage
+            pathReference = storageRef.child("images/" + story.getTitle());
+
+            // temp path just to test
+            //pathReference = storageRef.child("images/" + "download.jpg");
+
+
+            // Load the image using Glide
+            Glide.with(context /* context*/).using(new FirebaseImageLoader())
+                    .load(pathReference)
+                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 0))
+                    .error(R.drawable.ocean)
+                    .centerCrop()
+                    .into(holder.ivStoryImage);
+        }
+        // an error will be thrown when a story has no picture
+        // a little jank but good for now I guess
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
     }
 
     @Override
@@ -88,11 +136,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
 
-           // ivStoryImage.setClipToOutline(true);
-
-            ivStoryImage.setImageResource(R.drawable.ocean);
-            ivStoryImage.setAdjustViewBounds(true);
-            ivStoryImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,6 +145,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                     v.getContext().startActivity(intent);
                 }
             });
+
         }
 
 

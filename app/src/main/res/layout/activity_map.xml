@@ -12,67 +12,67 @@ android:layout_height="match_parent">
         android:gravity="bottom"
         app:umanoDragView="@+id/dragView"
         app:umanoOverlay="true"
-        app:umanoPanelHeight="68dp"
+        app:umanoPanelHeight="60dp"
         app:umanoShadowHeight="4dp">
 
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Switch
-            android:id="@+id/sMapList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:text="Map or List?"
-            app:layout_anchor="@+id/map"
-            app:layout_anchorGravity="top|left" />
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabComposeCurrentLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onFabComposeCurrentLocationClick"
-            android:src="@drawable/ic_edit_location_black_24dp"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_anchor="@+id/map" />
-
-        <fragment
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="545dp"
-            android:layout_alignParentTop="true" />
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent">
 
-            <!-- SLIDING LAYOUT -->
-            <LinearLayout
-                android:id="@+id/dragView"
+            <Switch
+                android:id="@+id/sMapList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:text="Map or List?"
+                app:layout_anchor="@+id/map"
+                app:layout_anchorGravity="top|left" />
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabComposeCurrentLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:onClick="onFabComposeCurrentLocationClick"
+                android:src="@drawable/ic_edit_location_black_24dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:layout_anchor="@+id/map" />
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffff"
-                android:clickable="true"
-                android:focusable="false"
-                android:orientation="vertical">
+                android:layout_height="550dp"
+                android:layout_alignParentTop="true" />
+        </android.support.design.widget.CoordinatorLayout>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/sliding_tabs_all"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabMode="fixed" />
+        <!-- SLIDING LAYOUT -->
+        <LinearLayout
+            android:id="@+id/dragView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:clickable="true"
+            android:focusable="false"
+            android:orientation="vertical">
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:layout_below="@+id/sliding_tabs_all"
-                    android:background="@android:color/white" />
-            </LinearLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/sliding_tabs_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed" />
 
-        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_below="@+id/sliding_tabs_all"
+                android:layout_weight="1"
+                android:background="@android:color/white" />
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </android.support.design.widget.CoordinatorLayout>

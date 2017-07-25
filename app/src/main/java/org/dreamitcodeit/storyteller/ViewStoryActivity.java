@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -26,6 +27,9 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
 public class ViewStoryActivity extends AppCompatActivity {
@@ -56,7 +60,9 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvStoryBody.setText(story.getStoryBody());
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Regular.ttf");
 
+        tvStoryBody.setTypeface(typeface);
 
         try
         {
@@ -77,8 +83,10 @@ public class ViewStoryActivity extends AppCompatActivity {
             // Load the image using Glide
             Glide.with(this /* context */).using(new FirebaseImageLoader())
                     .load(pathReference)
+                    .error(R.drawable.ocean)
+                    .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
+                    .centerCrop()
                     .into(ivImage);
-
         }
         // an error will be thrown when a story has no picture
         // a little jank but good for now I guess
@@ -87,8 +95,11 @@ public class ViewStoryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ivImage.setImageResource(R.drawable.ocean);
+        /*ivImage.setImageResource(R.drawable.ocean);
         ivImage.setAdjustViewBounds(true);
+<<<<<<< HEAD
+        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
+
         ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
         btnFavorite.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +147,7 @@ public class ViewStoryActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 
     public void incrementFavCount(){

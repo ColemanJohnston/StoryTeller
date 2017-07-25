@@ -40,9 +40,6 @@ public class SearchAllStoriesFragment extends StoryListFragment {
         Firebase ref = new Firebase(Config.FIREBASE_URl);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userName = currentUser.getEmail();
-
-        // TODO: FIX POPULATING ALL TAB once database is restored
 
         if (!tag.equals("all")) {
             ref.child("stories").orderByChild(tag).equalTo(true).addChildEventListener(new ChildEventListener() {
@@ -102,8 +99,6 @@ public class SearchAllStoriesFragment extends StoryListFragment {
                 public void onCancelled(FirebaseError firebaseError) {
 
                 }
-
-
             });
         }
 
