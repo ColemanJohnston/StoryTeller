@@ -87,6 +87,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
+    boolean flag = false;
 
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
@@ -422,6 +423,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         if (closeStories > 0)
         {
             NotificationManager notif =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            flag = false;
             Notification notify=new Notification.Builder
                     (getApplicationContext())
                     .setContentTitle("There are " + closeStories + " stories near your location!")
@@ -560,8 +562,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         // I think it will be null at the start
         if (intentResult != null)
         {
-            if (getIntent().getStringExtra("notification").equals("zoom_to_current_location"))
+            if (getIntent().getStringExtra("notification").equals("zoom_to_current_location") && !flag)
             {
+                flag = true;
                 if (mCurrentLocation != null) {
                     Toast.makeText(this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
                     LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
