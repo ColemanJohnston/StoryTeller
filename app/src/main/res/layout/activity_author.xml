@@ -137,4 +137,21 @@
             android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
 
+    <jp.wasabeef.richeditor.RichEditor
+        android:id="@+id/editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btSave"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/bold"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/bold"
+        android:layout_below="@+id/tvDate"
+        android:layout_toEndOf="@+id/ibCalendar"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="17dp" />
+
 </RelativeLayout>
