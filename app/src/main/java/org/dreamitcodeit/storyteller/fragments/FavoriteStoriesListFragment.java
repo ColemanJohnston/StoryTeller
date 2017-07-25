@@ -19,10 +19,10 @@ import org.dreamitcodeit.storyteller.Story;
 import java.util.List;
 
 /**
- * Created by colemanmav on 7/18/17.
+ * Created by colemanmav on 7/24/17.
  */
 
-public class YourStoriesListFragment extends StoryListFragment {
+public class FavoriteStoriesListFragment extends StoryListFragment {
     private String uid;
     Firebase ref;
 
@@ -34,7 +34,7 @@ public class YourStoriesListFragment extends StoryListFragment {
         return v;
     }
 
-    public YourStoriesListFragment setUid(String uid){
+    public FavoriteStoriesListFragment setUid(String uid){
         this.uid = uid;
         return this;//allow for method chaining
     }
@@ -43,7 +43,7 @@ public class YourStoriesListFragment extends StoryListFragment {
     public void fetchUserData(){
         ref = new Firebase(Config.FIREBASE_URl);
 
-        ref.child("users").child(uid).child("userStoryIDs").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("users").child(uid).child("favoriteIDs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};

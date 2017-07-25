@@ -12,10 +12,12 @@ public class StoriesPagerAdapter extends SmartFragmentStatePagerAdapter{
 
     private String tabTitles[] = new String[]{"My Stories","Favorites"};
     Context context;
+    private String uid;
 
-    public StoriesPagerAdapter(FragmentManager fm, Context context){
+    public StoriesPagerAdapter(FragmentManager fm, Context context, String uid){
         super(fm);
         this.context = context;
+        this.uid = uid;
     }
 
     //return title
@@ -34,10 +36,10 @@ public class StoriesPagerAdapter extends SmartFragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            return new YourStoriesListFragment();
+            return new YourStoriesListFragment().setUid(uid);
         }
         if(position == 1){
-            return new YourStoriesListFragment();//TODO: replace with Favorites when feature is added
+            return new FavoriteStoriesListFragment().setUid(uid);
         }
         return null;
     }

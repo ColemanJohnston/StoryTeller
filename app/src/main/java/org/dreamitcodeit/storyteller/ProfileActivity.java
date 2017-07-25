@@ -1,9 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
 
-
-import android.net.Uri;
-
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,11 +15,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.LoggingBehavior;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -44,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String userName = "";
     private TextView tvLocation;
     private FusedLocationProviderClient mFusedLocationClient;
-
+    private String uid;
     // References to the xml
     private ImageView ivProfileImage;
     private TextView tvName;
@@ -56,10 +48,21 @@ public class ProfileActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
-
         tvName = (TextView) findViewById(R.id.tvName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+
+        // fetchUserData();
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        userName = currentUser.getEmail();
+
+        uid = getIntent().getStringExtra("uid");
+
+        if(uid == null){//if user id is null assume the profile belongs to the current user.
+            uid = mAuth.getCurrentUser().getUid();
+        }
 
         if (AccessToken.getCurrentAccessToken() != null)
         {
@@ -71,16 +74,10 @@ public class ProfileActivity extends AppCompatActivity {
             tvName.setText(userName);
         }
 
-        // fetchUserData();
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        userName = currentUser.getEmail();
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
-        adapterViewPager = new StoriesPagerAdapter(getSupportFragmentManager(), this);
+        adapterViewPager = new StoriesPagerAdapter(getSupportFragmentManager(), this, uid);
         vPager.setAdapter(adapterViewPager);
         TabLayout tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
@@ -111,9 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void populateFacebookUserData()
     {
         ref = new Firebase(Config.FIREBASE_URl);
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String uid = user.getUid();
+
 
         ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -39,7 +39,7 @@ public class User {
 
     public List<String> getFavoriteIDs() {
         return favoriteIDs;
-    }
+    }//TODO: figure out how to make ArrayList instead of list
 
     public void setFavoriteIDs(List<String> favoriteIDs) {
         this.favoriteIDs = favoriteIDs;

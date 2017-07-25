@@ -9,10 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.dreamitcodeit.storyteller.models.User;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ViewStoryActivity extends AppCompatActivity {
@@ -24,7 +34,8 @@ public class ViewStoryActivity extends AppCompatActivity {
     private ImageView ivImage;
     String TAG = "LoadImage";
     StorageReference pathReference;
-
+    Firebase ref;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +91,44 @@ public class ViewStoryActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: make favorite happen here... Hopefully
+                Firebase.setAndroidContext(ViewStoryActivity.this);
+                ref = new Firebase(Config.FIREBASE_URl);
+
+                mAuth = FirebaseAuth.getInstance();
+                String uid = mAuth.getCurrentUser().getUid();
+
+
+                ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {//for some reason this is getting called twice. Maybe because I'm changing it??
+                        try{
+                            User userObject = dataSnapshot.getValue(User.class);
+                            List<String> favStoryList = userObject.getFavoriteIDs();
+                            if(favStoryList == null){
+                                favStoryList = new ArrayList<String>();
+                                favStoryList.add(story.getStoryId());
+                            }
+                            else{
+                                if(favStoryList.contains(story.getStoryId())){
+                                    //Do nothing or maybe un-favorite
+                                }
+                                else{
+                                    favStoryList.add(story.getStoryId());
+                                }
+                            }
+                            ref.child("users").child(mAuth.getCurrentUser().getUid()).child("favoriteIDs").setValue(favStoryList);
+
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
             }
         });
     }
