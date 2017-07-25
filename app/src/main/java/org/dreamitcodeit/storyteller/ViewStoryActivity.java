@@ -3,6 +3,7 @@ package org.dreamitcodeit.storyteller;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
@@ -107,6 +110,7 @@ public class ViewStoryActivity extends AppCompatActivity {
                             if(favStoryList == null){
                                 favStoryList = new ArrayList<String>();
                                 favStoryList.add(story.getStoryId());
+                                incrementFavCount();//add one the favCount of the story
                             }
                             else{
                                 if(favStoryList.contains(story.getStoryId())){
@@ -114,6 +118,7 @@ public class ViewStoryActivity extends AppCompatActivity {
                                 }
                                 else{
                                     favStoryList.add(story.getStoryId());
+                                    incrementFavCount();//add one the favCount of the story
                                 }
                             }
                             ref.child("users").child(mAuth.getCurrentUser().getUid()).child("favoriteIDs").setValue(favStoryList);
@@ -133,5 +138,27 @@ public class ViewStoryActivity extends AppCompatActivity {
         });
     }
 
+    public void incrementFavCount(){
+        ref.child("stories").child(story.getStoryId()).runTransaction(new Transaction.Handler(){//TODO: check to see if multiple users can make a transaction at the same time
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Story s = mutableData.getValue(Story.class);
+                if (s == null) {
+                    return Transaction.success(mutableData);//TODO: check to see what this is for
+                }
+                s.favCount = s.favCount + 1;//increment the favorites for a story
+
+                // Set value and report transaction success
+                mutableData.setValue(s);
+                return Transaction.success(mutableData);
+            }
+
+            public void onComplete(FirebaseError databaseError, boolean b,
+                                   DataSnapshot dataSnapshot) {
+                // Transaction completed
+                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
+            }
+        });
+    }
 
 }

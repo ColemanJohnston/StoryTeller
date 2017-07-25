@@ -39,6 +39,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvStoryBody.setText(story.getStoryBody());
         holder.tvAuthorName.setText(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
+        holder.tvFavorites.setText(String.format("%d",story.getFavCount()));
 
         if(story.getIsCheckedIn()){
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
