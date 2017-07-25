@@ -39,7 +39,9 @@ public class Story {
         this.rating = rating;
     }
 
-    public Story(String title, String storyBody, String uID, double latitude, double longitude, String date, boolean isCheckedIn, int favCount, boolean isPersonal, boolean isHistorical, boolean isFictional, String userName){
+
+    public Story(String title, String storyBody, String uID, double latitude, double longitude, String date, boolean isCheckedIn, int favCount, boolean isPersonal, boolean isHistorical, boolean isFictional, String storyId, String userName){
+
 
         this.title = title;
         this.storyBody = storyBody;
@@ -53,6 +55,7 @@ public class Story {
         this.isFictional = isFictional;
         this.favCount = favCount;
         this.userName = userName;
+        this.storyId = storyId;
     }
 
     // getters and setters

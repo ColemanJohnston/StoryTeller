@@ -150,10 +150,12 @@ public class AuthorActivity extends AppCompatActivity {
                 currentUser = mAuth.getCurrentUser();
                 String userName = currentUser.getDisplayName();
 
-                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
+                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
+
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
+                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, newStoryRef.getKey(), userName );//zero for no favorites
                 newStoryRef.setValue(story);//send new story to its spot in the database
-                addToUserStoriesList(newStoryRef.getKey());//TODO: test to make sure key goes to the correct place...
+                addToUserStoriesList(story.getStoryId());//give the id from the story to the user for easy access.
 
                 Intent data = new Intent();
 
