@@ -65,7 +65,6 @@ public class AuthorActivity extends AppCompatActivity {
     private Button btImportPhoto;
     private ImageView ivPreview;
     private String title;
-    private String userName;
 
     private RadioButton rPersonal;
     private RadioButton rHistorical;
@@ -95,9 +94,9 @@ public class AuthorActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        /*mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        userName = currentUser.getEmail();
+        userName = currentUser.getEmail();*/
 
         btSave = (Button) findViewById(R.id.btSave);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
@@ -147,7 +146,11 @@ public class AuthorActivity extends AppCompatActivity {
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional);//zero for no favorites
+                mAuth = FirebaseAuth.getInstance();
+                currentUser = mAuth.getCurrentUser();
+                String userName = currentUser.getDisplayName();
+
+                story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
                 newStoryRef.setValue(story);//send new story to its spot in the database
                 addToUserStoriesList(newStoryRef.getKey());//TODO: test to make sure key goes to the correct place...

@@ -31,6 +31,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
 
     Context context;
 
+    String userName;
 
     public StoryAdapter(List<Story> stories){
         this.stories = stories;
@@ -38,6 +39,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
 
     @Override
     public StoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View storyView = inflater.inflate(R.layout.item_story, parent, false);
         ViewHolder viewHolder = new ViewHolder(storyView);
@@ -47,11 +49,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
+
+
         Story story = stories.get(position);
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
         holder.tvStoryBody.setText(story.getStoryBody());
-        holder.tvAuthorName.setText(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
+        holder.tvAuthorName.setText(story.getUserName());//(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
         holder.tvFavorites.setText(String.format("%d",story.getFavCount()));
 
