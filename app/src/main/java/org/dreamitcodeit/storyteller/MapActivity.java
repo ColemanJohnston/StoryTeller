@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -88,6 +89,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     String TAG = "DatabaseRefresh";
     boolean flag = false;
+    boolean locFlag = false;
+    int loopCounter = 0;
 
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
@@ -484,10 +487,15 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        locFlag = true;
+        getMyLocation();
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     void getMyLocation() {
+
+        flag = true;
+
         //noinspection MissingPermission
         map.setMyLocationEnabled(true);
 
@@ -564,6 +572,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         {
             if (getIntent().getStringExtra("notification").equals("zoom_to_current_location") && !flag)
             {
+
+                MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this); //Pretty sure this is needed, but still don't know
+                // MapActivityPermissionsDispatcher.getMyLocationWithCheck(this); // TODO I need this but it's making everything crash
                 flag = true;
                 if (mCurrentLocation != null) {
                     Toast.makeText(this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
@@ -573,7 +584,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 } else {
                     Toast.makeText(this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
                 }
-                MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//Pretty sure this is needed, but still don't know
             }
         }
 
@@ -596,10 +606,46 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
+
+                        zoomIn(locationResult.getLastLocation());
+
                         onLocationChanged(locationResult.getLastLocation());
+
+                        loopCounter++;
                     }
                 },
                 Looper.myLooper());
+    }
+
+    public void zoomIn(Location currLoc){
+
+        if (loopCounter == 1)
+        {
+            // this only happens if you are coming from a notification
+            String intentResult = getIntent().getStringExtra("notification");
+
+            // I think it will be null at the start
+            if (intentResult != null)
+            {
+                if (getIntent().getStringExtra("notification").equals("zoom_to_current_location") && !flag)
+                {
+                    getIntent().putExtra("notification", "nope");
+
+                    MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(MapActivity.this); //Pretty sure this is needed, but still don't know
+                    // MapActivityPermissionsDispatcher.getMyLocationWithCheck(this); // TODO I need this but it's making everything crash
+                    flag = true;
+                    if (currLoc != null) {
+                        Toast.makeText(MapActivity.this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
+                        LatLng latLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+                        map.animateCamera(cameraUpdate);
+                    } else {
+                        Toast.makeText(MapActivity.this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+
     }
 
     public void onLocationChanged(Location location) {
@@ -607,7 +653,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         if (location == null) {
             return;
         }
-
         // Report to the UI that the location was updated
         mCurrentLocation = location;
         String msg = "Updated Location: " +
