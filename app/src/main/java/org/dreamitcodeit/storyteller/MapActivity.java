@@ -259,7 +259,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         if(story.getIsCheckedIn()){
             marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
         }
-
+        marker.setDraggable(true); // TODO - this will become a problem when we
         latLngMarkerHashMap.put(location,marker);
     }
 
@@ -273,6 +273,27 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 storiesDialogFragment.show(fm,"fragment_dialog_fragment");
 
                 return true;
+            }
+        });
+    }
+
+    // TODO - call this function wherever above one is called
+    private void setMarkerDragListener(GoogleMap map){
+        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+                // grab marker's current location and remove the corresponding entry to the hash map
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+
             }
         });
     }
