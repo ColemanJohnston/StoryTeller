@@ -176,6 +176,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
 //                    populateMap();
                     setMarkerClickListener(map);
+                    setMarkerDragListener(map); // TODO just added
                     map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     //map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
@@ -201,14 +202,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 }
         });
 
-
-        // TODO - code to listen for real time refresh
-        // TODO - right now we will re-popoulate the map everytime anything is changed
-        // TODO - in the future we should optimize this
-
         Firebase.setAndroidContext(this);
-
-
 
         ref = new Firebase(Config.FIREBASE_URl);
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -259,7 +253,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         if(story.getIsCheckedIn()){
             marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
         }
-        marker.setDraggable(true); // TODO - this will become a problem when we
+        marker.setDraggable(true);
         latLngMarkerHashMap.put(location,marker);
     }
 
@@ -288,12 +282,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             @Override
             public void onMarkerDragStart(Marker marker) {
 
+                // check if the story's user is the same as the current user trying to drag
+
+                // if it is not, set draggable to false again TODO - this may be too late
+
                 // grab marker's current location and remove the corresponding entry to the hash map
             }
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-
+                // get the marker's current location and put in hash map
+                // do all the other things that are done in dropMarker()
             }
         });
     }
