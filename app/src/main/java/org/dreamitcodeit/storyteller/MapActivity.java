@@ -3,6 +3,7 @@ package org.dreamitcodeit.storyteller;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -499,17 +500,24 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         // Display the connection status
 
         //TODO: think about if this needs to happen, but we decided that it's annoying
-//        if (mCurrentLocation != null) {
-//            Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-//            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-//            map.animateCamera(cameraUpdate);
-//        } else {
-//            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-//        }
-        MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//Pretty sure this is needed, but still don't know
-    }
 
+        if (getIntent().getStringExtra("notification") == "zoom_to_current_location")
+        {
+            if (mCurrentLocation != null)
+            {
+                Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
+                LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+                map.animateCamera(cameraUpdate);
+            }
+            else
+            {
+                Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+            }
+            MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//Pretty sure this is needed, but still don't know
+
+        }
+    }
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     protected void startLocationUpdates() {
         mLocationRequest = new LocationRequest();
@@ -580,6 +588,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             // TODO -maybe make listy global and remove from listy to prevent lots of spam notifications
         }
 
+        Intent intent = new Intent();
+        // use System.currentTimeMillis() to have a unique ID for the pending intent
+        intent.putExtra("notification", "zoom_to_current_location");
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
         // send a push notification saying so!
         if (closeStories > 0)
         {
@@ -588,6 +601,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     (getApplicationContext())
                     .setContentTitle("There are " + closeStories + " stories near your location!")
                     .setContentText("Click here to see and read them.")
+                    .setContentIntent(pIntent)
                     .setSmallIcon(R.drawable.com_facebook_button_icon) // TODO - replace once we have a logo
                     .build();
 
