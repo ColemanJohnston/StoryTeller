@@ -76,8 +76,13 @@ public class SearchAllStoriesFragment extends StoryListFragment {
             ref.child("stories").orderByChild("title").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    Story story = dataSnapshot.getValue(Story.class);
-                    storyAdapter.add(0, story);//TODO: make sure this is the best way to add these
+                    try {
+                        Story story = dataSnapshot.getValue(Story.class);
+                        storyAdapter.add(0, story);//TODO: make sure this is the best way to add these
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
