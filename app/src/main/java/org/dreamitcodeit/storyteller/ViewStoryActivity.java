@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -146,6 +147,21 @@ public class ViewStoryActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewStoryActivity.this, ViewImageActivity.class);
+                intent.putExtra("title", tvTitle.getText().toString().trim());
+                /*Bitmap bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                intent.putExtra("byteArray", bs.toByteArray());*/
+                startActivity(intent);
+            }
+        });
+
 
     }
 
