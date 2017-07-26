@@ -23,7 +23,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -231,6 +233,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 Log.d(TAG, "Failed to read value.");
             }
         });
+
+        EditText etLocation = (EditText) findViewById(R.id.etLocation);
+        Button btSearch = (Button) findViewById(R.id.btSearch);
+        btSearch.
 
     }
 

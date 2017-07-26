@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 android:id="@+id/main_content"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,6 +46,17 @@ android:layout_height="match_parent">
                 android:layout_width="match_parent"
                 android:layout_height="550dp"
                 android:layout_alignParentTop="true" />
+
+            <EditText
+                android:id="@+id/etLocation"
+                android:layout_width="269dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btSearch"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:text="Search Loc" />
         </android.support.design.widget.CoordinatorLayout>
 
         <!-- SLIDING LAYOUT -->
@@ -71,8 +82,9 @@ android:layout_height="match_parent">
                 android:layout_below="@+id/sliding_tabs_all"
                 android:layout_weight="1"
                 android:background="@android:color/white" />
+
         </LinearLayout>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
