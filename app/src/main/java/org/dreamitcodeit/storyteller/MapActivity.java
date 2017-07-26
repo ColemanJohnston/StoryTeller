@@ -256,7 +256,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                     Address address  = addressList.get(0);
                     LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
-                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng2));
+//                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng2));
+
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
+                    map.animateCamera(cameraUpdate);
                 }
             }
 
