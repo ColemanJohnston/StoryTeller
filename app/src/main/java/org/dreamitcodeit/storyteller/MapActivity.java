@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -62,6 +61,7 @@ import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -70,7 +70,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
 @RuntimePermissions
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
@@ -91,6 +91,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     boolean flag = false;
     boolean locFlag = false;
     int loopCounter = 0;
+    private HashMap<String, Story> personalStories;
+    private HashMap<String, Story> historicalStories;
+    private HashMap<String, Story> fictionalStories;
+    private HashMap<String, Story> miscStories;
+    private ArrayList<LatLng> storyLocations;
 
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
@@ -111,14 +116,72 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
 
+        personalStories = new HashMap<>();
+        historicalStories = new HashMap<>();
+        fictionalStories = new HashMap<>();
+        miscStories = new HashMap<>();
+        latLngMarkerHashMap = new HashMap<>();
+        storyLocations = new ArrayList<>();
+
         sMapList = (Switch) findViewById(R.id.sMapList);
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
         adapterViewPager = new AllStoriesPagerAdapter(getSupportFragmentManager(), MapActivity.this, "");
+
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
+
+
+
+        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                clearMap();
+                int pos = tab.getPosition();
+
+                if(pos == AllStoriesPagerAdapter.ALL){//add all stories to map
+                    for(Map.Entry<String,Story> e : personalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                    for(Map.Entry<String,Story> e : historicalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                    for(Map.Entry<String,Story> e : fictionalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                    for(Map.Entry<String,Story> e : miscStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                }
+                else if(pos == AllStoriesPagerAdapter.PERSONAL){//add personal stories to map
+                    for(Map.Entry<String,Story> e : personalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                }
+                else if(pos == AllStoriesPagerAdapter.HISTORICAL){//add historical stories to map
+                    for(Map.Entry<String,Story> e : historicalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                }
+                else if(pos == AllStoriesPagerAdapter.FICTIONAL){// add fictional stories to map
+                    for(Map.Entry<String,Story> e : fictionalStories.entrySet()){
+                        dropMarker(e.getValue(), e.getKey());
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //do nothing for now
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //do nothing for now
+            }
+        });
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
@@ -130,12 +193,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-
+                String s = "hello";
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-
+                String s = "hello";
             }
 
             public void onPanelExpanded(View panel) {
@@ -155,8 +218,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
-
-        latLngMarkerHashMap = new HashMap<>();
         if (TextUtils.isEmpty(getResources().getString(R.string.google_maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
         }
@@ -192,7 +253,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);
+                        Intent intent = new Intent(MapActivity.this, AllStoriesActivity.class);//TODO: check if this is used still
                         startActivity(intent);
                     }
                     else {
@@ -263,6 +324,49 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         latLngMarkerHashMap.put(location,marker);
     }
 
+    private void clearMap(){
+        map.clear();
+        latLngMarkerHashMap.clear();
+
+    }
+
+    private boolean isInCurrentTab(Story s){//check if a story is in the currently displayed tab
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.ALL){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.PERSONAL && s.isPersonal()){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.HISTORICAL && s.isHistorical()){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.FICTIONAL && s.isFictional()){
+            return true;
+        }
+        return false;
+    }
+
+    private void recordStory(Story story, String key){//TODO: decide if stories can be in multiple categories
+        storyLocations.add(new LatLng(story.getLatitude(),story.getLongitude()));//for notifications
+
+        if(isInCurrentTab(story)){//for live updates and first time app is opened
+            dropMarker(story,key);
+        }
+
+        if(story.isPersonal()){
+            personalStories.put(key,story);
+        }
+        else if(story.isHistorical()){
+            historicalStories.put(key,story);
+        }
+        else if(story.isFictional()){
+            fictionalStories.put(key,story);
+        }
+        else{
+            miscStories.put(key,story);
+        }
+    }
+
     private void setMarkerClickListener(GoogleMap map){
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -284,10 +388,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {//This function gets called like crazy all the time....
                 try{//check in case there are some objects in the db that don't match my current story object
                     Story story = dataSnapshot.getValue(Story.class);
-                    dropMarker(story,dataSnapshot.getKey());
+                    recordStory(story,dataSnapshot.getKey());
                     closeToStory(mCurrentLocation);
                 }
                 catch (Exception e){
@@ -298,7 +402,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Toast.makeText(MapActivity.this,"dataSnapshot: " + dataSnapshot.toString() + "\n" + "String: " + s, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -366,9 +470,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public void closeToStory(Location location)
     {
         // Get all the locations from the hash map
-        List<LatLng> listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
+        List<LatLng> listy = storyLocations;
 
-        if (listy.size() == 0) // not efficient
+        if (listy.size() == 0) // not efficient TODO: fix this sketchy circle call to populate map
         {
             populateMap();
         }
@@ -699,5 +803,4 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
         return super.onCreateOptionsMenu(menu);
     }
-
 }
