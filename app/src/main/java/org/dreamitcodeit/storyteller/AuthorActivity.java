@@ -48,9 +48,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import jp.wasabeef.richeditor.RichEditor;
-
-import static org.dreamitcodeit.storyteller.R.id.editor;
+//import static org.dreamitcodeit.storyteller.R.id.editor;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -69,7 +67,7 @@ public class AuthorActivity extends AppCompatActivity {
     private Button btImportPhoto;
     private ImageView ivPreview;
     private String title;
-    private RichEditor mEditor;
+   // private RichEditor mEditor;
 
     private RadioButton rPersonal;
     private RadioButton rHistorical;
@@ -114,24 +112,24 @@ public class AuthorActivity extends AppCompatActivity {
         rPersonal = (RadioButton) findViewById(R.id.rPersonal);
         rHistorical = (RadioButton) findViewById(R.id.rHistorical);
         rFictional = (RadioButton) findViewById(R.id.rFictional);
-        mEditor = (RichEditor) findViewById(editor);
+      //  mEditor = (RichEditor) findViewById(editor);
 
-        mEditor.setEditorHeight(100);
-        mEditor.setEditorFontSize(22);
-        mEditor.setEditorFontColor(R.color.colorPrimaryDark);
+        //mEditor.setEditorHeight(100);
+        //mEditor.setEditorFontSize(22);
+        //mEditor.setEditorFontColor(R.color.colorPrimaryDark);
         //mEditor.setEditorBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundResource(R.drawable.bg);
-        mEditor.setPadding(10, 10, 10, 10);
+       // mEditor.setPadding(10, 10, 10, 10);
         //mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("Insert text here...");
-        mEditor.setBold();
+       // mEditor.setPlaceholder("Insert text here...");
+       // mEditor.setBold();
 
-        findViewById(R.id.bold).setOnClickListener(new View.OnClickListener() {
+      /*  findViewById(R.id.bold).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 mEditor.setBold();
             }
-        });
+        });*/
 
         //mEditor.setInputEnabled(false);
 

@@ -28,7 +28,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
@@ -83,8 +82,8 @@ public class ViewStoryActivity extends AppCompatActivity {
             // Load the image using Glide
             Glide.with(this /* context */).using(new FirebaseImageLoader())
                     .load(pathReference)
-                    .error(R.drawable.ocean)
                     .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
+                    .error(R.drawable.ocean)
                     .centerCrop()
                     .into(ivImage);
         }
@@ -100,7 +99,7 @@ public class ViewStoryActivity extends AppCompatActivity {
 <<<<<<< HEAD
         ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
 
-        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
+       // ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
