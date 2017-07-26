@@ -176,7 +176,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
 //                    populateMap();
                     setMarkerClickListener(map);
-                    setMarkerDragListener(map); // TODO just added
+//                    setMarkerDragListener(map);
                     map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     //map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
@@ -254,6 +254,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
         }
         marker.setDraggable(true);
+        setMarkerDragListener(map, story, marker);
         latLngMarkerHashMap.put(location,marker);
     }
 
@@ -272,7 +273,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     // TODO - call this function wherever above one is called
-    private void setMarkerDragListener(GoogleMap map){
+    private void setMarkerDragListener(GoogleMap map, final Story story, final Marker marker){
         map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
             @Override
             public void onMarkerDrag(Marker marker) {
@@ -282,11 +283,21 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             @Override
             public void onMarkerDragStart(Marker marker) {
 
+
+                HashMap<String, Story> storyIDs = (HashMap<String, Story>) marker.getTag();
+                String [] keys = (String[]) storyIDs.keySet().toArray();
+
                 // check if the story's user is the same as the current user trying to drag
+                if (keys[0].equals(story.getTitle()))
+                {
+                    // grab marker's current location and remove the corresponding entry to the hash map
+                }
+                else
+                {
+                    // if it is not, set draggable to false again TODO - this may be too late
+                    marker.setDraggable(false);
 
-                // if it is not, set draggable to false again TODO - this may be too late
-
-                // grab marker's current location and remove the corresponding entry to the hash map
+                }
             }
 
             @Override
