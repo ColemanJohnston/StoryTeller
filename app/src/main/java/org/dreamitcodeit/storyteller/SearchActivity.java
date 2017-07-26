@@ -28,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
-        adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"));
+        adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"), getIntent().getStringArrayListExtra("locations"));
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);

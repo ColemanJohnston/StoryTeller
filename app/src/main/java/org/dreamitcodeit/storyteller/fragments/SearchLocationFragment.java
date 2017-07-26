@@ -44,7 +44,7 @@ public class SearchLocationFragment extends StoryListFragment  {
 
         // unpack the array of possible locations and add them to our new adapter.
 
-        for (int i =0; i < locations.size(); i++)
+        for (int i = 0; i < locations.size(); i++)
         {
             SearchLocationAdapter.add(0, locations.get(i)); // TODO - what does this mean?
         }

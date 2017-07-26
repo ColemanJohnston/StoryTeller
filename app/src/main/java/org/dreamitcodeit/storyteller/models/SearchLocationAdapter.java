@@ -21,6 +21,7 @@ import org.dreamitcodeit.storyteller.Story;
 import org.dreamitcodeit.storyteller.ViewStoryActivity;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -31,10 +32,10 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAdapter.ViewHolder>{
 
-    private List<String> locations;
+    private ArrayList<String> locations;
     Context context;
 
-    public SearchLocationAdapter(List<String> locations){
+    public SearchLocationAdapter(ArrayList<String> locations){
         this.locations = locations;
     }
 
@@ -119,13 +120,14 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
                 @Override
                 public void onClick(View v) {
 
-                    // TODO - this is where you go back to the map view and pass in an intent saying to zoom in to that specific location you clicked on
+                    // this is where you go back to the map view and pass in an intent saying to zoom in to that specific location you clicked on
                     // TODO - make sure to clear the intent in map activity
                     Intent intent = new Intent(context, MapActivity.class);
                     intent.putExtra("zoom-in-to-searched-location", "true");
 
-                    // TODO - somehow get the location you clicked on and pass it back to map activity
-                    // intent.putExtra("location-to-zoom-in-to", location);
+                    // get the location you clicked on and pass it back to map activity
+                    intent.putExtra("location-to-zoom-in-to", currentLoc);
+                    context.startActivity(intent);
                 }
             });
 

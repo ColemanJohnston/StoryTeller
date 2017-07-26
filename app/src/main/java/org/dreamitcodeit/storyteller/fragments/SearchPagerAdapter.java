@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import java.util.ArrayList;
+
 /**
  * Created by neeharmb on 7/20/17.
  */
@@ -14,11 +16,18 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     private String tabTitles[] = new String[]{"By Title","By User", "By Location"};
     Context context;
     String query;
+    ArrayList<String> locations;
 
     public SearchPagerAdapter(FragmentManager fm, Context context, String query){
         super(fm);
         this.context = context;
         this.query = query;
+    }
+    public SearchPagerAdapter(FragmentManager fm, Context context, String query, ArrayList<String> locations){
+        super(fm);
+        this.context = context;
+        this.query = query;
+        this.locations = locations;
     }
 
     //return title
