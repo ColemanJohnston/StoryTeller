@@ -105,6 +105,11 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
 
     }
 
+    public void clearList(){
+        stories.clear();
+        notifyDataSetChanged();
+    }
+
     public void add(int index, Story story){
         stories.add(index, story);
         notifyItemInserted(index);//TODO: test for crashes

@@ -30,7 +30,7 @@ public class FavoriteStoriesListFragment extends StoryListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        fetchUserData();
+//        fetchUserData();
         return v;
     }
 
@@ -39,6 +39,12 @@ public class FavoriteStoriesListFragment extends StoryListFragment {
         return this;//allow for method chaining
     }
 
+    @Override
+    public void onResume() {//TODO: Change to live updates. This is a bit of a hack that is not efficient, but it should work
+        super.onResume();
+        storyAdapter.clearList();
+        fetchUserData();
+    }
 
     public void fetchUserData(){
         ref = new Firebase(Config.FIREBASE_URl);

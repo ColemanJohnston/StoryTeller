@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.MutableData;
 import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
@@ -28,17 +29,18 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
 public class ViewStoryActivity extends AppCompatActivity {
 
     private Story story;
-    private Button btnFavorite;
+    private boolean isFavorite;
+    private ImageButton ibFavorite;
     private TextView tvTitle;
     private TextView tvStoryBody;
     private ImageView ivImage;
+    private ImageView ivHeartFiller;
     String TAG = "LoadImage";
     StorageReference pathReference;
     Firebase ref;
@@ -50,11 +52,11 @@ public class ViewStoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_story);
 
         story = Parcels.unwrap(getIntent().getParcelableExtra("story"));
-
+        ivHeartFiller = (ImageView) findViewById(R.id.ivHeartFiller);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
-        btnFavorite = (Button) findViewById(R.id.btnFavorite);
+        ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
 
         tvTitle.setText(story.getTitle());
         tvStoryBody.setText(story.getStoryBody());
@@ -102,15 +104,15 @@ public class ViewStoryActivity extends AppCompatActivity {
 
         ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
+        Firebase.setAndroidContext(ViewStoryActivity.this);
+        ref = new Firebase(Config.FIREBASE_URl);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        ibFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Firebase.setAndroidContext(ViewStoryActivity.this);
-                ref = new Firebase(Config.FIREBASE_URl);
-
-                mAuth = FirebaseAuth.getInstance();
                 String uid = mAuth.getCurrentUser().getUid();
-
 
                 ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -121,15 +123,21 @@ public class ViewStoryActivity extends AppCompatActivity {
                             if(favStoryList == null){
                                 favStoryList = new ArrayList<String>();
                                 favStoryList.add(story.getStoryId());
-                                incrementFavCount();//add one the favCount of the story
+                                updateFavCount(1);//add one the favCount of the story
+                                ivHeartFiller.setVisibility(View.VISIBLE);
                             }
                             else{
-                                if(favStoryList.contains(story.getStoryId())){
-                                    //Do nothing or maybe un-favorite
+                                int index;
+                                index = favStoryList.indexOf(story.getStoryId());
+                                if(index > -1){//if the story is in the list already remove it
+                                    favStoryList.remove(index);
+                                    ivHeartFiller.setVisibility(View.INVISIBLE);
+                                    updateFavCount(-1);//take one away from the number of favorites that a story has.
                                 }
                                 else{
                                     favStoryList.add(story.getStoryId());
-                                    incrementFavCount();//add one the favCount of the story
+                                    updateFavCount(1);//add one the favCount of the story
+                                    ivHeartFiller.setVisibility(View.VISIBLE);
                                 }
                             }
                             ref.child("users").child(mAuth.getCurrentUser().getUid()).child("favoriteIDs").setValue(favStoryList);
@@ -147,10 +155,10 @@ public class ViewStoryActivity extends AppCompatActivity {
                 });
             }
         });
-
+        findIsFavorite();
     }
 
-    public void incrementFavCount(){
+    public void updateFavCount(final int num){ //note: num should be 1 or negative one
         ref.child("stories").child(story.getStoryId()).runTransaction(new Transaction.Handler(){//TODO: check to see if multiple users can make a transaction at the same time
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -158,7 +166,7 @@ public class ViewStoryActivity extends AppCompatActivity {
                 if (s == null) {
                     return Transaction.success(mutableData);//TODO: check to see what this is for
                 }
-                s.favCount = s.favCount + 1;//increment the favorites for a story
+                s.favCount = s.favCount + num;//update the favorites for a story
 
                 // Set value and report transaction success
                 mutableData.setValue(s);
@@ -173,4 +181,34 @@ public class ViewStoryActivity extends AppCompatActivity {
         });
     }
 
+
+    public void findIsFavorite(){
+        String uid = mAuth.getCurrentUser().getUid();
+        ref.child("users").child(uid).child("favoriteIDs").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+                List<String> favoriteIDs = dataSnapshot.getValue(t);
+                if(favoriteIDs == null){
+                    isFavorite = false;
+                }
+                else{
+                    isFavorite = favoriteIDs.contains(story.getStoryId());
+                }
+                if(isFavorite){
+                    ivHeartFiller.setVisibility(View.VISIBLE);
+                }
+                else{
+                    ivHeartFiller.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+    }
 }

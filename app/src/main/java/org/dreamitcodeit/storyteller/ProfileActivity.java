@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -63,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         if(uid == null){//if user id is null assume the profile belongs to the current user.
             uid = mAuth.getCurrentUser().getUid();
         }
-
+        FacebookSdk.sdkInitialize(getApplicationContext());//app crashed and the error said to do this.
         if (AccessToken.getCurrentAccessToken() != null)
         {
             // means that the user is actually logged in with FB and not just email

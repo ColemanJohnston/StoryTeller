@@ -30,8 +30,15 @@ public class YourStoriesListFragment extends StoryListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        fetchUserData();
+//        fetchUserData();
         return v;
+    }
+
+    @Override
+    public void onResume() {//TODO: Change to live updates. This is a bit of a hack that is not efficient, but it should work
+        super.onResume();
+        storyAdapter.clearList();
+        fetchUserData();
     }
 
     public YourStoriesListFragment setUid(String uid){
