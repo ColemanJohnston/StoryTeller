@@ -272,7 +272,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         });
     }
 
-    // TODO - call this function wherever above one is called
+    // TODO - call this function wherever you drop a marker
     private void setMarkerDragListener(GoogleMap map, final Story story, final Marker marker){
         map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
             @Override
@@ -286,6 +286,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 HashMap<String, Story> storyIDs = (HashMap<String, Story>) marker.getTag();
                 String [] keys = (String[]) storyIDs.keySet().toArray();
+
+                // loop through all the storyIds and check if any of them match (assume that only one will match)
 
                 // check if the story's user is the same as the current user trying to drag
                 if (keys[0].equals(story.getTitle()))
