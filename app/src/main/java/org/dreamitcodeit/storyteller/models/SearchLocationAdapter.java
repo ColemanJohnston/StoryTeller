@@ -39,7 +39,9 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         this.locations = locations;
     }
 
-
+    public SearchLocationAdapter(){
+         // empty public constructor does nothing hehe
+    }
     @Override
     public SearchLocationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

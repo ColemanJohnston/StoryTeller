@@ -68,6 +68,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -570,11 +571,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume() { // TODO - I should make a method for zooming since I do it a bunch now. oops. problem for future Maria. Variable names could also be improved upon. And this comment is for sure over 80 characters. oops.
         super.onResume();
 
         // this only happens if you are coming from a notification
         String intentResult = getIntent().getStringExtra("notification");
+
+        String zoomLocationFlag = getIntent().getStringExtra("zoom-in-to-searched-location");
+        String locationToZoomTo = getIntent().getStringExtra("location-to-zoom-in-to");
 
         // I think it will be null at the start
         if (intentResult != null)
@@ -593,6 +597,18 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 } else {
                     Toast.makeText(this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        }
+
+        if (zoomLocationFlag != null)
+        {
+            if (zoomLocationFlag.equals("true"))
+            {
+                Address address = new Address(new Locale(locationToZoomTo));
+                LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
+
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
+                map.animateCamera(cameraUpdate);
             }
         }
 
@@ -702,22 +718,26 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public ArrayList<String> getSearchedLocations(String query)
     {
         List<Address> addressList = null;
-        ArrayList<String> locations = null;
+        ArrayList<String> locations = new ArrayList<String>();
 
         // time to search for a location!!!
         if (query!= null && !query.equals(""))
         {
             Geocoder geocoder = new Geocoder(MapActivity.this);
             try {
-                addressList = geocoder.getFromLocationName(query, 10);
+                addressList = geocoder.getFromLocationName(query, 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            for (int i = 0; i< addressList.size(); i++)
+            if (addressList != null)
             {
-                locations.add(0, addressList.get(i).toString());
+                for (int i = 0; i < addressList.size(); i++)
+                {
+                    locations.add(i, addressList.get(i).toString());
+                }
             }
+
 
 //            TODO - do this later in on resume
 //            Address address  = locations.get(0);
