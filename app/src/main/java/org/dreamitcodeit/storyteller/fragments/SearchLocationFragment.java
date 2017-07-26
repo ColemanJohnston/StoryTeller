@@ -13,14 +13,16 @@ package org.dreamitcodeit.storyteller.fragments;
 
         import org.dreamitcodeit.storyteller.Config;
         import org.dreamitcodeit.storyteller.Story;
+        import org.dreamitcodeit.storyteller.models.SearchLocationAdapter;
 
+        import java.util.ArrayList;
         import java.util.List;
 
 
 public class SearchLocationFragment extends StoryListFragment  {
 
     private String query;
-    String [] locations;
+    public ArrayList<String> locations;
 
     @Nullable
     @Override
@@ -30,19 +32,21 @@ public class SearchLocationFragment extends StoryListFragment  {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         query = getArguments().getString("query");
-        locations = getArguments().getStringArray("locations");
 
-        fetchUserData();
+        // get a string array of possible locations from the SearchActivity class
+        locations = getArguments().getStringArrayList("locations");
+
+        populateLocationResults();
         return v;
     }
 
-    public void fetchUserData(){
+    public void populateLocationResults(){
 
         // unpack the array of possible locations and add them to our new adapter.
 
-        for (int i =0; i <  locations.length; i++)
+        for (int i =0; i < locations.size(); i++)
         {
-            storyAdapter.add(0, locations[i]);
+            SearchLocationAdapter.add(0, locations.get(i)); // TODO - what does this mean?
         }
     }
 }

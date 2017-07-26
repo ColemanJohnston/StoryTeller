@@ -57,9 +57,10 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
 
         if (position == 2)
         {
-            AllStoriesPagerAdapter.SearchUsersListFragment fragment = new AllStoriesPagerAdapter.SearchUsersListFragment();
+            SearchLocationFragment fragment = new SearchLocationFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
+            bundle.putStringArrayList("locations", locations);
             fragment.setArguments(bundle);
         }
 

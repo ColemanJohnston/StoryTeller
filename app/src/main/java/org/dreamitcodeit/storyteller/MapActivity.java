@@ -699,6 +699,36 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
     }
 
+    public ArrayList<String> getSearchedLocations(String query)
+    {
+        List<Address> addressList = null;
+        ArrayList<String> locations = null;
+
+        // time to search for a location!!!
+        if (query!= null && !query.equals(""))
+        {
+            Geocoder geocoder = new Geocoder(MapActivity.this);
+            try {
+                addressList = geocoder.getFromLocationName(query, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i< addressList.size(); i++)
+            {
+                locations.add(0, addressList.get(i).toString());
+            }
+
+//            TODO - do this later in on resume
+//            Address address  = locations.get(0);
+//            LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
+//
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
+//            map.animateCamera(cameraUpdate);
+        }
+        return locations;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -713,6 +743,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 Intent intent = new Intent(MapActivity.this, SearchActivity.class);
                 intent.putExtra("query", query);
+
+                // get the list of possible locations
+                ArrayList<String> locations = getSearchedLocations(query);
+
+                if (locations != null)
+                {
+                    intent.putStringArrayListExtra("locations", locations);
+                }
 
                 startActivity(intent);
 
