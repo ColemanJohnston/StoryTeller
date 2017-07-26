@@ -15,7 +15,7 @@
         android:layout_marginTop="12dp"
         android:adjustViewBounds="false"
         android:background="@drawable/round_outline"
-        android:scaleType="fitXY" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/tvTitle"

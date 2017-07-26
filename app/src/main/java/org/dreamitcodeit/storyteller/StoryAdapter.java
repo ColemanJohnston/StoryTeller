@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -87,9 +88,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             // Load the image using Glide
             Glide.with(context /* context*/).using(new FirebaseImageLoader())
                     .load(pathReference)
-                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 0))
-                    .error(R.drawable.ocean)
-                    .centerCrop()
+                    .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 15, 0))
                     .into(holder.ivStoryImage);
         }
         // an error will be thrown when a story has no picture
