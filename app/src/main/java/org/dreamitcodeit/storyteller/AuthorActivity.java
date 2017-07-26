@@ -291,12 +291,15 @@ public class AuthorActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
         {
             // Now we have the image from the camera
-            Bitmap cameraImage = (Bitmap) data.getExtras().get("Data");
+            Bundle extras = data.getExtras();
+            Bitmap cameraImage = (Bitmap) extras.get("data");
+
+            bity = cameraImage;
+
             ivPreview.setImageBitmap(cameraImage);
 
-            // TODO - eventually convert to a bitmap so it can be pushed into cloud storage
             // Now store the image in Firebase Cloud Storage
-            // storeImageCloud();
+            storeImageCloud();
         }
     }
 
