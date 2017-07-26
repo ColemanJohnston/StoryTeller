@@ -5,7 +5,7 @@
 
     <ImageView
         android:id="@+id/ivStoryImage"
-        android:layout_width="310dp"
+        android:layout_width="305dp"
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"

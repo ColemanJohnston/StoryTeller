@@ -174,6 +174,7 @@ public class AuthorActivity extends AppCompatActivity {
                 String userName = currentUser.getDisplayName();
 
                 //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
+                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
 
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
                 story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, newStoryRef.getKey(), userName );//zero for no favorites
