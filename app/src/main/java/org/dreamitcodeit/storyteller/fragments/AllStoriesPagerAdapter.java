@@ -10,6 +10,10 @@ import android.support.v4.app.FragmentManager;
  */
 
 public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
+    public static final int ALL = 0;
+    public static final int PERSONAL = 1;
+    public static final int HISTORICAL = 2;
+    public static final int FICTIONAL = 3;
 
     private String tabTitles[] = new String[]{"All","Personal", "Historical"
     , "Fictional"};
@@ -37,7 +41,6 @@ public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
     //return the fragment to use depending on the position
     @Override
     public Fragment getItem(int position) {
-
         // search "by title" tab is selected
         if(position == 0){
             SearchAllStoriesFragment fragment = new SearchAllStoriesFragment();
