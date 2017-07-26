@@ -60,19 +60,24 @@ public class ViewStoryActivity extends AppCompatActivity {
         btnFavorite = (Button) findViewById(R.id.btnFavorite);
 
         tvTitle.setText(story.getTitle());
-        //tvStoryBody.setText(story.getStoryBody());
 
-        final SpannableString spannableString = new SpannableString(story.getStoryBody());
-        int position = 0;
-        for (int i = 0, ei = story.getStoryBody().length(); i < ei; i++) {
-            char c = story.getStoryBody().charAt(i);
-            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
-                position = i;
-                break;
+
+        if (story.getStoryBody() != null && !story.getStoryBody().isEmpty()) {
+            final SpannableString spannableString = new SpannableString(story.getStoryBody());
+            int position = 0;
+            for (int i = 0, ei = story.getStoryBody().length(); i < ei; i++) {
+                char c = story.getStoryBody().charAt(i);
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    position = i;
+                    break;
+                }
             }
+            spannableString.setSpan(new RelativeSizeSpan(3.0f), position, position + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvStoryBody.setText(spannableString, TextView.BufferType.SPANNABLE);
         }
-        spannableString.setSpan(new RelativeSizeSpan(3.0f), position, position + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvStoryBody.setText(spannableString, TextView.BufferType.SPANNABLE);
+        else {
+            tvStoryBody.setText(story.getStoryBody());
+        }
 
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
