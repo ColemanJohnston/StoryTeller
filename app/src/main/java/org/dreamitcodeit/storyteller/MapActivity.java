@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -61,6 +64,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +72,7 @@ import java.util.List;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
@@ -80,6 +85,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     AllStoriesPagerAdapter adapterViewPager;
 
     TabLayout tablayout;
+    EditText etLocation;
+    Button btSearch;
 
 
     private SupportMapFragment mapFragment;
@@ -203,11 +210,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 }
         });
 
-
-        // TODO - code to listen for real time refresh
-        // TODO - right now we will re-popoulate the map everytime anything is changed
-        // TODO - in the future we should optimize this
-
         Firebase.setAndroidContext(this);
 
 
@@ -234,9 +236,31 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
-        EditText etLocation = (EditText) findViewById(R.id.etLocation);
-        Button btSearch = (Button) findViewById(R.id.btSearch);
-        btSearch.
+        etLocation = (EditText) findViewById(R.id.etLocation);
+        btSearch = (Button) findViewById(R.id.btSearch);
+        btSearch.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // time to search for a location!!!
+                String location = etLocation.getText().toString().trim();
+                List<Address> addressList = null;
+                if (location!= null && !location.equals(""))
+                {
+                    Geocoder geocoder = new Geocoder(MapActivity.this);
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Address address  = addressList.get(0);
+                    LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
+                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng2));
+                }
+            }
+
+        });
 
     }
 
