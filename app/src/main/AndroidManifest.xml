@@ -75,7 +75,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".AllStoriesActivity"></activity>
+        <activity android:name=".AllStoriesActivity" />
+        <activity android:name=".fragments.SearchLocationFragment"></activity>
     </application>
 
 </manifest>

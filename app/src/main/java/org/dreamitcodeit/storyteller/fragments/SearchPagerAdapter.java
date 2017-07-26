@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 
 public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
 
-    private String tabTitles[] = new String[]{"By Title","By User"};
+    private String tabTitles[] = new String[]{"By Title","By User", "By Location"};
     Context context;
     String query;
 
@@ -30,7 +30,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     //return the total number of fragments
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     //return the fragment to use depending on the position
@@ -48,11 +48,19 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
 
         // search "by users" tab is selected
         if(position == 1){
-            SearchUsersListFragment fragment = new SearchUsersListFragment();
+            AllStoriesPagerAdapter.SearchUsersListFragment fragment = new AllStoriesPagerAdapter.SearchUsersListFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
             fragment.setArguments(bundle);
             return fragment;
+        }
+
+        if (position == 2)
+        {
+            AllStoriesPagerAdapter.SearchUsersListFragment fragment = new AllStoriesPagerAdapter.SearchUsersListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("query", query);
+            fragment.setArguments(bundle);
         }
 
         // search fails

@@ -43,7 +43,7 @@ public class SearchUsersListFragment extends StoryListFragment  {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Story story = dataSnapshot.getValue(Story.class);
-                storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+                storyAdapter.add(0,story); //TODO: make sure this is the best way to add these
             }
 
             @Override
