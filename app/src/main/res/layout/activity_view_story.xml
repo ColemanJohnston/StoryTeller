@@ -9,13 +9,13 @@
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        app:srcCompat="@color/colorAccent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_height="120dp"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:adjustViewBounds="false"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        app:srcCompat="@color/colorAccent" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -63,5 +63,13 @@
         android:src="@drawable/ic_favorite_border_black_24dp"
         android:backgroundTint="@android:color/transparent"
         android:layout_marginBottom="-13dp"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_above="@+id/tvStoryBody"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/above_shadow" />
 
 </RelativeLayout>

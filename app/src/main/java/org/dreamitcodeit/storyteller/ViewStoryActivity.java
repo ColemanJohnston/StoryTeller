@@ -108,7 +108,6 @@ public class ViewStoryActivity extends AppCompatActivity {
             Glide.with(this /* context */).using(new FirebaseImageLoader())
                     .load(pathReference)
                     .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
-                    .error(R.drawable.ocean)
                     .centerCrop()
                     .into(ivImage);
         }

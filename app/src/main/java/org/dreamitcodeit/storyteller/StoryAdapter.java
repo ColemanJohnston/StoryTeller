@@ -98,6 +98,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             e.printStackTrace();
         }
 
+        holder.tvStoryBody.bringToFront();
+
 
 
     }
