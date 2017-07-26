@@ -71,8 +71,7 @@ public class ViewStoryActivity extends AppCompatActivity {
                 break;
             }
         }
-        spannableString.setSpan(new RelativeSizeSpan(2.0f), position, position + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//titleTextView.setText(spannableString.toString());
+        spannableString.setSpan(new RelativeSizeSpan(3.0f), position, position + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvStoryBody.setText(spannableString, TextView.BufferType.SPANNABLE);
 
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
