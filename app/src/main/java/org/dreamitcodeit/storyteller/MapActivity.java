@@ -330,8 +330,28 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     }
 
+    private boolean isInCurrentTab(Story s){//check if a story is in the currently displayed tab
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.ALL){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.PERSONAL && s.isPersonal()){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.HISTORICAL && s.isHistorical()){
+            return true;
+        }
+        if(tablayout.getSelectedTabPosition() == AllStoriesPagerAdapter.FICTIONAL && s.isFictional()){
+            return true;
+        }
+        return false;
+    }
+
     private void recordStory(Story story, String key){//TODO: decide if stories can be in multiple categories
         storyLocations.add(new LatLng(story.getLatitude(),story.getLongitude()));//for notifications
+
+        if(isInCurrentTab(story)){//for live updates and first time app is opened
+            dropMarker(story,key);
+        }
 
         if(story.isPersonal()){
             personalStories.put(key,story);
