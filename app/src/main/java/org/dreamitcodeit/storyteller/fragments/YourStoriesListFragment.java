@@ -12,6 +12,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.dreamitcodeit.storyteller.Config;
 import org.dreamitcodeit.storyteller.Story;
@@ -25,11 +26,14 @@ import java.util.List;
 public class YourStoriesListFragment extends StoryListFragment {
     private String uid;
     Firebase ref;
+    String currentUserID;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
 //        fetchUserData();
         return v;
     }
@@ -65,7 +69,10 @@ public class YourStoriesListFragment extends StoryListFragment {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Story story = dataSnapshot.getValue(Story.class);
                                 story.setStoryId(dataSnapshot.getKey());
-                                storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+
+                                if( !(story.getUserName() == null || story.getUserName().isEmpty() ) || story.getuID().equals(currentUserID)){
+                                    storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+                                }
                             }
 
                             @Override
