@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -68,7 +69,7 @@ public class AuthorActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etStoryBody;
     private Button btSave;
-    private Button btTakePhoto;
+    private ImageButton btTakePhoto;
     private Button btImportPhoto;
     private ImageView ivPreview;
     private String title;
@@ -107,9 +108,12 @@ public class AuthorActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         btSave = (Button) findViewById(R.id.btSave);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Bold.ttf");
+
+        btSave.setTypeface(typeface);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
         etTitle = (EditText) findViewById(R.id.etTitle);
-        btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
+        btTakePhoto = (ImageButton) findViewById(R.id.btTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
@@ -126,7 +130,6 @@ public class AuthorActivity extends AppCompatActivity {
         tvDate.setText(today);
 
         ivPreview.setVisibility(View.INVISIBLE);
-
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,13 +300,11 @@ public class AuthorActivity extends AppCompatActivity {
 
                 ivPreview.setVisibility(View.VISIBLE);
 
-
                 // show the preview image to the user
                 ivPreview.setImageBitmap(image);
 
                 // Now store the image in Firebase Cloud Storage
                 storeImageCloud();
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -323,6 +324,7 @@ public class AuthorActivity extends AppCompatActivity {
             }
 
             try {
+                ivPreview.setVisibility(View.VISIBLE);
                 ivPreview.setImageURI(photoURI);
                 bity = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
             }

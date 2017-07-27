@@ -53,29 +53,19 @@
 
     <Button
         android:id="@+id/btSave"
-        android:text="Create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/etStoryBody"
-        android:layout_toEndOf="@+id/editText5" />
+        android:layout_marginTop="12dp"
+        android:textSize="20dp"
+        android:background="@drawable/color_accent"
+        android:text="Create Story!"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/bTakePhoto"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:text="Take Photo"
-        android:textSize="10sp"
-        android:layout_below="@+id/btSave"
-        android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:id="@+id/ivPreview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@color/colorAccent"
-        android:layout_below="@+id/bTakePhoto"
-        android:layout_alignStart="@+id/btSave" />
+
 
     <Button
         android:id="@+id/btImportPhoto"
@@ -84,7 +74,7 @@
         android:text="Import Photo"
         android:textSize="10sp"
         android:layout_below="@+id/btSave"
-        android:layout_toEndOf="@+id/bTakePhoto" />
+        android:layout_toEndOf="@+id/btTakePhoto" />
 
     <EditText
         android:id="@+id/tvDate"
@@ -104,15 +94,6 @@
         android:layout_below="@+id/btSave"
         android:layout_toEndOf="@+id/btImportPhoto"
         android:layout_alignBottom="@+id/btImportPhoto" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignParentStart="true" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -160,5 +141,24 @@
         android:layout_alignBottom="@+id/rHistorical"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/rHistorical" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/rFictional"
+        app:srcCompat="@color/colorAccent" />
+
+    <ImageButton
+        android:id="@+id/btTakePhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorWhite"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/take_photo"
+        android:layout_alignTop="@+id/tvDate"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/btImportPhoto" />
 
 </RelativeLayout>
