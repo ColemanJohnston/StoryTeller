@@ -1,6 +1,7 @@
 package org.dreamitcodeit.storyteller.fragments;
 
 import android.content.Context;
+import android.location.Address;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     private String tabTitles[] = new String[]{"By Title","By User", "By Location"};
     Context context;
     String query;
-    ArrayList<String> locations;
+    ArrayList<Address> locations;
 
 //    public SearchPagerAdapter(FragmentManager fm, Context context, String query){
 //        super(fm);
@@ -25,7 +26,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
 //        this.query = query;
 //    }
 
-    public SearchPagerAdapter(FragmentManager fm, Context context, String query, ArrayList<String> locations){
+    public SearchPagerAdapter(FragmentManager fm, Context context, String query, ArrayList<Address> locations){
         super(fm);
         this.context = context;
         this.query = query;
@@ -72,9 +73,8 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
             SearchLocationFragment fragment = new SearchLocationFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
-            bundle.putStringArrayList("locations", locations);
+            bundle.putParcelableArrayList("locations", locations);
             fragment.setArguments(bundle);
-            Toast.makeText(context, "Mase it to twooooo", Toast.LENGTH_SHORT).show();
             return fragment;
         }
 

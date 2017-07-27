@@ -23,20 +23,18 @@ package org.dreamitcodeit.storyteller.fragments;
 public class SearchLocationFragment extends LocationListFragment  {
 
     private String query;
-    // public ArrayList<String> locations;
-    // SearchLocationAdapter adapter;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // setContentView(R.layout.activity_search_location_fragment); TODO - do you ever do this in a fragment?
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         query = getArguments().getString("query");
 
         // get a string array of possible locations from the SearchActivity class
-        locations = getArguments().getStringArrayList("locations");
+        locations = getArguments().getParcelableArrayList("locations");
         // adapter = new SearchLocationAdapter(locations);
 
 

@@ -1,6 +1,8 @@
 package org.dreamitcodeit.storyteller;
 
+import android.location.Address;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.firebase.client.Firebase;
 
 import org.dreamitcodeit.storyteller.fragments.SearchPagerAdapter;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,7 +30,9 @@ public class SearchActivity extends AppCompatActivity {
 
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
-        adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"), getIntent().getStringArrayListExtra("locations"));
+        ArrayList<Address> locations = getIntent().getParcelableArrayListExtra("locations");
+
+        adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"), locations);
         vPager.setAdapter(adapterViewPager);
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);

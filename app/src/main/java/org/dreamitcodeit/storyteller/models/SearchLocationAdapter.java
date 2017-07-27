@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller.models;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,17 +33,17 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAdapter.ViewHolder>{
 
-    private ArrayList<String> locations;
+    private ArrayList<Address> locations;
     Context context;
 
-    public SearchLocationAdapter(ArrayList<String> locations){
+    public SearchLocationAdapter(ArrayList<Address> locations){
         this.locations = locations;
     }
 
 
     public SearchLocationAdapter(){
          // empty public constructor does nothing hehe
-        locations = new ArrayList<String>();
+        locations = new ArrayList<Address>();
     }
     @Override
     public SearchLocationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +66,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         notifyDataSetChanged();
     }
 
-    public void add(int index, String location){
+    public void add(int index, Address location){
         locations.add(index, location);
         notifyItemInserted(index); //TODO: test for crashes
     }
@@ -74,11 +75,11 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
     public void onBindViewHolder(SearchLocationAdapter.ViewHolder holder, int position) {
 
 
-        String currLoc = locations.get(position);
+        Address currLoc = locations.get(position);
         holder.currentLoc = currLoc;
 
         // only the title is filled in with each location possibility
-        holder.tvTitle.setText(currLoc);
+        holder.tvTitle.setText(currLoc.toString()); // todo - fix later, find out how to get place from address yikes
 
         // The rest are either set to blank or invisible
         holder.tvStoryBody.setText("");
@@ -103,7 +104,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         public ImageView ivFavoriteIcon;
         public ImageView ivIsCheckedIn;
         public TextView tvIsCheckedIn;
-        public String currentLoc;
+        public Address currentLoc;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -130,7 +131,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
                     intent.putExtra("zoom-in-to-searched-location", "true");
 
                     // get the location you clicked on and pass it back to map activity
-                    intent.putExtra("location-to-zoom-in-to", currentLoc);
+                    //intent.p("location-to-zoom-in-to", currentLoc);
                     context.startActivity(intent);
                 }
             });

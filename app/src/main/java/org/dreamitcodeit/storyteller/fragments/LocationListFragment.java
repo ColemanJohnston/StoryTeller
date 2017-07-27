@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller.fragments;
 
+import android.location.Address;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class LocationListFragment extends Fragment {
 
     SearchLocationAdapter searchLocationAdapter;
-    ArrayList<String> locations;
+    ArrayList<Address> locations;
     RecyclerView rvStories;
 
 
@@ -32,7 +33,7 @@ public class LocationListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stories_list, container, false);
         rvStories = (RecyclerView) v.findViewById(R.id.rvStories);
-        locations = new ArrayList<>();
+        locations = new ArrayList<Address>();
         searchLocationAdapter = new SearchLocationAdapter(locations);
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(searchLocationAdapter);

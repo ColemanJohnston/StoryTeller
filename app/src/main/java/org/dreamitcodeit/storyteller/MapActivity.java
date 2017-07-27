@@ -604,7 +604,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         {
             if (zoomLocationFlag.equals("true"))
             {
-                Address address = new Address(new Locale(locationToZoomTo));
+                Address address = new Address(locationToZoomTo);
                 LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
 
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
@@ -715,18 +715,19 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
     }
 
-    public ArrayList<String> getSearchedLocations(String query)
-    {
+    public ArrayList<Address> getSearchedLocations(String query) {
         List<Address> addressList = null;
-        ArrayList<String> locations = new ArrayList<String>();
+        ArrayList<Address> locations = new ArrayList<Address>();
 
         // time to search for a location!!!
-        if (query!= null && !query.equals(""))
-        {
+        if (query != null && !query.equals("")) {
             Geocoder geocoder = new Geocoder(MapActivity.this);
-            try {
+            try
+            {
                 addressList = geocoder.getFromLocationName(query, 1);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
 
@@ -734,19 +735,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             {
                 for (int i = 0; i < addressList.size(); i++)
                 {
-                    locations.add(i, addressList.get(i).toString());
+                    // locations.add(i, addressList.get(i).toString());
+                    locations.add(i, addressList.get(i));
                 }
             }
-
-
-//            TODO - do this later in on resume
-//            Address address  = locations.get(0);
-//            LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
-//
-//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
-//            map.animateCamera(cameraUpdate);
+            return locations;
         }
-        return locations;
+
+        return null; // should never happen
     }
 
     @Override
@@ -765,11 +761,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 intent.putExtra("query", query);
 
                 // get the list of possible locations
-                ArrayList<String> locations = getSearchedLocations(query);
+                ArrayList<Address> locations = getSearchedLocations(query);
 
                 if (locations != null)
                 {
-                    intent.putStringArrayListExtra("locations", locations);
+                    // intent.putStringArrayListExtra("locations", locations);
+                    intent.putParcelableArrayListExtra("locations", locations);
                 }
 
                 startActivity(intent);
