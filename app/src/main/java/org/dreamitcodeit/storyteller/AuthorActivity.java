@@ -125,6 +125,8 @@ public class AuthorActivity extends AppCompatActivity {
         String today = dateFormat.format(Calendar.getInstance().getTime());
         tvDate.setText(today);
 
+        ivPreview.setVisibility(View.INVISIBLE);
+
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,6 +294,9 @@ public class AuthorActivity extends AppCompatActivity {
                 // get a bitmap from the stream
                 Bitmap image = BitmapFactory.decodeStream(inputStream);
                 bity = image;
+
+                ivPreview.setVisibility(View.VISIBLE);
+
 
                 // show the preview image to the user
                 ivPreview.setImageBitmap(image);
