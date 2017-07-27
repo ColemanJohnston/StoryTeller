@@ -3,13 +3,9 @@
 
     <item>
         <shape android:shape="rectangle">
-
-            <gradient
-                android:angle="90"
-                android:endColor="#00ffffff"
-                android:startColor="#0b000000"
-                android:centerColor="#00ffffff" />
-
+            <!--apply button background transparent, full opacity-->
+            <solid android:color="@color/color5"/>
+            <!--make button border solid color, nontransparent-->
             <corners android:radius="5dp"/>
         </shape>
     </item>

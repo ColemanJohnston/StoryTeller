@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -246,7 +245,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
                     //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
-                    .icon(BitmapDescriptorFactory.defaultMarker(55)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(57)));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
@@ -257,7 +256,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(stories);
         }
         if(story.getIsCheckedIn()){
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(95));
         }
 
         latLngMarkerHashMap.put(location,marker);
