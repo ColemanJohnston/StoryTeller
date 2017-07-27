@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class ViewStoryActivity extends AppCompatActivity {
     private TextView tvStoryBody;
     private ImageView ivImage;
     private ImageView ivHeartFiller;
+    private TextView tvUsername;
     String TAG = "LoadImage";
     StorageReference pathReference;
     Firebase ref;
@@ -61,6 +63,7 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
         ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
 
         tvTitle.setText(story.getTitle());
 
@@ -81,6 +84,10 @@ public class ViewStoryActivity extends AppCompatActivity {
         else {
             tvStoryBody.setText(story.getStoryBody());
         }
+
+        tvUsername.setText(String.format("%s %s","By",story.getUserName()));
+        setUsernameOnClickListener();
+
 
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
@@ -245,4 +252,17 @@ public class ViewStoryActivity extends AppCompatActivity {
 
 
     }
+
+    private void setUsernameOnClickListener(){
+        tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = ViewStoryActivity.this;
+                Intent i = new Intent(context, ProfileActivity.class);
+                i.putExtra("uid",story.getuID());
+                context.startActivity(i);
+            }
+        });
+    }
+
 }
