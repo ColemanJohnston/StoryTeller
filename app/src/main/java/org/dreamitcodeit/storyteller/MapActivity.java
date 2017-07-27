@@ -105,6 +105,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
 
+    // for searching by location
+    String zoomLocationFlag;
+    ArrayList<Address> locationToZoomTo;
+
 
     private final static String KEY_LOCATION = "location";
 
@@ -424,10 +428,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 closeStories++;
             }
 
-            // TODO -maybe make listy global and remove from listy to prevent lots of spam notifications
+            // TODO - maybe make listy global and remove from listy to prevent lots of spam notifications
         }
 
-        Intent intent = new Intent(this, MapActivity.class); // TODO - can we deliver the intent to the same class we called it from?
+        Intent intent = new Intent(this, MapActivity.class);
         // use System.currentTimeMillis() to have a unique ID for the pending intent
         intent.putExtra("notification", "zoom_to_current_location");
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
@@ -530,14 +534,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     /*
-     * Called when the Activity becomes visible.
-    */
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    /*
      * Called when the Activity is no longer visible.
 	 */
     @Override
@@ -570,15 +566,36 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
     }
 
+    /*
+ * Called when the Activity becomes visible.
+*/
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        zoomLocationFlag = getIntent().getStringExtra("zoom-in-to-searched-location");
+        locationToZoomTo = getIntent().getParcelableArrayListExtra("location-to-zoom-in-to");
+
+        if (zoomLocationFlag != null && locationToZoomTo != null) // todo map is null when this is called
+        {
+            if (zoomLocationFlag.equals("true"))
+            {
+                Address address = locationToZoomTo.get(0);
+                LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
+
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
+                map.animateCamera(cameraUpdate);
+                zoomLocationFlag = null; // todo - this doesn't work :( duh
+            }
+        }
+    }
+
     @Override
     protected void onResume() { // TODO - I should make a method for zooming since I do it a bunch now. oops. problem for future Maria. Variable names could also be improved upon. And this comment is for sure over 80 characters. oops.
         super.onResume();
 
         // this only happens if you are coming from a notification
         String intentResult = getIntent().getStringExtra("notification");
-
-        String zoomLocationFlag = getIntent().getStringExtra("zoom-in-to-searched-location");
-        String locationToZoomTo = getIntent().getStringExtra("location-to-zoom-in-to");
 
         // I think it will be null at the start
         if (intentResult != null)
@@ -597,18 +614,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 } else {
                     Toast.makeText(this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
                 }
-            }
-        }
-
-        if (zoomLocationFlag != null)
-        {
-            if (zoomLocationFlag.equals("true"))
-            {
-                Address address = new Address(locationToZoomTo);
-                LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
-
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
-                map.animateCamera(cameraUpdate);
             }
         }
 

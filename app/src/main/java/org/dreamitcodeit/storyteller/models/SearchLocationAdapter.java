@@ -130,8 +130,12 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
                     Intent intent = new Intent(context, MapActivity.class);
                     intent.putExtra("zoom-in-to-searched-location", "true");
 
+                    ArrayList<Address> stupid = new ArrayList<Address>();
+                    stupid.add(0, currentLoc);
+
                     // get the location you clicked on and pass it back to map activity
                     //intent.p("location-to-zoom-in-to", currentLoc);
+                    intent.putParcelableArrayListExtra("location-to-zoom-in-to", stupid);
                     context.startActivity(intent);
                 }
             });
