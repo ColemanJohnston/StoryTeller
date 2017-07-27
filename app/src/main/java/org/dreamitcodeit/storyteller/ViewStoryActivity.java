@@ -88,36 +88,27 @@ public class ViewStoryActivity extends AppCompatActivity {
 
         tvStoryBody.setTypeface(typeface);
 
-        try
-        {
-            // get a reference to the storage bucket!
-            FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            // Create a storage reference from our app
-            StorageReference storageRef = storage.getReference();
+        // get a reference to the storage bucket!
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            // Create a reference with an initial file path and name of title.
-            // This is hopefully where your file will be found in cloud storage
-            pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
 
-            // temp path just to test
-            //pathReference = storageRef.child("images/" + "download.jpg");
+        // Create a reference with an initial file path and name of title.
+        // This is hopefully where your file will be found in cloud storage
+        pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
+
+        // temp path just to test
+        //pathReference = storageRef.child("images/" + "download.jpg");
 
 
-            // Load the image using Glide
-            Glide.with(this /* context */).using(new FirebaseImageLoader())
-                    .load(pathReference)
-                    .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
-                    .error(R.drawable.ocean)
-                    .centerCrop()
-                    .into(ivImage);
-        }
-        // an error will be thrown when a story has no picture
-        // a little jank but good for now I guess
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        // Load the image using Glide
+        Glide.with(this /* context */).using(new FirebaseImageLoader())
+                .load(pathReference)
+                .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
+                .centerCrop()
+                .into(ivImage);
 
         /*ivImage.setImageResource(R.drawable.ocean);
         ivImage.setAdjustViewBounds(true);
@@ -125,6 +116,8 @@ public class ViewStoryActivity extends AppCompatActivity {
         ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
 
        // ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        //ivImage.setBackgroundColor(R.drawable.color1);
 
         Firebase.setAndroidContext(ViewStoryActivity.this);
         ref = new Firebase(Config.FIREBASE_URl);

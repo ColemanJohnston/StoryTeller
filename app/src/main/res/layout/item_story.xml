@@ -15,7 +15,7 @@
         android:layout_marginTop="12dp"
         android:adjustViewBounds="false"
         android:background="@drawable/round_outline"
-        android:scaleType="fitXY" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -64,6 +64,7 @@
         android:textColor="@color/colorWhite"
         android:layout_alignEnd="@+id/ivStoryImage" />
 
+
     <TextView
         android:id="@+id/tvStoryBody"
         android:layout_width="match_parent"
@@ -75,9 +76,36 @@
         android:maxLines="3"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:textColor="@color/colorWhite"
         android:text="This is an example of longer text to demonstrate that it can be cut of at some point, but I'm done with thinking of new things to write so I'm just going to continue griping until this text gets to the end."
-        android:textSize="12sp" />
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/round_outline_transparent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/round_outline_transparent"
+        android:layout_below="@+id/tvTitle"
+        android:layout_alignStart="@+id/ivStoryImage"
+        android:layout_alignEnd="@+id/ivStoryImage"
+        android:layout_alignBottom="@+id/ivStoryImage" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/round_outline_transparent"
+        android:scaleType="centerCrop"
+        android:scaleY="-1"
+        app:srcCompat="@drawable/round_outline_transparent"
+        android:layout_alignTop="@+id/ivStoryImage"
+        android:layout_alignStart="@+id/ivStoryImage"
+        android:layout_alignEnd="@+id/ivStoryImage" />
 
     <TextView
         android:id="@+id/tvFavorites"

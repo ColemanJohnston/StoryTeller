@@ -17,13 +17,19 @@
         android:layout_marginTop="20dp"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:id="@+id/etTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvTitle"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp" >
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:layout_alignTop="@+id/tvTitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp" />
+    </ScrollView>
 
 
     <TextView
@@ -40,9 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="20"
+        android:inputType="textCapSentences"
         android:scrollbars="vertical"
         android:layout_below="@+id/tvBody"
-        android:layout_toEndOf="@+id/editText5" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/btSave"
