@@ -24,8 +24,6 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Firebase.setAndroidContext(this);
-
         ViewPager vPager = (ViewPager) findViewById(R.id.viewpager);
 
         adapterViewPager = new SearchPagerAdapter(getSupportFragmentManager(), this, getIntent().getStringExtra("query"), getIntent().getStringArrayListExtra("locations"));

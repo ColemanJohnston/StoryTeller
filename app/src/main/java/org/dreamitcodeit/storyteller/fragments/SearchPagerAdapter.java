@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,12 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     String query;
     ArrayList<String> locations;
 
-    public SearchPagerAdapter(FragmentManager fm, Context context, String query){
-        super(fm);
-        this.context = context;
-        this.query = query;
-    }
+//    public SearchPagerAdapter(FragmentManager fm, Context context, String query){
+//        super(fm);
+//        this.context = context;
+//        this.query = query;
+//    }
+
     public SearchPagerAdapter(FragmentManager fm, Context context, String query, ArrayList<String> locations){
         super(fm);
         this.context = context;
@@ -64,6 +66,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
             return fragment;
         }
 
+        // search "by location" tab is selected
         if (position == 2)
         {
             SearchLocationFragment fragment = new SearchLocationFragment();
@@ -71,6 +74,8 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
             bundle.putString("query", query);
             bundle.putStringArrayList("locations", locations);
             fragment.setArguments(bundle);
+            Toast.makeText(context, "Mase it to twooooo", Toast.LENGTH_SHORT).show();
+            return fragment;
         }
 
         // search fails

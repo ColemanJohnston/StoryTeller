@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller.fragments;
 
+        import android.location.Location;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.view.LayoutInflater;
@@ -19,10 +20,11 @@ package org.dreamitcodeit.storyteller.fragments;
         import java.util.List;
 
 
-public class SearchLocationFragment extends StoryListFragment  {
+public class SearchLocationFragment extends LocationListFragment  {
 
     private String query;
-    public ArrayList<String> locations;
+    // public ArrayList<String> locations;
+    // SearchLocationAdapter adapter;
 
     @Nullable
     @Override
@@ -35,6 +37,8 @@ public class SearchLocationFragment extends StoryListFragment  {
 
         // get a string array of possible locations from the SearchActivity class
         locations = getArguments().getStringArrayList("locations");
+        // adapter = new SearchLocationAdapter(locations);
+
 
         populateLocationResults();
         return v;
@@ -44,11 +48,9 @@ public class SearchLocationFragment extends StoryListFragment  {
 
         // unpack the array of possible locations and add them to our new adapter.
 
-        SearchLocationAdapter adapter = new SearchLocationAdapter();
-
         for (int i = 0; i < locations.size(); i++)
         {
-            adapter.add(0, locations.get(i));
+            searchLocationAdapter.add(0, locations.get(i));
         }
     }
 }
