@@ -191,6 +191,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 //                    populateMap();
                     setMarkerClickListener(map);
                     map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    zoomToSearchedLocation();
                     //map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }
             });
@@ -573,6 +574,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     protected void onStart() {
         super.onStart();
 
+    }
+
+    public void zoomToSearchedLocation(){
         zoomLocationFlag = getIntent().getStringExtra("zoom-in-to-searched-location");
         locationToZoomTo = getIntent().getParcelableArrayListExtra("location-to-zoom-in-to");
 
