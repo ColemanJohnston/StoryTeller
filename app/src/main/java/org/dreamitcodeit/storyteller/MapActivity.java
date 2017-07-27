@@ -188,7 +188,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setInfoWindowAdapter(new MarkerWindowAdapter(getLayoutInflater()));
-//                    populateMap();
                     setMarkerClickListener(map);
                     map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     zoomToSearchedLocation();
@@ -199,8 +198,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
-
-        // SWitCH STUFF
 
         sMapList.setChecked(false);
         sMapList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -218,10 +215,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         Firebase.setAndroidContext(this);
 
-
-
         ref = new Firebase(Config.FIREBASE_URl);
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
         Firebase myRef = ref.getRoot().getRef();
 
         // Read from the database
@@ -241,35 +235,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 Log.d(TAG, "Failed to read value.");
             }
         });
-
-//        etLocation = (EditText) findViewById(R.id.etLocation);
-//        btSearch = (Button) findViewById(R.id.btSearch);
-//        btSearch.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // time to search for a location!!!
-//                String location = etLocation.getText().toString().trim();
-//                List<Address> addressList = null;
-//                if (location!= null && !location.equals(""))
-//                {
-//                    Geocoder geocoder = new Geocoder(MapActivity.this);
-//                    try {
-//                        addressList = geocoder.getFromLocationName(location, 1);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    Address address  = addressList.get(0);
-//                    LatLng latLng2 = new LatLng(address.getLatitude(), address.getLongitude());
-////                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng2));
-//
-//                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng2, 17);
-//                    map.animateCamera(cameraUpdate);
-//                }
-//            }
-//
-//        });
 
     }
 
@@ -733,7 +698,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             Geocoder geocoder = new Geocoder(MapActivity.this);
             try
             {
-                addressList = geocoder.getFromLocationName(query, 1);
+                addressList = geocoder.getFromLocationName(query, 5);
             }
             catch (IOException e)
             {

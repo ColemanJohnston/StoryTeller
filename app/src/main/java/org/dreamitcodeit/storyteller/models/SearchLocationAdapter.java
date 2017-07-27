@@ -20,6 +20,7 @@ import org.dreamitcodeit.storyteller.MapActivity;
 import org.dreamitcodeit.storyteller.R;
 import org.dreamitcodeit.storyteller.Story;
 import org.dreamitcodeit.storyteller.ViewStoryActivity;
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -79,7 +80,9 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         holder.currentLoc = currLoc;
 
         // only the title is filled in with each location possibility
-        holder.tvTitle.setText(currLoc.toString()); // todo - fix later, find out how to get place from address yikes
+        //holder.tvTitle.setText(currLoc.toString()); // todo - fix later, find out how to get place from address yikes
+
+        holder.tvTitle.setText(currLoc.getAddressLine(0));
 
         // The rest are either set to blank or invisible
         holder.tvStoryBody.setText("");
