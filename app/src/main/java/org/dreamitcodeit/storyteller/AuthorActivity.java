@@ -82,6 +82,7 @@ public class AuthorActivity extends AppCompatActivity {
 
     // for taking photos
     public Uri file;
+    Uri photoURI;
     String mCurrentPhotoPath;
     InputStream inputStream;
     Bitmap bity;
@@ -293,18 +294,22 @@ public class AuthorActivity extends AppCompatActivity {
         // For taking a photo in app
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
         {
-
+            Bundle extras;
+            Uri qualityImageUri;
             // Now we have the image from the camera
-            Bundle extras = data.getExtras();
-            Bitmap cameraImage = (Bitmap) extras.get("data");
+            if (data != null){
+                extras = data.getExtras();
+                Bitmap cameraImage = (Bitmap) extras.get("data");
+            }
 
-            Uri qualityImageUri = (Uri) extras.get( MediaStore.EXTRA_OUTPUT);
-
-            ivPreview.setImageURI(qualityImageUri);
-
-//            bity = cameraImage;
-//
-//            ivPreview.setImageBitmap(cameraImage);
+            try {
+                ivPreview.setImageURI(photoURI);
+                bity = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
             // Now store the image in Firebase Cloud Storage
             storeImageCloud();
@@ -331,7 +336,7 @@ public class AuthorActivity extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                photoURI = FileProvider.getUriForFile(this,
                         "org.dreamitcodeit.storyteller.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
