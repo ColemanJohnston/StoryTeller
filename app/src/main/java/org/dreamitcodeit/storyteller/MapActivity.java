@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -525,7 +528,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        startAuthorActivity(latLng);
+        Marker marker = map.addMarker(new MarkerOptions()
+                .position(latLng)
+                //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
+                .icon(BitmapDescriptorFactory.defaultMarker(55)));
+
+
+        if(isCloseToCurrentLocation(latLng)){//drop verified color if marker is close enough to the current location
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
+        }
+        dropPinEffect(marker);//author activity is started here
+        //startAuthorActivity(latLng);
     }
 
     @Override
@@ -554,10 +567,21 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     public void onFabComposeCurrentLocationClick(View v){
         if (mCurrentLocation != null) {
-            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            final LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            map.animateCamera(cameraUpdate);
-            startAuthorActivity(latLng);
+            map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+                @Override
+                public void onFinish() {
+                    onMapLongClick(latLng);// do same as long click when animation is finished
+                }
+
+                @Override
+                public void onCancel() {
+                    Toast.makeText(MapActivity.this,"Author action canceled",Toast.LENGTH_SHORT).show();//TODO: think about if we want to still take them to the AuthorActivity if they scroll away while the camera is updating
+                }
+            });
+
+            //startAuthorActivity(latLng);
         } else {
             Toast.makeText(this, "Current location unavailable!", Toast.LENGTH_SHORT).show();
         }
@@ -802,5 +826,49 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void dropPinEffect(final Marker marker) {
+        // Handler allows us to repeat a code block after a specified delay
+        final android.os.Handler handler = new android.os.Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 500;
+
+        // Use the bounce interpolator
+        final android.view.animation.Interpolator interpolator =
+                new LinearInterpolator();
+
+        // Animate marker with a bounce updating its position every 15ms
+        handler.post(new Runnable() {
+            boolean flag1 = true;
+            boolean flag2 = true;
+
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+
+                float t = Math.max(1 - interpolator.getInterpolation((float) elapsed / duration), 0);
+                // Set the anchor
+                marker.setAnchor(0.5f, 1.0f + 14 * t);
+
+                if (t > 0.0) {
+                    handler.postDelayed(this, 15);
+                }
+                else if(flag1){//delay after pin finishes dropping (for satisfaction)
+                    Vibrator v = (Vibrator) MapActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(1);//tiny vibration (1 millisecond) //TODO does it need to be longer??
+                    flag1 = false;
+                    handler.postDelayed(this,300);
+                }
+                else if(flag2){ //start next activity and delay before removing marker
+                    flag2 = false;
+                    startAuthorActivity(marker.getPosition());
+                    handler.postDelayed(this, 100);
+                }
+                else{
+                    marker.remove();
+                }
+            }
+        });
     }
 }
