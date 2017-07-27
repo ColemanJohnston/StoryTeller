@@ -80,16 +80,14 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         holder.currentLoc = currLoc;
 
         // only the title is filled in with each location possibility
-        //holder.tvTitle.setText(currLoc.toString()); // todo - fix later, find out how to get place from address yikes
 
         holder.tvTitle.setText(currLoc.getAddressLine(0));
+        holder.tvAuthorName.setText(currLoc.getCountryName());
 
         // The rest are either set to blank or invisible
-        holder.tvStoryBody.setText("");
-        holder.tvAuthorName.setText("");
         holder.tvDate.setText("");
         holder.tvFavorites.setText("");
-
+        holder.tvStoryBody.setText("");
         holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
         holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         holder.ivFavoriteIcon.setVisibility(View.INVISIBLE);
