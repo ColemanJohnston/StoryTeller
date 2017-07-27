@@ -41,8 +41,6 @@ public class Story {
 
 
     public Story(String title, String storyBody, String uID, double latitude, double longitude, String date, boolean isCheckedIn, int favCount, boolean isPersonal, boolean isHistorical, boolean isFictional, String storyId, String userName){
-
-
         this.title = title;
         this.storyBody = storyBody;
         this.uID = uID;

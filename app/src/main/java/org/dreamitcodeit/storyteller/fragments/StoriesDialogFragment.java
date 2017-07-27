@@ -15,9 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.dreamitcodeit.storyteller.AuthorActivity;
 import org.dreamitcodeit.storyteller.MapActivity;
+import org.dreamitcodeit.storyteller.NarrowStoryAdapter;
 import org.dreamitcodeit.storyteller.R;
 import org.dreamitcodeit.storyteller.Story;
-import org.dreamitcodeit.storyteller.StoryAdapter;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class StoriesDialogFragment extends DialogFragment {
     private ImageButton ibPlus;
     private RecyclerView rvStories;
     private List<Story> stories;
-    private StoryAdapter storyAdapter;
+    private NarrowStoryAdapter storyAdapter;
 
     public StoriesDialogFragment(){}
 
@@ -54,7 +54,7 @@ public class StoriesDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         rvStories = (RecyclerView) view.findViewById(R.id.rvStories);
         ibPlus = (ImageButton) view.findViewById(R.id.ibPlus);
-        storyAdapter = new StoryAdapter(stories);
+        storyAdapter = new NarrowStoryAdapter(stories);
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(storyAdapter);
 

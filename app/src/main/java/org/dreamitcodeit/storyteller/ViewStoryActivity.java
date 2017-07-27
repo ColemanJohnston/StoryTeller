@@ -1,9 +1,13 @@
 package org.dreamitcodeit.storyteller;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -59,50 +63,61 @@ public class ViewStoryActivity extends AppCompatActivity {
         ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
 
         tvTitle.setText(story.getTitle());
-        tvStoryBody.setText(story.getStoryBody());
+
+
+        if (story.getStoryBody() != null && !story.getStoryBody().isEmpty()) {
+            final SpannableString spannableString = new SpannableString(story.getStoryBody());
+            int position = 0;
+            for (int i = 0, ei = story.getStoryBody().length(); i < ei; i++) {
+                char c = story.getStoryBody().charAt(i);
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    position = i;
+                    break;
+                }
+            }
+            spannableString.setSpan(new RelativeSizeSpan(3.0f), position, position + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvStoryBody.setText(spannableString, TextView.BufferType.SPANNABLE);
+        }
+        else {
+            tvStoryBody.setText(story.getStoryBody());
+        }
+
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Regular.ttf");
 
         tvStoryBody.setTypeface(typeface);
 
-        try
-        {
-            // get a reference to the storage bucket!
-            FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            // Create a storage reference from our app
-            StorageReference storageRef = storage.getReference();
+        // get a reference to the storage bucket!
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            // Create a reference with an initial file path and name of title.
-            // This is hopefully where your file will be found in cloud storage
-            pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
 
-            // temp path just to test
-            //pathReference = storageRef.child("images/" + "download.jpg");
+        // Create a reference with an initial file path and name of title.
+        // This is hopefully where your file will be found in cloud storage
+        pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
+
+        // temp path just to test
+        //pathReference = storageRef.child("images/" + "download.jpg");
 
 
-            // Load the image using Glide
-            Glide.with(this /* context */).using(new FirebaseImageLoader())
-                    .load(pathReference)
-                    .error(R.drawable.ocean)
-                    .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
-                    .centerCrop()
-                    .into(ivImage);
-        }
-        // an error will be thrown when a story has no picture
-        // a little jank but good for now I guess
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        // Load the image using Glide
+        Glide.with(this /* context */).using(new FirebaseImageLoader())
+                .load(pathReference)
+                .bitmapTransform(new RoundedCornersTransformation(this, 15, 0))
+                .centerCrop()
+                .into(ivImage);
 
         /*ivImage.setImageResource(R.drawable.ocean);
         ivImage.setAdjustViewBounds(true);
 <<<<<<< HEAD
         ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
 
-        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
+       // ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        //ivImage.setBackgroundColor(R.drawable.color1);
 
         Firebase.setAndroidContext(ViewStoryActivity.this);
         ref = new Firebase(Config.FIREBASE_URl);
@@ -155,7 +170,26 @@ public class ViewStoryActivity extends AppCompatActivity {
                 });
             }
         });
+
         findIsFavorite();
+
+
+
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewStoryActivity.this, ViewImageActivity.class);
+                intent.putExtra("title", tvTitle.getText().toString().trim());
+                /*Bitmap bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                intent.putExtra("byteArray", bs.toByteArray());*/
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     public void updateFavCount(final int num){ //note: num should be 1 or negative one
