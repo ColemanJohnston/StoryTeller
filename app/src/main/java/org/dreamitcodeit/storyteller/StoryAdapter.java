@@ -34,7 +34,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     Context context;
     private Context resources;
 
-    int colorCounter = 0;
+    int currPosition = 0;
 
     public StoryAdapter(List<Story> stories){
         this.stories = stories;
@@ -98,23 +98,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
          //   holder.ivStoryImage.setImageResource(R.drawable.ocean);
           //  holder.ivStoryImage.setBackgroundResource(R.drawable.round_outline);
 
-        int currPosition = stories.indexOf(story);
-    //    if (currPosition%5 == 1) colorCounter = 0;
+        currPosition = stories.indexOf(story);
         if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
         if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
         if (currPosition%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
         if (currPosition%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
         if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
-     //   colorCounter++;
-
-
-        //  e.printStackTrace();
-        //}
-
 
         holder.tvStoryBody.bringToFront();
-
-
     }
 
     @Override
@@ -163,18 +154,16 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ViewStoryActivity.class);
                     intent.putExtra("story", Parcels.wrap(currentStory));
+                    intent.putExtra("position", currPosition);
                     v.getContext().startActivity(intent);
                 }
             });
 
         }
-
-
     }
 }

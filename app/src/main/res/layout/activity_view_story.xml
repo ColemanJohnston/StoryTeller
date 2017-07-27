@@ -8,14 +8,13 @@
 
     <ImageView
         android:id="@+id/ivImage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="false"
-        android:scaleType="fitXY"
-        app:srcCompat="@color/colorAccent" />
+        android:background="@color/colorAccent"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -28,6 +27,10 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:scrollbars = "vertical">-->
     <TextView
         android:id="@+id/tvStoryBody"
         android:layout_width="wrap_content"
@@ -38,6 +41,7 @@
         android:scrollbars="vertical"
         android:text="TextView"
         android:textColor="@android:color/black" />
+    <!--</ScrollView>-->
 
 
     <ImageView
@@ -64,12 +68,6 @@
         android:backgroundTint="@android:color/transparent"
         android:layout_marginBottom="-13dp"/>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_above="@+id/tvStoryBody"
-        android:layout_alignParentStart="true"
-        app:srcCompat="@drawable/above_shadow" />
+
 
 </RelativeLayout>
