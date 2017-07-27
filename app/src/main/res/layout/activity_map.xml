@@ -47,16 +47,6 @@ android:layout_height="match_parent">
                 android:layout_height="550dp"
                 android:layout_alignParentTop="true" />
 
-            <EditText
-                android:id="@+id/etLocation"
-                android:layout_width="269dp"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/btSearch"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:text="Search Loc" />
         </android.support.design.widget.CoordinatorLayout>
 
         <!-- SLIDING LAYOUT -->
