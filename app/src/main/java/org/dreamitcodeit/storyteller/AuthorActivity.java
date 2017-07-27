@@ -70,7 +70,7 @@ public class AuthorActivity extends AppCompatActivity {
     private EditText etStoryBody;
     private Button btSave;
     private ImageButton btTakePhoto;
-    private Button btImportPhoto;
+    private ImageButton btImportPhoto;
     private ImageView ivPreview;
     private String title;
 
@@ -115,7 +115,7 @@ public class AuthorActivity extends AppCompatActivity {
         etTitle = (EditText) findViewById(R.id.etTitle);
         btTakePhoto = (ImageButton) findViewById(R.id.btTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
-        btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
+        btImportPhoto = (ImageButton) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvDate = (TextView) findViewById(R.id.tvDate);
         rPersonal = (RadioButton) findViewById(R.id.rPersonal);
