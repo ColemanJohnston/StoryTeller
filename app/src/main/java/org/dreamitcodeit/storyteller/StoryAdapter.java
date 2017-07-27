@@ -98,6 +98,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
          //   holder.ivStoryImage.setImageResource(R.drawable.ocean);
           //  holder.ivStoryImage.setBackgroundResource(R.drawable.round_outline);
 
+     //   holder.ivStoryImage.setScaleType(scaleXY);
+
         currPosition = stories.indexOf(story);
         if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
         if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);

@@ -12,5 +12,6 @@
     <color name ="color4">#CA0C84</color>
     <color name="color5">#BF009F</color>
     <color name="verifiedPin">#9FBF00</color>
+    <color name = "colorYellow">#fff200</color>
 
 </resources>
