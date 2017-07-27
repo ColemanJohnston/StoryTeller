@@ -45,9 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvBody"
-        android:lines="2"
+        android:gravity="top"
+        android:lines="3"
         android:maxLines="5"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:scrollbars="vertical" />
 
 
@@ -119,30 +120,45 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/ivPreview"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/radioGroup">
 
-        <RadioButton
-            android:id="@+id/rPersonal"
-            android:layout_width="92dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="Personal" />
-
-        <RadioButton
-            android:id="@+id/rHistorical"
-            android:layout_width="93dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="Historical" />
-
-        <RadioButton android:id="@+id/rFictional"
-            android:layout_width="93dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Fictional"
-            android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
+
+    <RadioButton
+        android:id="@+id/rPersonal"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        android:onClick="onRadioButtonClicked"
+        android:text="Personal"
+        android:layout_below="@+id/btImportPhoto"
+        android:layout_toStartOf="@+id/tvDate" />
+
+    <RadioButton
+        android:id="@+id/rHistorical"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:onClick="onRadioButtonClicked"
+        android:text="Historical"
+        android:layout_below="@+id/rPersonal"
+        android:layout_alignEnd="@+id/rPersonal" />
+
+    <RadioButton
+        android:id="@+id/rFictional"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/rHistorical"
+        android:layout_below="@+id/rHistorical"
+        android:onClick="onRadioButtonClicked"
+        android:text="Fictional" />
+
+    <Switch
+        android:id="@+id/swAnonymous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post anonymously?"
+        android:layout_alignBottom="@+id/rHistorical"
+        android:layout_toEndOf="@+id/rHistorical"
+        android:layout_below="@+id/rPersonal" />
 
 </RelativeLayout>

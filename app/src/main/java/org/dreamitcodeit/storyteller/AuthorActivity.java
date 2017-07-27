@@ -15,12 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +90,9 @@ public class AuthorActivity extends AppCompatActivity {
     DatePickerFragment datePickerFragment;
     private FirebaseUser currentUser;
 
+    private Switch swAnonymous;
+    String userName;
+
     private TextView tvDate;
 
     @Override
@@ -112,26 +117,8 @@ public class AuthorActivity extends AppCompatActivity {
         rPersonal = (RadioButton) findViewById(R.id.rPersonal);
         rHistorical = (RadioButton) findViewById(R.id.rHistorical);
         rFictional = (RadioButton) findViewById(R.id.rFictional);
-      //  mEditor = (RichEditor) findViewById(editor);
+        swAnonymous = (Switch) findViewById(R.id.swAnonymous);
 
-        //mEditor.setEditorHeight(100);
-        //mEditor.setEditorFontSize(22);
-        //mEditor.setEditorFontColor(R.color.colorPrimaryDark);
-        //mEditor.setEditorBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundResource(R.drawable.bg);
-       // mEditor.setPadding(10, 10, 10, 10);
-        //mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-       // mEditor.setPlaceholder("Insert text here...");
-       // mEditor.setBold();
-
-      /*  findViewById(R.id.bold).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setBold();
-            }
-        });*/
-
-        //mEditor.setInputEnabled(false);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
         String today = dateFormat.format(Calendar.getInstance().getTime());
@@ -143,6 +130,20 @@ public class AuthorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "DatePicker");
+            }
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        userName = currentUser.getDisplayName();
+
+        //swAnonymous.setChecked(false);
+        swAnonymous.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    userName = "";
+                }
             }
         });
 
@@ -168,13 +169,6 @@ public class AuthorActivity extends AppCompatActivity {
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                mAuth = FirebaseAuth.getInstance();
-                currentUser = mAuth.getCurrentUser();
-                String userName = currentUser.getDisplayName();
-
-                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
-                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
 
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
                 story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, newStoryRef.getKey(), userName );//zero for no favorites

@@ -26,9 +26,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.view.animation.LinearInterpolator;
-
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -41,7 +40,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -73,11 +71,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 
@@ -315,7 +311,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
                     //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
-                    .icon(BitmapDescriptorFactory.defaultMarker(57)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(43)));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
