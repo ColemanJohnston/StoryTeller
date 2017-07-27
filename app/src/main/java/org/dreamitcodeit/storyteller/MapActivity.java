@@ -406,7 +406,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Toast.makeText(MapActivity.this,"dataSnapshot: " + dataSnapshot.toString() + "\n" + "String: " + s, Toast.LENGTH_LONG).show();
+                //TODO: support live updates here
             }
 
             @Override
