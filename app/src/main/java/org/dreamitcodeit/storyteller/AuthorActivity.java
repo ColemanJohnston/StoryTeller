@@ -166,6 +166,34 @@ public class AuthorActivity extends AppCompatActivity {
             }
         });
 
+        ibPersonal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibPersonal.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isPersonal = true;
+            }
+        });
+
+        ibHistorical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibHistorical.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isHistorical = true;
+            }
+        });
+
+        ibFictional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibFictional.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isFictional = true;
+            }
+        });
+                                   //   }
+
         // save this story and return to MapView Activity
         btSave.setOnClickListener(new View.OnClickListener() {
 
