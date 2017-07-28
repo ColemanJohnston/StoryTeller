@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 
 public class StoriesDialogFragment extends DialogFragment {
-    private ImageButton ibPlus;
+    private Button btPlus;
     private RecyclerView rvStories;
     private List<Story> stories;
     private NarrowStoryAdapter storyAdapter;
@@ -53,12 +54,12 @@ public class StoriesDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvStories = (RecyclerView) view.findViewById(R.id.rvStories);
-        ibPlus = (ImageButton) view.findViewById(R.id.ibPlus);
+        btPlus = (Button) view.findViewById(R.id.btPlus);
         storyAdapter = new NarrowStoryAdapter(stories);
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(storyAdapter);
 
-        ibPlus.setOnClickListener(new View.OnClickListener() {
+        btPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(getContext() instanceof MapActivity){//making sure that this dialog box was started by mapActivity TODO: find out if this is bad style

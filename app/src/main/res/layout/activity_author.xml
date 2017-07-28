@@ -51,10 +51,6 @@
         android:inputType="textMultiLine|textCapSentences"
         android:scrollbars="vertical" />
 
-
-
-
-
     <EditText
         android:id="@+id/tvDate"
         android:layout_width="120dp"
@@ -161,13 +157,13 @@
         android:id="@+id/btSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="@drawable/color_accent"
-        android:text="Create Story!"
+        android:text="Share your memory"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="bold" />
 
 </RelativeLayout>
