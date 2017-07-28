@@ -619,7 +619,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
         locFlag = true;
-//      getMyLocation(); //TODO: this is crashing the app on opening after a delete, but i think it is needed for notifications
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
