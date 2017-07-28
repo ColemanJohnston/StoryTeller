@@ -81,35 +81,6 @@
 
     </RadioGroup>
 
-    <RadioButton
-        android:id="@+id/rPersonal"
-        android:layout_width="92dp"
-        android:layout_height="wrap_content"
-        android:onClick="onRadioButtonClicked"
-        android:text="Personal"
-        android:layout_below="@+id/ibCalendar"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/rFictional"
-        android:layout_alignBottom="@+id/swAnonymous" />
-
-    <RadioButton
-        android:id="@+id/rHistorical"
-        android:layout_width="93dp"
-        android:layout_height="wrap_content"
-        android:onClick="onRadioButtonClicked"
-        android:text="Historical"
-        android:layout_alignBottom="@+id/btTakePhoto"
-        android:layout_toStartOf="@+id/ibCalendar" />
-
-    <RadioButton
-        android:id="@+id/rFictional"
-        android:layout_width="93dp"
-        android:layout_height="wrap_content"
-        android:onClick="onRadioButtonClicked"
-        android:text="Fictional"
-        android:layout_below="@+id/rHistorical"
-        android:layout_alignStart="@+id/rHistorical" />
-
     <Switch
         android:id="@+id/swAnonymous"
         android:layout_width="wrap_content"
@@ -134,13 +105,12 @@
     <ImageButton
         android:id="@+id/btImportPhoto"
         android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/rHistorical"
+        android:layout_height="25dp"
+        android:layout_below="@+id/etStoryBody"
         android:layout_toEndOf="@+id/btTakePhoto"
         android:backgroundTint="@android:color/transparent"
         android:cropToPadding="false"
-        android:layout_marginTop="3dp"
-        android:scaleType="fitStart"
+        android:scaleType="centerCrop"
         android:tint="@color/colorAccent"
         app:srcCompat="@drawable/import_image_dark" />
 
@@ -165,5 +135,39 @@
         android:textColor="@color/colorWhite"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/ibPersonal"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/btTakePhoto"
+        android:layout_marginStart="11dp"
+        android:layout_toEndOf="@+id/btImportPhoto"
+        android:background="@drawable/color_accent"
+        android:scaleType="fitCenter"
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/personal" />
+
+    <ImageButton
+        android:id="@+id/ibHistorical"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/ibPersonal"
+        android:layout_toEndOf="@+id/ibPersonal"
+        android:background="@drawable/color_accent"
+        android:scaleType="centerInside"
+        android:tint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/historical" />
+
+    <ImageButton
+        android:id="@+id/ibFictional"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/color_accent"
+        android:scaleType="centerInside"
+        android:tint="@color/colorWhite"
+        app:srcCompat="@drawable/fictional"
+        android:layout_alignTop="@+id/ibHistorical"
+        android:layout_toEndOf="@+id/ibHistorical" />
 
 </RelativeLayout>
