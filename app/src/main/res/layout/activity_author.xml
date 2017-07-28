@@ -68,12 +68,12 @@
         android:id="@+id/ibCalendar"
         android:layout_width="50dp"
         android:layout_height="45dp"
+        android:layout_alignTop="@+id/tvDate"
+        android:layout_toStartOf="@+id/tvDate"
         android:backgroundTint="@android:color/transparent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/date_picker"
-        android:layout_below="@+id/etStoryBody"
-        android:layout_toStartOf="@+id/tvDate" />
+        app:srcCompat="@drawable/calendar_dark" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
