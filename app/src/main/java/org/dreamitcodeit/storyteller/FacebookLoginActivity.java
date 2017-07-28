@@ -25,7 +25,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.dreamitcodeit.storyteller.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,10 +136,15 @@ public class FacebookLoginActivity extends AppCompatActivity {
                             Firebase.setAndroidContext(FacebookLoginActivity.this);
                             Firebase ref = new Firebase(Config.FIREBASE_URl);
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Firebase userRef = ref.child("users").child(user.getUid());
                             String fbName = response.getJSONObject().get("name").toString();
                             String fbUserID = response.getJSONObject().get("id").toString();
-                            User newUser = new User(user.getUid(), null, null, fbName, fbUserID);
-                            ref.child("users").child(newUser.getUid()).setValue(newUser);
+//                            User newUser = new User(user.getUid(), null, null, fbName, fbUserID);
+//                            ref.child("users").child(newUser.getUid()).setValue(newUser);
+                            userRef.child("fbName").setValue(fbName);
+                            userRef.child("fbUserID").setValue(fbUserID);
+                            userRef.child("uid").setValue(user.getUid());
+
                             goMainScreen();
                             //fbLocation = response.getJSONObject().get("location").toString();
 
