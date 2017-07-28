@@ -51,18 +51,7 @@
         android:scrollbars="vertical" />
 
 
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etStoryBody"
-        android:layout_marginTop="12dp"
-        android:textSize="20dp"
-        android:background="@drawable/color_accent"
-        android:text="Create Story!"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold" />
+
 
 
     <EditText
@@ -76,10 +65,13 @@
 
     <ImageButton
         android:id="@+id/ibCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_date_range_black_24dp"
-        android:layout_below="@+id/btSave"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:backgroundTint="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:tint="@color/colorAccent"
+        app:srcCompat="@drawable/date_picker"
+        android:layout_below="@+id/etStoryBody"
         android:layout_toStartOf="@+id/tvDate" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -99,6 +91,7 @@
         android:onClick="onRadioButtonClicked"
         android:text="Personal"
         android:layout_below="@+id/ibCalendar"
+        android:layout_toEndOf="@+id/ivPreview"
         android:layout_alignParentStart="true" />
 
     <RadioButton
@@ -107,8 +100,9 @@
         android:layout_height="wrap_content"
         android:onClick="onRadioButtonClicked"
         android:text="Historical"
-        android:layout_below="@+id/rPersonal"
-        android:layout_alignEnd="@+id/rPersonal" />
+        android:layout_alignBaseline="@+id/swAnonymous"
+        android:layout_alignBottom="@+id/swAnonymous"
+        android:layout_toEndOf="@+id/rPersonal" />
 
     <RadioButton
         android:id="@+id/rFictional"
@@ -124,28 +118,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post anonymously?"
-        android:layout_below="@+id/ibCalendar"
+        android:layout_alignBaseline="@+id/rPersonal"
+        android:layout_alignBottom="@+id/rPersonal"
         android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:id="@+id/ivPreview"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/rFictional"
-        app:srcCompat="@color/colorAccent" />
 
     <ImageButton
         android:id="@+id/btTakePhoto"
         android:layout_width="29dp"
         android:layout_height="25dp"
-        android:layout_alignBottom="@+id/tvDate"
-        android:layout_marginBottom="11dp"
         android:tint="@color/colorAccent"
         android:background="@android:color/transparent"
         android:backgroundTint="@color/colorWhite"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/take_photo" />
+        android:layout_marginBottom="11dp"
+        app:srcCompat="@drawable/take_photo"
+        android:layout_alignBottom="@+id/tvDate"
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:id="@+id/btImportPhoto"
@@ -155,7 +143,29 @@
         android:backgroundTint="@android:color/transparent"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/import_photo"
-        android:layout_below="@+id/btSave"
+        android:layout_below="@+id/etStoryBody"
         android:layout_toEndOf="@+id/btTakePhoto" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:srcCompat="@color/colorAccent"
+        android:layout_below="@+id/rFictional"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btSave" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_accent"
+        android:text="Create Story!"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
