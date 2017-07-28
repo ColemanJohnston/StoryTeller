@@ -50,6 +50,7 @@
         android:layout_below="@+id/tvTitle"
         android:maxLines="40"
         android:scrollbars="vertical"
+        android:fastScrollEnabled="true"
         android:text="TextView"
         android:textColor="@android:color/black" />
     <!--</ScrollView>-->

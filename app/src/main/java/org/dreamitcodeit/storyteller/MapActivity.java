@@ -321,7 +321,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker = map.addMarker(new MarkerOptions()
                     .position(location)
                     //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
-                    .icon(BitmapDescriptorFactory.defaultMarker(57)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(43)));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker

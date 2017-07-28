@@ -2,10 +2,12 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,13 +17,16 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,8 +71,8 @@ public class AuthorActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etStoryBody;
     private Button btSave;
-    private Button btTakePhoto;
-    private Button btImportPhoto;
+    private ImageButton btTakePhoto;
+    private ImageButton btImportPhoto;
     private ImageView ivPreview;
     private String title;
 
@@ -92,6 +97,9 @@ public class AuthorActivity extends AppCompatActivity {
     DatePickerFragment datePickerFragment;
     private FirebaseUser currentUser;
 
+    private Switch swAnonymous;
+    String userName;
+
     private TextView tvDate;
 
     @Override
@@ -102,27 +110,52 @@ public class AuthorActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         btSave = (Button) findViewById(R.id.btSave);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Bold.ttf");
+
+        btSave.setTypeface(typeface);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
         etTitle = (EditText) findViewById(R.id.etTitle);
-        btTakePhoto = (Button) findViewById(R.id.bTakePhoto);
+
+        etTitle.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etTitle, InputMethodManager.SHOW_IMPLICIT);
+        btTakePhoto = (ImageButton) findViewById(R.id.btTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
-        btImportPhoto = (Button) findViewById(R.id.btImportPhoto);
+        btImportPhoto = (ImageButton) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvDate = (TextView) findViewById(R.id.tvDate);
         rPersonal = (RadioButton) findViewById(R.id.rPersonal);
         rHistorical = (RadioButton) findViewById(R.id.rHistorical);
         rFictional = (RadioButton) findViewById(R.id.rFictional);
 
+        swAnonymous = (Switch) findViewById(R.id.swAnonymous);
+
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
         String today = dateFormat.format(Calendar.getInstance().getTime());
         tvDate.setText(today);
 
+        ivPreview.setVisibility(View.INVISIBLE);
 
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "DatePicker");
+            }
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        userName = currentUser.getDisplayName();
+
+        //swAnonymous.setChecked(false);
+        swAnonymous.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    userName = "";
+                }
             }
         });
 
@@ -148,13 +181,6 @@ public class AuthorActivity extends AppCompatActivity {
                 double longitude = getIntent().getDoubleExtra("long", 0);
                 boolean isCheckedIn = getIntent().getBooleanExtra("isCheckedIn",false);
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                mAuth = FirebaseAuth.getInstance();
-                currentUser = mAuth.getCurrentUser();
-                String userName = currentUser.getDisplayName();
-
-                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
-                //story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, userName);//zero for no favorites
 
                 Firebase newStoryRef = ref.child("stories").push(); //generate new spot in database
                 story = new Story(title,storyBody, uid,latitude, longitude, tvDate.getText().toString(), isCheckedIn, 0, isPersonal, isHistorical, isFictional, newStoryRef.getKey(), userName );//zero for no favorites
@@ -278,12 +304,13 @@ public class AuthorActivity extends AppCompatActivity {
                 Bitmap image = BitmapFactory.decodeStream(inputStream);
                 bity = image;
 
+                ivPreview.setVisibility(View.VISIBLE);
+
                 // show the preview image to the user
                 ivPreview.setImageBitmap(image);
 
                 // Now store the image in Firebase Cloud Storage
                 storeImageCloud();
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -303,6 +330,7 @@ public class AuthorActivity extends AppCompatActivity {
             }
 
             try {
+                ivPreview.setVisibility(View.VISIBLE);
                 ivPreview.setImageURI(photoURI);
                 bity = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
             }

@@ -85,7 +85,7 @@ public class ViewStoryActivity extends AppCompatActivity {
             tvStoryBody.setText(story.getStoryBody());
         }
 
-        tvUsername.setText(String.format("%s %s","By",story.getUserName()));
+        tvUsername.setText(story.getUserName());
         setUsernameOnClickListener();
 
 

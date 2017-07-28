@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#BF009F</color>
-    <color name="colorPrimaryDark">#BF009F</color>
+    <color name="colorPrimary">#a5cfd4</color>
+    <color name="colorPrimaryDark">#a5cfd4</color>
     <color name="colorAccent">#BFDEBD</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorHeart">#c72542</color>
     <color name="colorBlack">#000000</color>
-    <color name ="color1">#F9401A</color>
-    <color name ="color2">#E72C41</color>
-    <color name ="color3">#D61969</color>
-    <color name ="color4">#CA0C84</color>
-    <color name="color5">#BF009F</color>
+    <color name ="color1">#DBD7D2</color>
+    <color name ="color2">#a5cfd4</color>
+    <color name ="color3">#ffd670</color>
+    <color name ="color4">#8E98C8</color>
+    <color name="color5">#3D4060</color>
     <color name="verifiedPin">#9FBF00</color>
-    <color name = "colorYellow">#fff200</color>
+    <color name = "colorYellow">#ffd670</color>
+
+
 
 </resources>

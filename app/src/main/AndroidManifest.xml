@@ -61,7 +61,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ViewStoryActivity" />
-        <activity android:name=".AuthorActivity" />
+        <activity android:name=".AuthorActivity"
+            android:windowSoftInputMode="adjustUnspecified"/>
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".SearchActivity"
