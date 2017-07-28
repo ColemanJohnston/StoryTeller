@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,6 +18,7 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +33,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -64,6 +68,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
 import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
+import android.graphics.PorterDuff.Mode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,8 +159,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
+
+        // set the tab icons for the tags
         for (int i = 0; i < imageResId.length; i++) {
             tablayout.getTabAt(i).setIcon(imageResId[i]);
+            int tabIconColor = ContextCompat.getColor(this, R.color.color1);
+            tablayout.getTabAt(i).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         }
 
 
@@ -164,6 +173,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             public void onTabSelected(TabLayout.Tab tab) {
                 clearMap();
                 int pos = tab.getPosition();
+                int selectedTabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.color5);
+                tablayout.getTabAt(pos).getIcon().setColorFilter(selectedTabIconColor, PorterDuff.Mode.SRC_IN);
+
 
                 if(pos == AllStoriesPagerAdapter.ALL){//add all stories to map
                     for(Map.Entry<String,Story> e : personalStories.entrySet()){
@@ -199,6 +211,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //do nothing for now
+                int pos = tab.getPosition();
+                int selectedTabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.color1);
+                tablayout.getTabAt(pos).getIcon().setColorFilter(selectedTabIconColor, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
