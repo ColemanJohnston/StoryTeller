@@ -159,9 +159,13 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
+        tablayout.getTabAt(0).setIcon(imageResId[0]);
+        int tabIconColorFirst = ContextCompat.getColor(this, R.color.color5);
+        tablayout.getTabAt(0).getIcon().setColorFilter(tabIconColorFirst, PorterDuff.Mode.SRC_IN);
+
 
         // set the tab icons for the tags
-        for (int i = 0; i < imageResId.length; i++) {
+        for (int i = 1; i < imageResId.length; i++) {
             tablayout.getTabAt(i).setIcon(imageResId[i]);
             int tabIconColor = ContextCompat.getColor(this, R.color.color1);
             tablayout.getTabAt(i).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
