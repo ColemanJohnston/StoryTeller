@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
+import org.dreamitcodeit.storyteller.R;
+
 import java.util.ArrayList;
 
 /**
@@ -36,6 +38,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
     //return title
     @Override
     public CharSequence getPageTitle(int position) {
+
         return tabTitles[position];
     }
 

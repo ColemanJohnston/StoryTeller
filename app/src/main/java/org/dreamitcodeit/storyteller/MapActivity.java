@@ -89,6 +89,13 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     EditText etLocation;
     Button btSearch;
 
+    // for tab layout image icons
+    // configure icons
+    private int[] imageResId = {
+            R.drawable.all_stories,
+            R.drawable.personal,
+            R.drawable.historical,
+            R.drawable.fictional};
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -147,6 +154,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         tablayout = (TabLayout) findViewById(R.id.sliding_tabs_all);
         tablayout.setupWithViewPager(vPager);
 
+        for (int i = 0; i < imageResId.length; i++) {
+            tablayout.getTabAt(i).setIcon(imageResId[i]);
+        }
 
 
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -41,7 +41,8 @@ public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
     //return title
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabTitles[position];
+        //return tabTitles[position];
+        return null;
     }
 
     //return the total number of fragments
