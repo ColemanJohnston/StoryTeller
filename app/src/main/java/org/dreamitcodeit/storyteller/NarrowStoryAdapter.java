@@ -34,6 +34,9 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
 
     String userName;
 
+    int currPosition = 0;
+
+
     public NarrowStoryAdapter(List<Story> stories){
         this.stories = stories;
     }
@@ -56,49 +59,56 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
         holder.tvStoryBody.setText(story.getStoryBody());
-        holder.tvAuthorName.setText(story.getUserName());//(String.format("By %s","Neehar"));//TODO: optimize for i18n with string resource
+        holder.tvAuthorName.setText(story.getUserName());//TODO: optimize for i18n with string resource
         holder.tvDate.setText(story.getDate());
-        holder.tvFavorites.setText(String.format("%d",story.getFavCount()));
+        holder.tvFavorites.setText(String.format("%d", story.getFavCount()));
 
-        if(story.getIsCheckedIn()){
+        if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
             holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
             holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
-        try
-        {
-            // get a reference to the storage bucket!
-            FirebaseStorage storage = FirebaseStorage.getInstance();
+//        try {
+        // get a reference to the storage bucket!
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            // Create a storage reference from our app
-            StorageReference storageRef = storage.getReference();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
 
-            // Create a reference with an initial file path and name of title.
-            // This is hopefully where your file will be found in cloud storage
-            pathReference = storageRef.child("images/" + story.getTitle());
+        // Create a reference with an initial file path and name of title.
+        // This is hopefully where your file will be found in cloud storage
+        pathReference = storageRef.child("images/" + story.getTitle());
 
-            // temp path just to test
-            //pathReference = storageRef.child("images/" + "download.jpg");
+        // temp path just to test
+        //pathReference = storageRef.child("images/" + "download.jpg");
 
 
-            // Load the image using Glide
-            Glide.with(context /* context*/).using(new FirebaseImageLoader())
-                    .load(pathReference)
-                    .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 15, 0))
-                    .into(holder.ivStoryImage);
-        }
+        // Load the image using Glide
+        Glide.with(context /* context*/).using(new FirebaseImageLoader())
+                .load(pathReference)
+                .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 15, 0))
+                //.error(R.color.color1)
+                .into(holder.ivStoryImage);
+        //  }
         // an error will be thrown when a story has no picture
         // a little jank but good for now I guess
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        //catch (Exception e) {
+        //   holder.ivStoryImage.setImageResource(R.drawable.ocean);
+        //  holder.ivStoryImage.setBackgroundResource(R.drawable.round_outline);
 
+        //   holder.ivStoryImage.setScaleType(scaleXY);
 
+        currPosition = stories.indexOf(story);
+        if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
+        if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
+        if (currPosition%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
+        if (currPosition%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
+        if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
+
+        holder.tvStoryBody.bringToFront();
 
     }
 

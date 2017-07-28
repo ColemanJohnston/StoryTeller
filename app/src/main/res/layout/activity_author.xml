@@ -51,10 +51,6 @@
         android:inputType="textMultiLine|textCapSentences"
         android:scrollbars="vertical" />
 
-
-
-
-
     <EditText
         android:id="@+id/tvDate"
         android:layout_width="120dp"
@@ -68,12 +64,12 @@
         android:id="@+id/ibCalendar"
         android:layout_width="50dp"
         android:layout_height="45dp"
+        android:layout_alignTop="@+id/tvDate"
+        android:layout_toStartOf="@+id/tvDate"
         android:backgroundTint="@android:color/transparent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/date_picker"
-        android:layout_below="@+id/etStoryBody"
-        android:layout_toStartOf="@+id/tvDate" />
+        app:srcCompat="@drawable/calendar_dark" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -121,31 +117,32 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/ibCalendar"
         android:text="Anonymous?"
-        android:layout_toEndOf="@+id/ibCalendar" />
+        android:layout_toEndOf="@+id/rFictional" />
 
     <ImageButton
         android:id="@+id/btTakePhoto"
         android:layout_width="29dp"
-        android:layout_height="25dp"
-        android:tint="@color/colorAccent"
+        android:layout_height="20dp"
         android:background="@android:color/transparent"
         android:backgroundTint="@color/colorWhite"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="11dp"
+        android:scaleType="fitCenter"
+        android:tint="@color/colorAccent"
         app:srcCompat="@drawable/take_photo"
-        android:layout_alignBottom="@+id/tvDate"
+        android:layout_below="@+id/etStoryBody"
         android:layout_alignParentStart="true" />
 
     <ImageButton
         android:id="@+id/btImportPhoto"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:tint="@color/colorAccent"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/rHistorical"
+        android:layout_toEndOf="@+id/btTakePhoto"
         android:backgroundTint="@android:color/transparent"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/import_photo"
-        android:layout_below="@+id/etStoryBody"
-        android:layout_toEndOf="@+id/btTakePhoto" />
+        android:cropToPadding="false"
+        android:layout_marginTop="3dp"
+        android:scaleType="fitStart"
+        android:tint="@color/colorAccent"
+        app:srcCompat="@drawable/import_image_dark" />
 
     <ImageView
         android:id="@+id/ivPreview"
@@ -160,13 +157,13 @@
         android:id="@+id/btSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="@drawable/color_accent"
-        android:text="Create Story!"
+        android:text="Share your memory"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="bold" />
 
 </RelativeLayout>

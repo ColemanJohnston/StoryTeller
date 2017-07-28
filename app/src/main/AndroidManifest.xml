@@ -62,7 +62,7 @@
 
         <activity android:name=".ViewStoryActivity" />
         <activity android:name=".AuthorActivity"
-            android:windowSoftInputMode="adjustUnspecified"/>
+            android:windowSoftInputMode="stateVisible|adjustNothing"/>
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".SearchActivity"
