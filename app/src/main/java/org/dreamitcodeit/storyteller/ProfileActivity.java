@@ -52,16 +52,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
-        ImageView ivAll = (ImageView) findViewById(R.id.ivAll);
-        ImageView ivPersonal = (ImageView) findViewById(R.id.ivPersonal);
-        ImageView ivFictional = (ImageView) findViewById(R.id.ivFictional);
-        ImageView ivHistorical = (ImageView) findViewById(R.id.ivHistorical);
-
-        int tabIconColor = ContextCompat.getColor(this, R.color.colorWhite);
-        ivAll.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        ivPersonal.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        ivFictional.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        ivHistorical.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ImageView ivAll = (ImageView) findViewById(R.id.ivAll);
+//        ImageView ivPersonal = (ImageView) findViewById(R.id.ivPersonal);
+//        ImageView ivFictional = (ImageView) findViewById(R.id.ivFictional);
+//        ImageView ivHistorical = (ImageView) findViewById(R.id.ivHistorical);
+//
+//        int tabIconColor = ContextCompat.getColor(this, R.color.colorWhite);
+//        ivAll.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivPersonal.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivFictional.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivHistorical.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
 
         tvName = (TextView) findViewById(R.id.tvName);
