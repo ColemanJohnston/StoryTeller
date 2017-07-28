@@ -56,7 +56,7 @@
 
         <LinearLayout
             android:layout_width="170dp"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_alignBottom="@+id/tvLocation"
             android:layout_toEndOf="@+id/tvLocation"
             android:orientation="horizontal">
@@ -64,22 +64,21 @@
             <ImageView
                 android:id="@+id/ivAll"
                 android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="15dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/all_stories" />
 
             <ImageView
                 android:id="@+id/ivPersonal"
                 android:layout_width="25dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/personal" />
 
             <ImageView
                 android:id="@+id/ivHistorical"
                 android:layout_width="25dp"
                 android:layout_height="30dp"
-
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/historical" />
 
@@ -87,9 +86,8 @@
                 android:id="@+id/ivFictional"
                 android:layout_width="25dp"
                 android:layout_height="30dp"
-                android:layout_marginEnd="19dp"
+                android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/fictional" />
-
 
         </LinearLayout>
 
