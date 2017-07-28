@@ -46,7 +46,7 @@
             android:id="@+id/tvLocation"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ratingBar"
+            android:layout_below="@+id/tvName"
             android:layout_toEndOf="@+id/ivLocationIcon"
             android:text="Menlo Park, CA"
             android:textColor="@android:color/white"
@@ -54,16 +54,44 @@
             android:textStyle="bold" />
 
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/tvName"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:theme="@style/RatingBar" />
+        <LinearLayout
+            android:layout_width="170dp"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@+id/tvLocation"
+            android:layout_toEndOf="@+id/tvLocation"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivAll"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                app:srcCompat="@drawable/all_stories" />
+
+            <ImageView
+                android:id="@+id/ivPersonal"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/personal" />
+
+            <ImageView
+                android:id="@+id/ivHistorical"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+
+                android:layout_marginEnd="20dp"
+                app:srcCompat="@drawable/historical" />
+
+            <ImageView
+                android:id="@+id/ivFictional"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="19dp"
+                app:srcCompat="@drawable/fictional" />
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 
