@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
@@ -33,7 +32,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -68,7 +66,6 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
 import org.dreamitcodeit.storyteller.fragments.AllStoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.fragments.StoriesDialogFragment;
-import android.graphics.PorterDuff.Mode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -425,7 +422,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 try{//check in case there are some objects in the db that don't match my current story object
                     Story story = dataSnapshot.getValue(Story.class);
                     recordStory(story,dataSnapshot.getKey());
-                    closeToStory(mCurrentLocation);
+                    closeToStory(mCurrentLocation);//TODO: should this be called every time a story is added like this
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -462,8 +459,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setOnMapLongClickListener(this);
             map.setOnInfoWindowClickListener(this);
-            MapActivityPermissionsDispatcher.getMyLocationWithCheck(this);
-            MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);
+            MapActivityPermissionsDispatcher.getMyLocationWithCheck(this);//TODO: see if this is breaking anything
+            MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this);//TODO: same as above
         } else {
             Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
@@ -510,7 +507,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             populateMap();
         }
 
-        listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
+        //listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
 
         int closeStories = 0;
 
@@ -622,7 +619,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
         locFlag = true;
-        getMyLocation();
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
