@@ -17,14 +17,15 @@
         android:layout_alignParentStart="true" />
 
 
-        <EditText
-            android:id="@+id/etTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            android:layout_alignTop="@+id/tvTitle"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp" />
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:layout_alignTop="@+id/tvTitle"
+        android:layout_alignParentStart="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="20dp" />
 
 
 
@@ -91,8 +92,9 @@
         android:onClick="onRadioButtonClicked"
         android:text="Personal"
         android:layout_below="@+id/ibCalendar"
-        android:layout_toEndOf="@+id/ivPreview"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/rFictional"
+        android:layout_alignBottom="@+id/swAnonymous" />
 
     <RadioButton
         android:id="@+id/rHistorical"
@@ -100,27 +102,26 @@
         android:layout_height="wrap_content"
         android:onClick="onRadioButtonClicked"
         android:text="Historical"
-        android:layout_alignBaseline="@+id/swAnonymous"
-        android:layout_alignBottom="@+id/swAnonymous"
-        android:layout_toEndOf="@+id/rPersonal" />
+        android:layout_alignBottom="@+id/btTakePhoto"
+        android:layout_toStartOf="@+id/ibCalendar" />
 
     <RadioButton
         android:id="@+id/rFictional"
         android:layout_width="93dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rHistorical"
-        android:layout_below="@+id/rHistorical"
         android:onClick="onRadioButtonClicked"
-        android:text="Fictional" />
+        android:text="Fictional"
+        android:layout_below="@+id/rHistorical"
+        android:layout_alignStart="@+id/rHistorical" />
 
     <Switch
         android:id="@+id/swAnonymous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post anonymously?"
-        android:layout_alignBaseline="@+id/rPersonal"
-        android:layout_alignBottom="@+id/rPersonal"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ibCalendar"
+        android:text="Anonymous?"
+        android:layout_toEndOf="@+id/ibCalendar" />
 
     <ImageButton
         android:id="@+id/btTakePhoto"
@@ -148,12 +149,12 @@
 
     <ImageView
         android:id="@+id/ivPreview"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:srcCompat="@color/colorAccent"
-        android:layout_below="@+id/rFictional"
+        android:layout_width="wrap_content"
+        android:layout_height="295dp"
+        android:layout_above="@+id/btSave"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btSave" />
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@color/colorAccent" />
 
     <Button
         android:id="@+id/btSave"

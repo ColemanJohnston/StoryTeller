@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -113,6 +115,10 @@ public class AuthorActivity extends AppCompatActivity {
         btSave.setTypeface(typeface);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
         etTitle = (EditText) findViewById(R.id.etTitle);
+
+        etTitle.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etTitle, InputMethodManager.SHOW_IMPLICIT);
         btTakePhoto = (ImageButton) findViewById(R.id.btTakePhoto);
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         btImportPhoto = (ImageButton) findViewById(R.id.btImportPhoto);
