@@ -2,10 +2,12 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,12 +44,25 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView ivProfileImage;
     private TextView tvName;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         Firebase.setAndroidContext(this);
+
+//        ImageView ivAll = (ImageView) findViewById(R.id.ivAll);
+//        ImageView ivPersonal = (ImageView) findViewById(R.id.ivPersonal);
+//        ImageView ivFictional = (ImageView) findViewById(R.id.ivFictional);
+//        ImageView ivHistorical = (ImageView) findViewById(R.id.ivHistorical);
+//
+//        int tabIconColor = ContextCompat.getColor(this, R.color.colorWhite);
+//        ivAll.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivPersonal.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivFictional.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        ivHistorical.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
