@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -58,6 +57,19 @@ public class StoriesDialogFragment extends DialogFragment {
         storyAdapter = new NarrowStoryAdapter(stories);
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(storyAdapter);
+
+        if(getContext() instanceof MapActivity){
+            MapActivity mapActivity = (MapActivity) getContext();
+            mapActivity.setMapActivityListener(new MapActivity.MapActivityListener() {
+                @Override
+                public void onStoryAdded(Story story) {
+                    Story element = stories.get(0);
+                    if(story.getLatitude() == element.getLatitude() && story.getLongitude() == element.getLongitude()){
+                        storyAdapter.add(0,story);
+                    }
+                }
+            });
+        }
 
         btPlus.setOnClickListener(new View.OnClickListener() {
             @Override

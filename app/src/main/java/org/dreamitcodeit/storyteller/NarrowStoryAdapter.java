@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.parceler.Parcels;
 
+import java.util.HashSet;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -27,6 +28,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.ViewHolder> {
     private List<Story> stories;
+    private HashSet<String>storyIDs;
 
     StorageReference pathReference;
 
@@ -119,8 +121,11 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
     }
 
     public void add(int index, Story story){
-        stories.add(index, story);
-        notifyItemInserted(index);//TODO: test for crashes
+        if(!storyIDs.contains(story.getStoryId())){
+            stories.add(index, story);
+            notifyItemInserted(index);
+            storyIDs.add(story.getStoryId());
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

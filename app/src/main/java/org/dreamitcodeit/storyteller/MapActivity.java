@@ -82,6 +82,10 @@ import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 @RuntimePermissions
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
+    public interface MapActivityListener{
+        public void onStoryAdded(Story story);
+    }
+
     HashMap<LatLng,Marker> latLngMarkerHashMap;
     Firebase ref;
 
@@ -115,6 +119,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private HashMap<String, Story> fictionalStories;
     private HashMap<String, Story> miscStories;
     private ArrayList<LatLng> storyLocations;
+    private MapActivityListener listener;
 
    // GestureDetector gestureScanner;
     private SlidingUpPanelLayout mLayout;
@@ -325,6 +330,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     }
 
+    public void setMapActivityListener(MapActivityListener listener){
+        this.listener = listener;
+    }
+
     public void onProfileIconClick(MenuItem mi){
         this.startActivity(new Intent(this, ProfileActivity.class));
     }
@@ -423,6 +432,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     Story story = dataSnapshot.getValue(Story.class);
                     recordStory(story,dataSnapshot.getKey());
                     closeToStory(mCurrentLocation);//TODO: should this be called every time a story is added like this
+
+                    if(listener != null){
+                        listener.onStoryAdded(story);
+                    }
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -464,6 +477,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         } else {
             Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public List<Story> getStoriesAtLatLng(LatLng latLng){
+        HashMap<String,Story> result = (HashMap<String,Story>) latLngMarkerHashMap.get(latLng).getTag();
+        return new ArrayList<Story>(result.values());
     }
 
     private boolean isCloseToCurrentLocation(LatLng latLng){
