@@ -180,8 +180,9 @@
             android:tint="@color/colorWhite"
             app:srcCompat="@drawable/fictional"
             android:layout_weight="2.60"
-            android:layout_above="@+id/tvImage"
-            android:layout_toStartOf="@+id/ibCalendar" />
+            android:layout_alignTop="@+id/ibHistorical"
+            android:layout_toStartOf="@+id/ibCalendar"
+            android:layout_marginEnd="10dp" />
 
 
 
