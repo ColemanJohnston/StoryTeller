@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -40,7 +41,13 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
 
 
     public NarrowStoryAdapter(List<Story> stories){
-        this.stories = stories;
+        storyIDs = new HashSet<>();
+        this.stories = new ArrayList<>();
+
+        for (Story s : stories) {
+            add(0,s);
+        }
+
     }
 
     @Override
