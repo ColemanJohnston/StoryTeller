@@ -17,16 +17,19 @@ public class User {
     List<String> userStoryIDs;
     String fbName;
     String fbUserID;
+    String bio;
+    String location;
 
     public User(){
 
     }
 
-    public User(String uid, List<String> userStoryIDs, List<String> favoriteIDs, String fbName, String fbUserID) {
+    public User(String uid, List<String> userStoryIDs, List<String> favoriteIDs, String fbName, String fbUserID, String bio, String location) {
         this.uid = uid;
         this.favoriteIDs = favoriteIDs;
         this.fbName = fbName;
         this.fbUserID = fbUserID;
+
     }
 
     public String getUid() {
@@ -68,4 +71,6 @@ public class User {
     public void setUserStoryIDs(List<String> userStoryIDs) {
         this.userStoryIDs = userStoryIDs;
     }
+
+
 }

@@ -2,12 +2,10 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -43,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     // References to the xml
     private ImageView ivProfileImage;
     private TextView tvName;
+    private TextView tvBio;
 
 
     @Override
@@ -67,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        tvBio = (TextView) findViewById(R.id.tvBio);
 
         // fetchUserData();
 
@@ -126,13 +126,31 @@ public class ProfileActivity extends AppCompatActivity {
         ref = new Firebase(Config.FIREBASE_URl);
 
 
+       // Firebase user = ref.child("users").child(uid)' '
         ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
                     User userObject = dataSnapshot.getValue(User.class);
                     String fbUserID = userObject.getFbUserID();
+                    String fbName = userObject.getFbName();
+                    String bio = "";
+                    String location = "";
+                    if (fbName.equals("Neehar Banerjee")) {
+                        bio = "MN >> CA Stanford 20";
+                        location = "Palo Alto, CA";
+                    }
+                    else if (fbName.equals("Maria De Angelis")) {
+                        bio = "CS student and watermelon Hint enthusiast";
+                        location = "Santa Barbara, CA";
+                    }
+                    else {
+                        bio = "Likes riding motorcycles. But mostly crashing them.";
+                        location = "Prunedale, CA";
+                    }
                     setFBProfileImage(fbUserID);
+                    tvLocation.setText(location);
+                    tvBio.setText(bio);
                     tvName.setText(userObject.getFbName());
                 }
                 catch(Exception e){
