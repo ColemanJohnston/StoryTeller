@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -70,7 +71,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
-//        try {
+        currPosition = stories.indexOf(story);
+        if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
+        if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
+        if (currPosition%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
+        if (currPosition%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
+        if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
+
+
+        try {
             // get a reference to the storage bucket!
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -91,21 +100,20 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                     .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 15, 0))
                     //.error(R.color.color1)
                     .into(holder.ivStoryImage);
-      //  }
+        }
         // an error will be thrown when a story has no picture
         // a little jank but good for now I guess
-        //catch (Exception e) {
-         //   holder.ivStoryImage.setImageResource(R.drawable.ocean);
-          //  holder.ivStoryImage.setBackgroundResource(R.drawable.round_outline);
+        catch (Exception e){
+                //   holder.ivStoryImage.setImageResource(R.drawable.ocean);
+                //  holder.ivStoryImage.setBackgroundResource(R.drawable.round_outline);
 
-     //   holder.ivStoryImage.setScaleType(scaleXY);
+                //   holder.ivStoryImage.setScaleType(scaleXY);
+            Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
+        }
 
-        currPosition = stories.indexOf(story);
-        if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
-        if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
-        if (currPosition%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
-        if (currPosition%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
-        if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
+
+
+        //holder.ivGradient
 
         holder.tvStoryBody.bringToFront();
     }
@@ -140,6 +148,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         public TextView tvFavorites;
         public ImageView ivFavoriteIcon;
         public ImageView ivIsCheckedIn;
+        public ImageView ivGradient;
         public TextView tvIsCheckedIn;
         public Story currentStory;
 
@@ -155,6 +164,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
+            ivGradient = (ImageView) itemView.findViewById(R.id.ivGradient);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -82,30 +82,16 @@
         android:visibility="visible" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ivGradient"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:adjustViewBounds="false"
-        android:background="@drawable/round_outline_transparent"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/round_outline_transparent"
-        android:layout_below="@+id/tvTitle"
-        android:layout_alignStart="@+id/ivStoryImage"
+        android:layout_alignBottom="@+id/ivStoryImage"
         android:layout_alignEnd="@+id/ivStoryImage"
-        android:layout_alignBottom="@+id/ivStoryImage" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_alignStart="@+id/ivStoryImage"
         android:adjustViewBounds="false"
         android:background="@drawable/round_outline_transparent"
         android:scaleType="centerCrop"
-        android:scaleY="-1"
-        app:srcCompat="@drawable/round_outline_transparent"
-        android:layout_alignTop="@+id/ivStoryImage"
-        android:layout_alignStart="@+id/ivStoryImage"
-        android:layout_alignEnd="@+id/ivStoryImage" />
+        app:srcCompat="@drawable/round_outline_transparent" />
 
     <TextView
         android:id="@+id/tvFavorites"
