@@ -2,8 +2,10 @@ package org.dreamitcodeit.storyteller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -45,25 +47,30 @@ public class ViewStoryActivity extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvStoryBody;
     private ImageView ivImage;
-    private ImageView ivHeartFiller;
     private TextView tvUsername;
     String TAG = "LoadImage";
     StorageReference pathReference;
     Firebase ref;
     private FirebaseAuth mAuth;
+    int notFavColor;
+    int favColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_story);
 
+
         story = Parcels.unwrap(getIntent().getParcelableExtra("story"));
-        ivHeartFiller = (ImageView) findViewById(R.id.ivHeartFiller);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvStoryBody = (TextView) findViewById(R.id.tvStoryBody);
         ivImage = (ImageView) findViewById(R.id.ivImage);
-        ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
+        ibFavorite = (ImageButton) findViewById(R.id.ibFav);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
+
+        notFavColor = ContextCompat.getColor(getApplicationContext(), R.color.color1);
+        ibFavorite.setColorFilter(notFavColor, PorterDuff.Mode.SRC_IN);
+        favColor = ContextCompat.getColor(getApplicationContext(), R.color.colorHeart);
 
         tvTitle.setText(story.getTitle());
 
@@ -146,20 +153,20 @@ public class ViewStoryActivity extends AppCompatActivity {
                                 favStoryList = new ArrayList<String>();
                                 favStoryList.add(story.getStoryId());
                                 updateFavCount(1);//add one the favCount of the story
-                                ivHeartFiller.setVisibility(View.VISIBLE);
+                                ibFavorite.setColorFilter(favColor, PorterDuff.Mode.SRC_IN);
                             }
                             else{
                                 int index;
                                 index = favStoryList.indexOf(story.getStoryId());
                                 if(index > -1){//if the story is in the list already remove it
                                     favStoryList.remove(index);
-                                    ivHeartFiller.setVisibility(View.INVISIBLE);
+                                    ibFavorite.setColorFilter(notFavColor, PorterDuff.Mode.SRC_IN);
                                     updateFavCount(-1);//take one away from the number of favorites that a story has.
                                 }
                                 else{
                                     favStoryList.add(story.getStoryId());
                                     updateFavCount(1);//add one the favCount of the story
-                                    ivHeartFiller.setVisibility(View.VISIBLE);
+                                    ibFavorite.setColorFilter(favColor, PorterDuff.Mode.SRC_IN);
                                 }
                             }
                             ref.child("users").child(mAuth.getCurrentUser().getUid()).child("favoriteIDs").setValue(favStoryList);
@@ -237,10 +244,12 @@ public class ViewStoryActivity extends AppCompatActivity {
                     isFavorite = favoriteIDs.contains(story.getStoryId());
                 }
                 if(isFavorite){
-                    ivHeartFiller.setVisibility(View.VISIBLE);
+                    // set to red
+                    ibFavorite.setColorFilter(favColor, PorterDuff.Mode.SRC_IN);
                 }
                 else{
-                    ivHeartFiller.setVisibility(View.INVISIBLE);
+                    // set to grey
+                    ibFavorite.setColorFilter(notFavColor, PorterDuff.Mode.SRC_IN);
                 }
             }
 

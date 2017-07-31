@@ -1,5 +1,6 @@
 package org.dreamitcodeit.storyteller;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -151,6 +152,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
 
+//        try {
+//            getSupportActionBar().setTitle("");
+//            //actionBar.setIcon(R.mipmap.logo);
+//            getSupportActionBar().setDisplayShowHomeEnabled(false);
+//            getSupportActionBar().setIcon(R.mipmap.logo);
+//            getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
         personalStories = new HashMap<>();
         historicalStories = new HashMap<>();
         fictionalStories = new HashMap<>();

@@ -83,12 +83,13 @@
         android:id="@+id/tvFavorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="422"
-        android:layout_marginTop="3dp"
+        android:layout_alignBaseline="@+id/tvTitle"
+        android:layout_alignBottom="@+id/tvTitle"
+        android:layout_alignEnd="@+id/ivIsCheckedIn"
         android:layout_marginRight="3dp"
+        android:text="422"
         android:textColor="@color/colorWhite"
-        android:layout_alignTop="@+id/ivStoryImage"
-        android:layout_alignEnd="@+id/ivStoryImage" />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/ivIsCheckedIn"
@@ -112,11 +113,11 @@
 
     <ImageView
         android:id="@+id/ivFavoriteIcon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="3dp"
-        app:srcCompat="@drawable/ic_favorite_border_black_24dp"
-        android:layout_alignTop="@+id/ivStoryImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:tint="@color/colorWhite"
+        app:srcCompat="@drawable/favorite"
+        android:layout_alignTop="@+id/tvTitle"
         android:layout_toStartOf="@+id/tvFavorites" />
 
     <ImageView
