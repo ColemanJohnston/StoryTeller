@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -25,7 +27,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,10 +77,6 @@ public class AuthorActivity extends AppCompatActivity {
     private ImageView ivPreview;
     private String title;
 
-    private RadioButton rPersonal;
-    private RadioButton rHistorical;
-    private RadioButton rFictional;
-
     private boolean isPersonal = false;
     private boolean isHistorical = false;
     private boolean isFictional = false;
@@ -93,6 +90,9 @@ public class AuthorActivity extends AppCompatActivity {
     Bitmap bity;
     private DatePicker dpCompose;
     private ImageButton ibCalendar;
+    private ImageButton ibPersonal;
+    private ImageButton ibHistorical;
+    private ImageButton ibFictional;
     private ListView lvContainer;
     DatePickerFragment datePickerFragment;
     private FirebaseUser currentUser;
@@ -124,9 +124,16 @@ public class AuthorActivity extends AppCompatActivity {
         btImportPhoto = (ImageButton) findViewById(R.id.btImportPhoto);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvDate = (TextView) findViewById(R.id.tvDate);
-        rPersonal = (RadioButton) findViewById(R.id.rPersonal);
-        rHistorical = (RadioButton) findViewById(R.id.rHistorical);
-        rFictional = (RadioButton) findViewById(R.id.rFictional);
+        ibPersonal = (ImageButton) findViewById(R.id.ibPersonal);
+        int notPressed = ContextCompat.getColor(this, R.color.colorWhite);
+        ibPersonal.setColorFilter(notPressed, PorterDuff.Mode.SRC_IN);
+        ibHistorical = (ImageButton) findViewById(R.id.ibHistorical);
+        ibHistorical.setColorFilter(notPressed, PorterDuff.Mode.SRC_IN);
+        ibFictional = (ImageButton) findViewById(R.id.ibFictional);
+        ibFictional.setColorFilter(notPressed, PorterDuff.Mode.SRC_IN);
+
+//        rHistorical = (RadioButton) findViewById(R.id.rHistorical);
+//        rFictional = (RadioButton) findViewById(R.id.rFictional);
 
         swAnonymous = (Switch) findViewById(R.id.swAnonymous);
 
@@ -158,6 +165,34 @@ public class AuthorActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ibPersonal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibPersonal.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isPersonal = true;
+            }
+        });
+
+        ibHistorical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibHistorical.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isHistorical = true;
+            }
+        });
+
+        ibFictional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pressed = ContextCompat.getColor(AuthorActivity.this, R.color.color5);
+                ibFictional.setColorFilter(pressed, PorterDuff.Mode.SRC_IN);
+                isFictional = true;
+            }
+        });
+                                   //   }
 
         // save this story and return to MapView Activity
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -245,28 +280,28 @@ public class AuthorActivity extends AppCompatActivity {
 
     }
 
-    public void onRadioButtonClicked(View view) {
-        // is any radio button checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.rPersonal:
-                if (checked) {
-                    isPersonal = true;
-                }
-                break;
-            case R.id.rHistorical:
-                if (checked) {
-                    isHistorical = true;
-                }
-                break;
-            case R.id.rFictional:
-                if (checked) {
-                    isFictional = true;
-                }
-                break;
-        }
-    }
+//    public void onRadioButtonClicked(View view) {
+//        // is any radio button checked?
+//        boolean checked = ((RadioButton) view).isChecked();
+//
+//        switch(view.getId()) {
+//            case R.id.rPersonal:
+//                if (checked) {
+//                    isPersonal = true;
+//                }
+//                break;
+//            case R.id.rHistorical:
+//                if (checked) {
+//                    isHistorical = true;
+//                }
+//                break;
+//            case R.id.rFictional:
+//                if (checked) {
+//                    isFictional = true;
+//                }
+//                break;
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
