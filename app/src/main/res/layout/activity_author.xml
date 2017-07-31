@@ -97,32 +97,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/ibCalendar"
-        android:text="Anonymous?"
-        android:layout_toEndOf="@+id/rFictional" />
-
-    <ImageButton
-        android:id="@+id/btTakePhoto"
-        android:layout_width="29dp"
-        android:layout_height="20dp"
-        android:background="@android:color/transparent"
-        android:backgroundTint="@color/colorWhite"
-        android:scaleType="fitCenter"
-        android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/take_photo"
-        android:layout_alignTop="@+id/btImportPhoto"
-        android:layout_toEndOf="@+id/ivPreview" />
+        android:text="Anonymous?"  />
 
     <ImageButton
         android:id="@+id/btImportPhoto"
         android:layout_width="50dp"
         android:layout_height="25dp"
+        android:layout_above="@+id/textView2"
+        android:layout_toEndOf="@+id/btTakePhoto"
         android:backgroundTint="@android:color/transparent"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
         android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/import_image_dark"
-        android:layout_above="@+id/textView2"
-        android:layout_toEndOf="@+id/btTakePhoto" />
+        android:visibility="visible"
+        app:srcCompat="@drawable/import_image_dark" />
+
+    <ImageButton
+        android:id="@+id/btTakePhoto"
+        android:layout_width="29dp"
+        android:layout_height="20dp"
+        android:layout_alignTop="@+id/btImportPhoto"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/colorWhite"
+        android:scaleType="fitCenter"
+        android:tint="@color/colorAccent"
+        android:visibility="visible"
+        app:srcCompat="@drawable/take_photo" />
 
     <ImageView
         android:id="@+id/ivPreview"
