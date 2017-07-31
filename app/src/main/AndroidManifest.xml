@@ -62,11 +62,14 @@
 
         <activity android:name=".ViewStoryActivity" />
         <activity android:name=".AuthorActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing"/>
-        <activity android:name=".ProfileActivity" />
+            android:windowSoftInputMode="stateVisible|adjustNothing"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SearchActivity"
-            android:parentActivityName=".SearchActivity" />
+            android:parentActivityName=".SearchActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".FacebookLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -77,8 +80,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".AllStoriesActivity" />
-        <activity android:name=".fragments.SearchLocationFragment"></activity>
+        <activity android:name=".AllStoriesActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ViewImageActivity"></activity>
 
 

@@ -144,6 +144,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
 
+        // lock orientation to portrait
+
         personalStories = new HashMap<>();
         historicalStories = new HashMap<>();
         fictionalStories = new HashMap<>();
