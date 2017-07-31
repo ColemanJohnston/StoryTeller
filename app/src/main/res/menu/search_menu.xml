@@ -13,5 +13,6 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_person_black_24dp"
         android:onClick="onProfileIconClick"
+
         />
 </menu>

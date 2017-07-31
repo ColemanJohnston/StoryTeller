@@ -6,10 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -35,6 +38,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -61,6 +67,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
@@ -893,6 +900,30 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         inflater.inflate(search_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final MenuItem miProfile = menu.findItem(R.id.miProfile);
+
+
+        ref.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("fbUserID").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String fbUserId = dataSnapshot.getValue().toString();
+                String imageUrl = "https://graph.facebook.com/" + fbUserId + "/picture?type=large";// type can be one of these: enum{small, normal, album, large, square}
+
+                Uri uri = Uri.parse(imageUrl);
+
+                Glide.with(MapActivity.this).load(uri).asBitmap().into(new SimpleTarget<Bitmap>(100,100) {//TODO: make this image round and consider using the small image from fb.
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                        miProfile.setIcon(new BitmapDrawable(getResources(), resource));
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
