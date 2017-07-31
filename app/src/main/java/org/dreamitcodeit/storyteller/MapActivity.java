@@ -930,6 +930,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing in map activity
+    }
+
     private void dropPinEffect(final Marker marker) {
         // Handler allows us to repeat a code block after a specified delay
         final android.os.Handler handler = new android.os.Handler();
