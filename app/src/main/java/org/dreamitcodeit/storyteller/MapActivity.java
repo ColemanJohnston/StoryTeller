@@ -91,7 +91,7 @@ import static org.dreamitcodeit.storyteller.R.menu.search_menu;
 public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener{
 
     public interface MapActivityListener{
-        public void onStoryAdded(Story story);
+        void onStoryAdded(Story story);
     }
 
     HashMap<LatLng,Marker> latLngMarkerHashMap;
@@ -464,7 +464,13 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                //TODO: support live updates here
+//                TODO: Do live updates here instead of calling the whole function over and over again.
+//                try{
+//                    Story story = dataSnapshot.getValue(Story.class);
+//                }
+//                catch(Exception e){
+//                    e.printStackTrace();
+//                }
             }
 
             @Override

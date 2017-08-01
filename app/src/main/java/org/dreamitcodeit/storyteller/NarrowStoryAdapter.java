@@ -133,6 +133,11 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             notifyItemInserted(index);
             storyIDs.add(story.getStoryId());
         }
+        else{
+            int i = stories.indexOf(story);//replace story if it changed TODO: sort and binary search for optimization
+            stories.set(i,story);
+            notifyItemChanged(i);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
