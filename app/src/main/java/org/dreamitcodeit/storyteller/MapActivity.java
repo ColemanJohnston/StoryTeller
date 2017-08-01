@@ -366,6 +366,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     .position(location)
                     //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
                     .icon(BitmapDescriptorFactory.defaultMarker(43)));
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.not_verified_pin));
             HashMap<String,Story> tag = new HashMap<>();
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
@@ -376,7 +377,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setTag(stories);
         }
         if(story.getIsCheckedIn()){
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(95));
+            //marker.setIcon(BitmapDescriptorFactory.defaultMarker(43));
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.verified_pin)
+            );
         }
 
         latLngMarkerHashMap.put(location,marker);
@@ -595,11 +598,13 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(latLng)
                 //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
-                .icon(BitmapDescriptorFactory.defaultMarker(55)));
+                .icon(BitmapDescriptorFactory.defaultMarker(43)));
+        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.not_verified_pin));
 
 
         if(isCloseToCurrentLocation(latLng)){//drop verified color if marker is close enough to the current location
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(165));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(43));
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.verified_pin));
         }
         dropPinEffect(marker);//author activity is started here
         //startAuthorActivity(latLng);
