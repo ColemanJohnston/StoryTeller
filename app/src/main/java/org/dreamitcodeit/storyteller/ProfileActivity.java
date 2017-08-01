@@ -137,12 +137,12 @@ public class ProfileActivity extends AppCompatActivity {
                     String bio = "";
                     String location = "";
                     if (fbName.equals("Neehar Banerjee")) {
-                        bio = "MN >> CA Stanford 20";
+                        bio = "MN --> CA Stanford 20";
                         location = "Palo Alto, CA";
                     }
                     else if (fbName.equals("Maria De Angelis")) {
                         bio = "CS student and watermelon Hint enthusiast";
-                        location = "Santa Barbara, CA";
+                        location = "Pasadena, CA";
                     }
                     else {
                         bio = "Likes riding motorcycles. But mostly crashing them.";

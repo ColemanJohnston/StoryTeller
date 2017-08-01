@@ -62,7 +62,7 @@
         android:layout_alignEnd="@+id/ivStoryImage"
         android:layout_alignStart="@+id/ivStoryImage"
         android:ellipsize="end"
-        android:maxLines="3"
+        android:maxLines="1"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:textColor="@color/colorWhite"
@@ -108,6 +108,18 @@
         app:srcCompat="@drawable/ic_favorite_border_black_24dp"
         android:layout_alignTop="@+id/ivStoryImage"
         android:layout_toStartOf="@+id/tvFavorites" />
+
+    <ImageView
+        android:id="@+id/ivGradient"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/ivStoryImage"
+        android:layout_alignEnd="@+id/ivStoryImage"
+        android:layout_alignStart="@+id/ivStoryImage"
+        android:adjustViewBounds="false"
+        android:background="@drawable/round_outline_transparent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/round_outline_transparent" />
 
 
 </RelativeLayout>

@@ -63,7 +63,7 @@
         android:layout_alignEnd="@+id/ivStoryImage"
         android:layout_alignStart="@+id/ivStoryImage"
         android:ellipsize="end"
-        android:maxLines="3"
+        android:maxLines="1"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:text="This is an example of longer text to demonstrate that it can be cut of at some point, but I'm done with thinking of new things to write so I'm just going to continue griping until this text gets to the end."

@@ -33,9 +33,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".WelcomeActivity">
@@ -61,13 +61,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ViewStoryActivity" />
-        <activity
-            android:name=".AuthorActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AuthorActivity"
+            android:windowSoftInputMode="stateVisible|adjustNothing"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SearchActivity"
-            android:parentActivityName=".SearchActivity" />
+            android:parentActivityName=".SearchActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".FacebookLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -77,10 +79,11 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <activity android:name=".AllStoriesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ViewImageActivity"></activity>
 
-        <activity android:name=".AllStoriesActivity" />
-        <activity android:name=".fragments.SearchLocationFragment" />
-        <activity android:name=".ViewImageActivity" />
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

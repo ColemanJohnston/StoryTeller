@@ -111,8 +111,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
         }
 
-
-
         //holder.ivGradient
 
         holder.tvStoryBody.bringToFront();
