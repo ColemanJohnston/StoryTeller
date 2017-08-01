@@ -28,7 +28,7 @@ public class SearchUsersListFragment extends StoryListFragment  {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         query = getArguments().getString("query");
-
+        showNoResults();
         fetchUserData();
         return v;
     }
@@ -42,6 +42,7 @@ public class SearchUsersListFragment extends StoryListFragment  {
         ref.child("stories").orderByChild("userName").equalTo(query).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                hideNoResults();
                 Story story = dataSnapshot.getValue(Story.class);
                 storyAdapter.add(0,story); //TODO: make sure this is the best way to add these
             }

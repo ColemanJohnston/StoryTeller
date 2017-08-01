@@ -5,9 +5,6 @@ import android.location.Address;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.widget.Toast;
-
-import org.dreamitcodeit.storyteller.R;
 
 import java.util.ArrayList;
 
@@ -63,7 +60,7 @@ public class SearchPagerAdapter extends SmartFragmentStatePagerAdapter{
 
         // search "by users" tab is selected
         if(position == 1){
-            AllStoriesPagerAdapter.SearchUsersListFragment fragment = new AllStoriesPagerAdapter.SearchUsersListFragment();
+            SearchUsersListFragment fragment = new SearchUsersListFragment();
             Bundle bundle = new Bundle();
             bundle.putString("query", query);
             fragment.setArguments(bundle);

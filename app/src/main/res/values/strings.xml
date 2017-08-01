@@ -4,6 +4,7 @@
     <string name="fb_login_protocol_scheme">fb251058322063208</string>
     <string name="font_name_fontawesome">fontawesome</string>
     <string name="font_name_source_sans_pro">SourceSansPro</string>
+    <string name="no_results_message">Sorry, we didn\'t find any results matching this search.</string>
 
 </resources>
 

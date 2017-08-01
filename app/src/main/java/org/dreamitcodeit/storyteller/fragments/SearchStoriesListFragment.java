@@ -30,7 +30,7 @@ public class SearchStoriesListFragment extends StoryListFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         query = getArguments().getString("query");
-
+        showNoResults();
         fetchUserData();
         return v;
     }
@@ -47,6 +47,7 @@ public class SearchStoriesListFragment extends StoryListFragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Story story = dataSnapshot.getValue(Story.class);
                 storyAdapter.add(0,story);//TODO: make sure this is the best way to add these
+                hideNoResults();//make sure that no results is hidden
             }
 
             @Override

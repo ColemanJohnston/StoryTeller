@@ -3,6 +3,29 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/ivNoResults"
+        android:layout_marginTop="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:src="@android:drawable/ic_menu_search"
+        android:tint="@color/color4"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results_message"
+        android:padding="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/color4"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvStories"
         android:layout_width="match_parent"

@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.dreamitcodeit.storyteller.R;
 import org.dreamitcodeit.storyteller.Story;
@@ -24,6 +26,8 @@ public class StoryListFragment extends Fragment {
     StoryAdapter storyAdapter;
     ArrayList<Story> stories;
     RecyclerView rvStories;
+    TextView tvNoResults;
+    ImageView ivNoResults;
 
 
     @Nullable
@@ -31,14 +35,26 @@ public class StoryListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stories_list, container, false);
         rvStories = (RecyclerView) v.findViewById(R.id.rvStories);
+        tvNoResults = (TextView) v.findViewById(R.id.tvNoResults);
+        ivNoResults = (ImageView) v.findViewById(R.id.ivNoResults);
+
         stories = new ArrayList<>();
         storyAdapter = new StoryAdapter(stories);
         rvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         rvStories.setAdapter(storyAdapter);
-
-        for(int i = 0;i < stories.size(); ++i){
-
-        }
         return v;
     }
+
+
+    public void showNoResults(){
+        ivNoResults.setVisibility(View.VISIBLE);
+        tvNoResults.setVisibility(View.VISIBLE);
+    }
+
+    public void hideNoResults(){
+        ivNoResults.setVisibility(View.GONE);
+        tvNoResults.setVisibility(View.GONE);
+    }
+
+
 }
