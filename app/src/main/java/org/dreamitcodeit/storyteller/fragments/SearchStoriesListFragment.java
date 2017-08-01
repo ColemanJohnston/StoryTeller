@@ -2,7 +2,6 @@ package org.dreamitcodeit.storyteller.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.dreamitcodeit.storyteller.Config;
-import org.dreamitcodeit.storyteller.R;
 import org.dreamitcodeit.storyteller.Story;
 
 /**
@@ -34,13 +32,6 @@ public class SearchStoriesListFragment extends StoryListFragment {
         query = getArguments().getString("query");
 
         fetchUserData();
-        if (storyAdapter.getItemCount() == 0) {
-            NoResultsFragment fragment = new NoResultsFragment();
-            if (fragment != null) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.viewpager, fragment, "TAG").commit();
-            }
-        }
         return v;
     }
 
