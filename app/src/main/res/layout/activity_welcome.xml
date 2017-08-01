@@ -47,4 +47,17 @@
         android:layout_marginTop="24dp"
         android:text="Sign In with Facebook!" />
 
+    <Button
+        android:id="@+id/btPlus"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Sign In or sign up with Facebook!"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -30,10 +32,13 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import static org.dreamitcodeit.storyteller.R.id.Facebook_sign_in;
+
 public class FacebookLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private LoginButton loginButton;
+    private Button pretty;
     private CallbackManager callbackManager;
 
     private FirebaseAuth firebaseAuth;
@@ -48,6 +53,8 @@ public class FacebookLoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        pretty = (Button) findViewById(R.id.btPretty);
+
 
         loginButton.setReadPermissions(Arrays.asList("email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -78,6 +85,14 @@ public class FacebookLoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+        pretty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.callOnClick();
+            }
+        });
+
     }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {

@@ -50,6 +50,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if (AccessToken.getCurrentAccessToken() == null) {
+            goLoginScreen();
+        }
+        else{
+            gotoMap(null);
+        }
+
         // Get references to our EditTexts and buttons
         mEmailField = (EditText) findViewById(R.id.email_input);
         mPasswordField = (EditText) findViewById(R.id.password_input);

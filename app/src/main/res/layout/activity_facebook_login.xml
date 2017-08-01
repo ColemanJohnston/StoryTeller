@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.dreamitcodeit.storyteller.FacebookLoginActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="179dp"
+        android:layout_height="179dp"
+        app:srcCompat="@mipmap/logo"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="55dp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        tools:layout_editor_absoluteY="228dp"
-        tools:layout_editor_absoluteX="103dp" />
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="122dp" />
 
-</android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btPretty"
+        android:layout_width="327dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/color3"
+        android:clickable="false"
+        android:text="Sign Up with Facebook!"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp" />
+
+
+</RelativeLayout>
