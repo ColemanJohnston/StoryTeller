@@ -1,6 +1,5 @@
 package org.dreamitcodeit.storyteller;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -81,6 +80,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -923,7 +923,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
                 Uri uri = Uri.parse(imageUrl);
 
-                Glide.with(MapActivity.this).load(uri).asBitmap().into(new SimpleTarget<Bitmap>(100,100) {//TODO: make this image round and consider using the small image from fb.
+                Glide.with(MapActivity.this).load(uri).asBitmap().transform(new RoundedCornersTransformation(MapActivity.this, 50, 0)).into(new SimpleTarget<Bitmap>(100,100) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                         miProfile.setIcon(new BitmapDrawable(getResources(), resource));

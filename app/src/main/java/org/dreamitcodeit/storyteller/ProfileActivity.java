@@ -2,12 +2,10 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.dreamitcodeit.storyteller.fragments.StoriesPagerAdapter;
 import org.dreamitcodeit.storyteller.models.User;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -158,6 +158,7 @@ public class ProfileActivity extends AppCompatActivity {
             // Load the image using Glide
             Glide.with(this /* context */)
                     .load(uri)
+                    .bitmapTransform(new RoundedCornersTransformation(this,15,0))
                     .into(ivProfileImage);
         }
         catch (Exception e){
