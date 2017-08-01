@@ -579,7 +579,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     .setContentTitle("There are " + closeStories + " stories near your location!")
                     .setContentText("Click here to see and read them.")
                     .setContentIntent(pIntent)
-                    .setSmallIcon(R.drawable.com_facebook_button_icon) // TODO - replace once we have a logo
+                    .setSmallIcon(R.mipmap.logo) // TODO - replace once we have a logo
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
