@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,15 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
             holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+
+        holder.tvTitle.setTypeface(typefaceBold);
+        holder.tvAuthorName.setTypeface(typeface);
+        holder.tvDate.setTypeface(typeface);
+        holder.tvFavorites.setTypeface(typeface);
+        holder.tvIsCheckedIn.setTypeface(typeface);
 
 //        try {
         // get a reference to the storage bucket!
@@ -159,6 +169,8 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
+
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

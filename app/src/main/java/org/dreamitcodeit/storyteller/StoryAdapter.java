@@ -48,9 +48,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View storyView = inflater.inflate(R.layout.item_story, parent, false);
         ViewHolder viewHolder = new ViewHolder(storyView);
-
-
-
         context = parent.getContext();
 
         return viewHolder;
@@ -68,13 +65,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvAuthorName.setText(story.getUserName());
         holder.tvDate.setText(story.getDate());
         holder.tvFavorites.setText(String.format("%d", story.getFavCount()));
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
 
         holder.tvTitle.setTypeface(typefaceBold);
         holder.tvAuthorName.setTypeface(typeface);
         holder.tvDate.setTypeface(typeface);
         holder.tvFavorites.setTypeface(typeface);
+        holder.tvIsCheckedIn.setTypeface(typeface);
 
         if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
