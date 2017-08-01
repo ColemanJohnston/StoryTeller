@@ -3,7 +3,6 @@ package org.dreamitcodeit.storyteller.models;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import org.dreamitcodeit.storyteller.MapActivity;
 import org.dreamitcodeit.storyteller.R;
-import org.dreamitcodeit.storyteller.Story;
-import org.dreamitcodeit.storyteller.ViewStoryActivity;
-import org.json.JSONArray;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by mariadeangelis on 7/26/17.
@@ -112,7 +99,6 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
 
             tvAuthorName = (TextView) itemView.findViewById(R.id.tvAuthorName);
-            tvRating = (TextView) itemView.findViewById(R.id.tvRating);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             tvStoryBody = (TextView) itemView.findViewById(R.id.tvStoryBody);
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);

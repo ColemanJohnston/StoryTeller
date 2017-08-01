@@ -133,6 +133,11 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             notifyItemInserted(index);
             storyIDs.add(story.getStoryId());
         }
+        else{
+            int i = stories.indexOf(story);//replace story if it changed TODO: sort and binary search for optimization
+            stories.set(i,story);
+            notifyItemChanged(i);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -153,7 +158,6 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             ivStoryImage = (ImageView) itemView.findViewById(R.id.ivStoryImage);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvAuthorName = (TextView) itemView.findViewById(R.id.tvAuthorName);
-            tvRating = (TextView) itemView.findViewById(R.id.tvRating);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             tvStoryBody = (TextView) itemView.findViewById(R.id.tvStoryBody);
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);

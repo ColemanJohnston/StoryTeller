@@ -56,6 +56,16 @@ public class Story {
         this.storyId = storyId;
     }
 
+    public boolean equals(Object obj){//checks if the id is the same and not all the fields
+        if(obj instanceof Story){
+            Story otherStory = (Story) obj;
+            if( this.storyId.equals(otherStory.storyId) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     // getters and setters
 
     public String getTitle() {
