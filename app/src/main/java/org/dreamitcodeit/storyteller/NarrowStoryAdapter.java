@@ -75,10 +75,10 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
 
         if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
+           // holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
         } else {
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+           // holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
@@ -88,7 +88,7 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
         holder.tvAuthorName.setTypeface(typeface);
         holder.tvDate.setTypeface(typeface);
         holder.tvFavorites.setTypeface(typeface);
-        holder.tvIsCheckedIn.setTypeface(typeface);
+       // holder.tvIsCheckedIn.setTypeface(typeface);
 
 //        try {
         // get a reference to the storage bucket!
@@ -128,6 +128,8 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
         if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
 
         holder.tvStoryBody.bringToFront();
+        holder.tvAuthorName.bringToFront();
+        holder.tvTitle.bringToFront();
 
     }
 
@@ -168,10 +170,6 @@ public class NarrowStoryAdapter extends RecyclerView.Adapter<NarrowStoryAdapter.
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
-            tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
-
-
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

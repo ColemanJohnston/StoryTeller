@@ -21,15 +21,15 @@
         android:id="@+id/tvTitle"
         android:layout_width="310dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tvAuthorName"
+        android:layout_alignStart="@+id/ivStoryImage"
+        android:layout_marginLeft="3dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:layout_marginLeft="3dp"
-        android:textColor="@color/colorWhite"
         android:text="This is A Very Long Title to Demonstrate What Happens with Long Titles"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_above="@+id/tvAuthorName"
-        android:layout_alignStart="@+id/ivStoryImage" />
+        android:textColor="@color/colorWhite"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvAuthorName"
@@ -40,17 +40,19 @@
         android:textAlignment="viewStart"
         android:textSize="12sp"
         android:layout_above="@+id/tvStoryBody"
-        android:layout_alignStart="@+id/tvTitle" />
+        android:layout_alignStart="@+id/tvTitle"
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Created 12/25/0000"
-        android:layout_marginRight="3dp"
-        android:textColor="@color/colorWhite"
         android:layout_above="@+id/ivGradient"
-        android:layout_alignEnd="@+id/ivStoryImage" />
+        android:layout_alignEnd="@+id/ivStoryImage"
+        android:layout_marginRight="3dp"
+        android:text="Created 12/25/0000"
+        android:textColor="@color/colorWhite"
+        android:visibility="visible" />
 
 
     <TextView
@@ -73,13 +75,13 @@
         android:id="@+id/ivGradient"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_alignBottom="@+id/ivStoryImage"
-        android:layout_alignEnd="@+id/ivStoryImage"
-        android:layout_alignStart="@+id/ivStoryImage"
         android:adjustViewBounds="false"
         android:background="@drawable/round_outline_transparent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/round_outline_transparent" />
+        app:srcCompat="@drawable/round_outline_transparent"
+        android:layout_alignBottom="@+id/ivStoryImage"
+        android:layout_alignStart="@+id/ivStoryImage"
+        android:layout_alignEnd="@+id/ivStoryImage" />
 
     <TextView
         android:id="@+id/tvFavorites"

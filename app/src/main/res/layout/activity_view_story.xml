@@ -65,7 +65,7 @@
         android:scaleType="fitXY"
         android:visibility="visible"
         app:srcCompat="@drawable/favorite"
-        android:layout_alignBottom="@+id/ivImage"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
     <!--</ScrollView>-->

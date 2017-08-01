@@ -125,6 +125,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         //holder.ivGradient
 
         holder.tvStoryBody.bringToFront();
+        holder.tvAuthorName.bringToFront();
+        holder.tvTitle.bringToFront();
     }
 
     @Override
@@ -171,7 +173,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
-            tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
             ivGradient = (ImageView) itemView.findViewById(R.id.ivGradient);
 
 
