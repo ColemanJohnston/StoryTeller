@@ -72,14 +72,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvAuthorName.setTypeface(typeface);
         holder.tvDate.setTypeface(typeface);
         holder.tvFavorites.setTypeface(typeface);
-        holder.tvIsCheckedIn.setTypeface(typeface);
+//        holder.tvIsCheckedIn.setTypeface(typeface);
 
         if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
+          //  holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
         } else {
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+            //holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
         currPosition = stories.indexOf(story);
