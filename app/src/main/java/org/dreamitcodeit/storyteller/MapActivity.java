@@ -126,7 +126,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private HashMap<String, Story> historicalStories;
     private HashMap<String, Story> fictionalStories;
     private HashMap<String, Story> miscStories;
-    private ArrayList<LatLng> storyLocations;
+    private HashMap<String,LatLng> storyLocations;
     private MapActivityListener listener;
 
    // GestureDetector gestureScanner;
@@ -168,7 +168,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         fictionalStories = new HashMap<>();
         miscStories = new HashMap<>();
         latLngMarkerHashMap = new HashMap<>();
-        storyLocations = new ArrayList<>();
+        storyLocations = new HashMap<>();
 
         sMapList = (Switch) findViewById(R.id.sMapList);
 
@@ -326,27 +326,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
         Firebase.setAndroidContext(this);
 
-        ref = new Firebase(Config.FIREBASE_URl);
-        Firebase myRef = ref.getRoot().getRef();
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever anything in our database is changed
-
-                // Update our UI to reflect these changes
-                populateMap();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-                // Failed to read value
-                Log.d(TAG, "Failed to read value.");
-            }
-        });
-
+        ref = new Firebase(Config.FIREBASE_URl);//should only have one of these.
+        populateMap();//should only be called once.
     }
 
     public void setMapActivityListener(MapActivityListener listener){
@@ -405,7 +386,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     private void recordStory(Story story, String key){//TODO: decide if stories can be in multiple categories
-        storyLocations.add(new LatLng(story.getLatitude(),story.getLongitude()));//for notifications
+
+
+        storyLocations.put(key, new LatLng(story.getLatitude(),story.getLongitude()));//for notifications
 
         if(isInCurrentTab(story)){//for live updates and first time app is opened
             dropMarker(story,key);
@@ -440,8 +423,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     private void populateMap(){
-        ref = new Firebase(Config.FIREBASE_URl);
-
         Query queryRef = ref.child("stories");
 
         queryRef.addChildEventListener(new ChildEventListener() {
@@ -464,13 +445,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                TODO: Do live updates here instead of calling the whole function over and over again.
-//                try{
-//                    Story story = dataSnapshot.getValue(Story.class);
-//                }
-//                catch(Exception e){
-//                    e.printStackTrace();
-//                }
+                try{//check in case there are some objects in the db that don't match my current story object
+                    Story story = dataSnapshot.getValue(Story.class);
+                    recordStory(story,dataSnapshot.getKey());
+
+                    if(listener != null){
+                        listener.onStoryAdded(story);//it's called onStoryAdded but it works for changed also (this is a style issue)
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -543,11 +528,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     public void closeToStory(Location location)
     {
         // Get all the locations from the hash map
-        List<LatLng> listy = storyLocations;
+        List<LatLng> listy = new ArrayList(storyLocations.values());
 
         if (listy.size() == 0) // not efficient TODO: fix this sketchy circle call to populate map
         {
-            populateMap();
+            //populateMap();
+            Toast.makeText(this,"listy was empty",Toast.LENGTH_SHORT).show();
         }
 
         //listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
