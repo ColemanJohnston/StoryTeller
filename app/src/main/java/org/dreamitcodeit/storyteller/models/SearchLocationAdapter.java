@@ -105,8 +105,6 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
 
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
-            tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

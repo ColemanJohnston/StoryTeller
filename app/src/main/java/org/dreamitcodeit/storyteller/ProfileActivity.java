@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -151,9 +152,15 @@ public class ProfileActivity extends AppCompatActivity {
                         location = "Prunedale, CA";
                     }
                     setFBProfileImage(fbUserID);
+
+                    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+                    Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
                     tvLocation.setText(location);
                     tvBio.setText(bio);
                     tvName.setText(userObject.getFbName());
+                    tvLocation.setTypeface(typeface);
+                    tvName.setTypeface(typefaceBold);
+                    tvBio.setTypeface(typeface);
                 }
                 catch(Exception e){
                     e.printStackTrace();

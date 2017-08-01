@@ -98,10 +98,15 @@ public class ViewStoryActivity extends AppCompatActivity {
 
         tvStoryBody.setMovementMethod(new ScrollingMovementMethod());
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Regular.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         tvStoryBody.setTypeface(typeface);
+        tvTitle.setTypeface(typefaceBold);
+        tvUsername.setTypeface(typeface);
 
+        tvTitle.bringToFront();
+        tvUsername.bringToFront();
 
         // get a reference to the storage bucket!
         FirebaseStorage storage = FirebaseStorage.getInstance();

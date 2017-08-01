@@ -20,29 +20,26 @@
         android:id="@+id/tvTitle"
         android:layout_width="310dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ivStoryImage"
-        android:layout_alignTop="@+id/ivStoryImage"
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="3dp"
         android:textColor="@color/colorWhite"
         android:text="This is A Very Long Title to Demonstrate What Happens with Long Titles"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_toStartOf="@+id/ivFavoriteIcon" />
+        android:layout_above="@+id/tvAuthorName"
+        android:layout_alignStart="@+id/ivStoryImage" />
 
     <TextView
         android:id="@+id/tvAuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/tvTitle"
-        android:layout_below="@id/tvTitle"
-        android:layout_toEndOf="@id/ivProfileImage"
         android:text="By John Doe"
         android:textColor="@color/colorWhite"
         android:textAlignment="viewStart"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_above="@+id/tvStoryBody"
+        android:layout_alignStart="@+id/tvTitle" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -50,8 +47,8 @@
         android:layout_height="wrap_content"
         android:text="Created 12/25/0000"
         android:layout_marginRight="3dp"
-        android:layout_centerVertical="true"
         android:textColor="@color/colorWhite"
+        android:layout_above="@+id/ivIsCheckedIn"
         android:layout_alignEnd="@+id/ivStoryImage" />
 
     <TextView
@@ -73,33 +70,25 @@
         android:id="@+id/tvFavorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvTitle"
-        android:layout_alignBottom="@+id/tvTitle"
-        android:layout_alignEnd="@+id/ivIsCheckedIn"
         android:layout_marginRight="3dp"
         android:text="422"
+        android:layout_marginTop="5dp"
         android:textColor="@color/colorWhite"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/tvDate"
+        android:layout_alignEnd="@+id/tvDate" />
 
     <ImageView
         android:id="@+id/ivIsCheckedIn"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignEnd="@+id/ivStoryImage"
-        android:layout_below="@+id/tvTitle"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignStart="@+id/tvDate"
+        android:layout_alignTop="@+id/ivGradient"
         android:layout_marginRight="3dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="3dp"
         android:src="@drawable/ic_check_circle_black_24dp"
         android:tint="#03c91e" />
-
-    <TextView
-        android:id="@+id/tvIsCheckedIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Verified Location"
-        android:textSize="12sp"
-        android:textColor="@color/colorWhite"
-        android:layout_below="@+id/tvTitle"
-        android:layout_toStartOf="@+id/ivIsCheckedIn" />
 
     <ImageView
         android:id="@+id/ivFavoriteIcon"
@@ -107,7 +96,7 @@
         android:layout_height="30dp"
         android:tint="@color/colorWhite"
         app:srcCompat="@drawable/favorite"
-        android:layout_alignTop="@+id/tvTitle"
+        android:layout_below="@+id/tvDate"
         android:layout_toStartOf="@+id/tvFavorites" />
 
     <ImageView

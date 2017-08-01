@@ -27,32 +27,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/ivProfileImage"
-            android:paddingTop="12dp"
             android:text="Jane Doe"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/ivLocationIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvLocation"
-            android:layout_alignTop="@+id/tvLocation"
-            android:layout_toEndOf="@+id/ivProfileImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_location_on_black_24dp"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/white"
+            android:layout_below="@+id/tvName"
+            android:layout_toEndOf="@+id/ivProfileImage" />
 
         <TextView
             android:id="@+id/tvLocation"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tvBio"
+            android:layout_height="20dp"
+            android:paddingTop="5dp"
             android:layout_below="@+id/tvName"
+            android:layout_toEndOf="@+id/ivLocationIcon"
             android:text="Santa Barbara, CA"
+            android:textAlignment="textStart"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/ivLocationIcon" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvBio"
@@ -60,8 +61,10 @@
             android:layout_height="wrap_content"
             android:text="Computer science student and watermelon hint lover"
             android:textColor="@android:color/white"
+            android:paddingTop="3dp"
             tools:text="Computer science student and watermelon hint lover"
-            android:layout_below="@+id/ivLocationIcon"
+
+            android:layout_below="@+id/tvLocation"
             android:layout_toEndOf="@+id/ivProfileImage" />
 
 
