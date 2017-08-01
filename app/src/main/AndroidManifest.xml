@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -79,10 +79,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <activity android:name=".AllStoriesActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ViewImageActivity"></activity>
+
 
 
         <provider
@@ -92,9 +92,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".fragments.NoResultsActivity"></activity>
     </application>
 
 </manifest>

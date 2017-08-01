@@ -70,4 +70,5 @@ public class SearchUsersListFragment extends StoryListFragment  {
 
         });
     }
+
 }

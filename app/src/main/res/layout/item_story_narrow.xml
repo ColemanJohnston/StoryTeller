@@ -45,16 +45,6 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rating: 4.2"
-        android:layout_marginLeft="3dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/colorWhite"
-        android:layout_alignStart="@+id/ivStoryImage" />
-
-    <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

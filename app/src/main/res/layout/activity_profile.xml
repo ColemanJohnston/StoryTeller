@@ -46,7 +46,7 @@
             android:id="@+id/tvLocation"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView6"
+            android:layout_alignEnd="@+id/tvBio"
             android:layout_below="@+id/tvName"
             android:text="Santa Barbara, CA"
             android:textColor="@android:color/white"
@@ -55,7 +55,7 @@
             android:layout_toEndOf="@+id/ivLocationIcon" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvBio"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="Computer science student and watermelon hint lover"
