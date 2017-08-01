@@ -105,6 +105,8 @@ public class ViewStoryActivity extends AppCompatActivity {
         tvTitle.setTypeface(typefaceBold);
         tvUsername.setTypeface(typeface);
 
+        tvTitle.bringToFront();
+        tvUsername.bringToFront();
 
         // get a reference to the storage bucket!
         FirebaseStorage storage = FirebaseStorage.getInstance();

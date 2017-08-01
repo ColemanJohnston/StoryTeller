@@ -528,7 +528,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
-        startActivityForResult(i, 20);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
+        startActivity(i);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
     }
 
 

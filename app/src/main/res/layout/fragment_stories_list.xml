@@ -30,7 +30,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvStories"
         android:layout_width="match_parent"
-        android:layout_height="497dp"
-        android:layout_weight="0.29" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
