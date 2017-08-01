@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View storyView = inflater.inflate(R.layout.item_story, parent, false);
         ViewHolder viewHolder = new ViewHolder(storyView);
+
+
+
         context = parent.getContext();
 
         return viewHolder;
@@ -55,6 +59,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
 
+
+
         Story story = stories.get(position);
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
@@ -62,6 +68,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvAuthorName.setText(story.getUserName());
         holder.tvDate.setText(story.getDate());
         holder.tvFavorites.setText(String.format("%d", story.getFavCount()));
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+
+        holder.tvTitle.setTypeface(typefaceBold);
+        holder.tvAuthorName.setTypeface(typeface);
+        holder.tvDate.setTypeface(typeface);
+        holder.tvFavorites.setTypeface(typeface);
 
         if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
@@ -162,6 +175,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
             tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
             ivGradient = (ImageView) itemView.findViewById(R.id.ivGradient);
+
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
