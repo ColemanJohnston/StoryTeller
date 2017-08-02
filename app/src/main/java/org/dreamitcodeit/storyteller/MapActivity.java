@@ -421,7 +421,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                HashMap<String,Story> tag = (HashMap<String, Story>) marker.getTag();
+                TreeMap<String,Story> tag = (TreeMap<String, Story>) marker.getTag();
                 FragmentManager fm = getSupportFragmentManager();
                 StoriesDialogFragment storiesDialogFragment = StoriesDialogFragment.newInstance(new ArrayList<Story>(tag.values()));
                 storiesDialogFragment.show(fm,"fragment_dialog_fragment");
@@ -499,7 +499,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     public List<Story> getStoriesAtLatLng(LatLng latLng){
-        HashMap<String,Story> result = (HashMap<String,Story>) latLngMarkerHashMap.get(latLng).getTag();
+        TreeMap<String,Story> result = (TreeMap<String,Story>) latLngMarkerHashMap.get(latLng).getTag();
         return new ArrayList<Story>(result.values());
     }
 
