@@ -13,7 +13,5 @@
     <color name="color5">#3D4060</color>
     <color name="verifiedPin">#9FBF00</color>
     <color name = "colorYellow">#ffd670</color>
-
-
-
+    <color name = "colorTransparent">#007070ff</color>
 </resources>
