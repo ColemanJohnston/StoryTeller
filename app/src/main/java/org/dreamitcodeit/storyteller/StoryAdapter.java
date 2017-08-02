@@ -2,6 +2,7 @@ package org.dreamitcodeit.storyteller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
 
+
+
         Story story = stories.get(position);
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
@@ -62,13 +65,21 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.tvAuthorName.setText(story.getUserName());
         holder.tvDate.setText(story.getDate());
         holder.tvFavorites.setText(String.format("%d", story.getFavCount()));
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+
+        holder.tvTitle.setTypeface(typefaceBold);
+        holder.tvAuthorName.setTypeface(typeface);
+        holder.tvDate.setTypeface(typeface);
+        holder.tvFavorites.setTypeface(typeface);
+//        holder.tvIsCheckedIn.setTypeface(typeface);
 
         if (story.getIsCheckedIn()) {
             holder.ivIsCheckedIn.setVisibility(View.VISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
+          //  holder.tvIsCheckedIn.setVisibility(View.VISIBLE);
         } else {
             holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
-            holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+            //holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
         currPosition = stories.indexOf(story);
@@ -114,6 +125,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         //holder.ivGradient
 
         holder.tvStoryBody.bringToFront();
+        holder.tvAuthorName.bringToFront();
+        holder.tvTitle.bringToFront();
     }
 
     @Override
@@ -160,8 +173,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
             ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
-            tvIsCheckedIn = (TextView) itemView.findViewById(R.id.tvIsCheckedIn);
             ivGradient = (ImageView) itemView.findViewById(R.id.ivGradient);
+
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

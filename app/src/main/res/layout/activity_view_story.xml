@@ -20,23 +20,22 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ivImage"
-        android:layout_alignParentStart="true"
+        android:layout_above="@+id/tvUsername"
+        android:layout_alignStart="@+id/tvStoryBody"
         android:text="TextView"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_above="@+id/tvStoryBody"
+        android:layout_alignStart="@+id/tvTitle"
         android:text="By Name Here"
-        android:layout_toEndOf="@id/tvTitle"
-        android:layout_alignBottom="@id/tvTitle"
         android:textColor="@color/colorWhite"
-        android:textSize="12sp"/>
+        android:textSize="14sp" />
 
     <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--android:layout_width="fill_parent"-->
@@ -47,10 +46,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginLeft="5dp"
+        android:fastScrollEnabled="true"
+        android:lineSpacingExtra="4sp"
         android:maxLines="40"
         android:scrollbars="vertical"
-        android:fastScrollEnabled="true"
         android:text="TextView"
         android:textColor="@android:color/black" />
 
@@ -64,8 +65,16 @@
         android:scaleType="fitXY"
         android:visibility="visible"
         app:srcCompat="@drawable/favorite"
-        android:layout_alignBottom="@+id/ivImage"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/ivShadow"
+        android:layout_width="390dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/tvStoryBody"
+        app:srcCompat="@drawable/above_shadow"
+        android:layout_alignParentStart="true" />
 
     <!--</ScrollView>-->
 
