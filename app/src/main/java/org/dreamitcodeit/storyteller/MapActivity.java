@@ -151,7 +151,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
-        
+
         personalStories = new HashMap<>();
         historicalStories = new HashMap<>();
         fictionalStories = new HashMap<>();
