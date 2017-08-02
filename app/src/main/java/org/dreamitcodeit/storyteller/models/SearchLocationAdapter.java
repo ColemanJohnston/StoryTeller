@@ -75,8 +75,8 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         holder.tvDate.setText("");
         holder.tvFavorites.setText("");
         holder.tvStoryBody.setText("");
-        holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
-        holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+        //holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
+        //holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         holder.ivFavoriteIcon.setVisibility(View.INVISIBLE);
         }
 
@@ -90,7 +90,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         public TextView tvStoryBody;
         public TextView tvFavorites;
         public ImageView ivFavoriteIcon;
-        public ImageView ivIsCheckedIn;
+        //public ImageView ivIsCheckedIn;
         public TextView tvIsCheckedIn;
         public Address currentLoc;
 
@@ -104,7 +104,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
 
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
-            ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
+            //ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
