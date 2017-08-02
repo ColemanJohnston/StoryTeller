@@ -25,6 +25,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -79,6 +80,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import permissions.dispatcher.NeedsPermission;
@@ -111,6 +113,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             R.drawable.historical,
             R.drawable.fictional};
 
+    private Toolbar toolbar;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private LocationRequest mLocationRequest;
@@ -150,6 +153,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mapToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         Firebase.setAndroidContext(this);
 
         personalStories = new HashMap<>();
@@ -337,12 +343,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     //.icon(BitmapDescriptorFactory.fromResource(R.color.colorAccent)));
                     .icon(BitmapDescriptorFactory.defaultMarker(43)));
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.not_verified_pin));
-            HashMap<String,Story> tag = new HashMap<>();
+            TreeMap<String,Story> tag = new TreeMap<>();//TreeMap for memory efficiency
             tag.put(key,story);
             marker.setTag( tag );//put an array with a story in the new marker
         }
         else {
-            HashMap<String,Story> stories = (HashMap<String,Story>) marker.getTag();
+            TreeMap<String,Story> stories = (TreeMap<String,Story>) marker.getTag();
             stories.put(key,story);
             marker.setTag(stories);
         }
