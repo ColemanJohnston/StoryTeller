@@ -62,5 +62,9 @@ public class StoryListFragment extends Fragment {
         tvNoResults.setVisibility(View.GONE);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        rvStories.setAdapter(null);//TODO: test if this lets the RecyclerView go. (I just did what stack overflow told me to)
+        super.onDestroyView();
+    }
 }
