@@ -118,9 +118,6 @@ public class ViewStoryActivity extends AppCompatActivity {
         // This is hopefully where your file will be found in cloud storage
         pathReference = storageRef.child("images/" + tvTitle.getText().toString().trim());
 
-        // temp path just to test
-        //pathReference = storageRef.child("images/" + "download.jpg");
-
 
         // Load the image using Glide
         Glide.with(this /* context */).using(new FirebaseImageLoader())
@@ -129,14 +126,6 @@ public class ViewStoryActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(ivImage);
 
-        /*ivImage.setImageResource(R.drawable.ocean);
-        ivImage.setAdjustViewBounds(true);
-<<<<<<< HEAD
-        ivImage.setScaleType(ImageView.ScaleType.FIT_XY);*/
-
-       // ivImage.setScaleType(ImageView.ScaleType.FIT_XY);
-
-        //ivImage.setBackgroundColor(R.drawable.color1);
 
         Firebase.setAndroidContext(ViewStoryActivity.this);
         ref = new Firebase(Config.FIREBASE_URl);

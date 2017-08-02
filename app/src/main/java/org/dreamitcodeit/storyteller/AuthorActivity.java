@@ -132,9 +132,6 @@ public class AuthorActivity extends AppCompatActivity {
         ibFictional = (ImageButton) findViewById(R.id.ibFictional);
         ibFictional.setColorFilter(notPressed, PorterDuff.Mode.SRC_IN);
 
-//        rHistorical = (RadioButton) findViewById(R.id.rHistorical);
-//        rFictional = (RadioButton) findViewById(R.id.rFictional);
-
         swAnonymous = (Switch) findViewById(R.id.swAnonymous);
 
 
@@ -280,29 +277,6 @@ public class AuthorActivity extends AppCompatActivity {
 
     }
 
-//    public void onRadioButtonClicked(View view) {
-//        // is any radio button checked?
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//        switch(view.getId()) {
-//            case R.id.rPersonal:
-//                if (checked) {
-//                    isPersonal = true;
-//                }
-//                break;
-//            case R.id.rHistorical:
-//                if (checked) {
-//                    isHistorical = true;
-//                }
-//                break;
-//            case R.id.rFictional:
-//                if (checked) {
-//                    isFictional = true;
-//                }
-//                break;
-//        }
-//    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -338,6 +312,12 @@ public class AuthorActivity extends AppCompatActivity {
                 // get a bitmap from the stream
                 Bitmap image = BitmapFactory.decodeStream(inputStream);
                 bity = image;
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                int imageHeight = options.outHeight;
+                int imageWidth = options.outWidth;
+                String imageType = options.outMimeType;
 
                 ivPreview.setVisibility(View.VISIBLE);
 
@@ -377,6 +357,29 @@ public class AuthorActivity extends AppCompatActivity {
             // Now store the image in Firebase Cloud Storage
             storeImageCloud();
         }
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
     public void takePhoto()
@@ -462,7 +465,9 @@ public class AuthorActivity extends AppCompatActivity {
     }
 
     private void addToUserStoriesList(final String newStoryId){
-        String uid = currentUser.getUid();
+       final String uid = currentUser.getUid();
+
+        final Firebase hello = ref.child("users").child(uid);
 
         ref.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

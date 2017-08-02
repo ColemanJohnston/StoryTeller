@@ -151,18 +151,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Firebase.setAndroidContext(this);
-
-//        try {
-//            getSupportActionBar().setTitle("");
-//            //actionBar.setIcon(R.mipmap.logo);
-//            getSupportActionBar().setDisplayShowHomeEnabled(false);
-//            getSupportActionBar().setIcon(R.mipmap.logo);
-//            getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
+        
         personalStories = new HashMap<>();
         historicalStories = new HashMap<>();
         fictionalStories = new HashMap<>();
@@ -482,7 +471,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         map = googleMap;
         if (map != null) {
             // Map is ready
-            //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setOnMapLongClickListener(this);
             map.setOnInfoWindowClickListener(this);
             MapActivityPermissionsDispatcher.getMyLocationWithCheck(this);//TODO: see if this is breaking anything
@@ -522,24 +510,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         }
         i.putExtra("lat", latLng.latitude);
         i.putExtra("long", latLng.longitude);
-        startActivity(i);//TODO: figure out why we are using startAcitvityForResult instead of StartActivity
+        startActivity(i);
     }
 
 
     // checks if you are close to a story and sends you a push notification if you are
-    // should get called when location is changed TODO - AND when a new story is added or modified.
+    // should get called when location is changed
     public void closeToStory(Location location)
     {
         // Get all the locations from the hash map
         List<LatLng> listy = new ArrayList(storyLocations.values());
-
-        if (listy.size() == 0) // not efficient TODO: fix this sketchy circle call to populate map
-        {
-            //populateMap();
-            Toast.makeText(this,"listy was empty",Toast.LENGTH_SHORT).show();
-        }
-
-        //listy = new ArrayList<LatLng>(latLngMarkerHashMap.keySet());
 
         int closeStories = 0;
 
@@ -556,11 +536,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 closeStories++;
             }
 
-            // TODO - maybe make listy global and remove from listy to prevent lots of spam notifications
         }
 
         Intent intent = new Intent(this, MapActivity.class);
-        // use System.currentTimeMillis() to have a unique ID for the pending intent
         intent.putExtra("notification", "zoom_to_current_location");
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
@@ -574,7 +552,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     .setContentTitle("There are " + closeStories + " stories near your location!")
                     .setContentText("Click here to see and read them.")
                     .setContentIntent(pIntent)
-                    .setSmallIcon(R.mipmap.logo) // TODO - replace once we have a logo
+                    .setSmallIcon(R.mipmap.logo)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -599,17 +577,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.verified_pin));
         }
         dropPinEffect(marker);//author activity is started here
-        //startAuthorActivity(latLng);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == 20) {
-
-            // TODO - Grab story object and extract location from it
-            // TODO - drop pin and fill it with story object
-        }
     }
 
     @Override
@@ -744,7 +711,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     }
 
     @Override
-    protected void onResume() { // TODO - I should make a method for zooming since I do it a bunch now. oops. problem for future Maria. Variable names could also be improved upon. And this comment is for sure over 80 characters. oops.
+    protected void onResume() {
         super.onResume();
 
         // this only happens if you are coming from a notification
@@ -757,7 +724,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             {
 
                 MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this); //Pretty sure this is needed, but still don't know
-                // MapActivityPermissionsDispatcher.getMyLocationWithCheck(this); // TODO I need this but it's making everything crash
                 flag = true;
                 if (mCurrentLocation != null) {
                     Toast.makeText(this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
@@ -765,7 +731,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                     map.animateCamera(cameraUpdate);
                 } else {
-                    Toast.makeText(this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -823,7 +789,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                         map.animateCamera(cameraUpdate);
                     } else {
-                        Toast.makeText(MapActivity.this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MapActivity.this, "Oh oh! Your GPS is not working!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -893,7 +859,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             {
                 for (int i = 0; i < addressList.size(); i++)
                 {
-                    // locations.add(i, addressList.get(i).toString());
                     locations.add(i, addressList.get(i));
                 }
             }
