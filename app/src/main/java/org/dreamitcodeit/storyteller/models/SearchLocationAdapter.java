@@ -75,9 +75,16 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         holder.tvDate.setText("");
         holder.tvFavorites.setText("");
         holder.tvStoryBody.setText("");
-        //holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
+        holder.ivIsCheckedIn.setVisibility(View.INVISIBLE);
         //holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
+
         holder.ivFavoriteIcon.setVisibility(View.INVISIBLE);
+
+        if (position%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
+        if (position%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
+        if (position%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
+        if (position%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
+        if (position%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
         }
 
 
@@ -90,7 +97,7 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         public TextView tvStoryBody;
         public TextView tvFavorites;
         public ImageView ivFavoriteIcon;
-        //public ImageView ivIsCheckedIn;
+        public ImageView ivIsCheckedIn;
         public TextView tvIsCheckedIn;
         public Address currentLoc;
 
@@ -104,7 +111,9 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
             tvFavorites = (TextView) itemView.findViewById(R.id.tvFavorites);
 
             ivFavoriteIcon = (ImageView) itemView.findViewById(R.id.ivFavoriteIcon);
-            //ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
+            ivIsCheckedIn = (ImageView) itemView.findViewById(R.id.ivIsCheckedIn);
+
+            ivStoryImage = (ImageView) itemView.findViewById(R.id.ivStoryImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,6 +133,8 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
                     context.startActivity(intent);
                 }
             });
+
+
 
         }
 

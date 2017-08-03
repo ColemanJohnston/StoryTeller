@@ -9,23 +9,29 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvImages"
         android:layout_width="100dp"
         android:layout_height="20dp"
         android:layout_alignEnd="@+id/btImportPhoto"
         android:layout_below="@+id/ibPersonal"
+        android:paddingLeft="0dp"
+        android:paddingRight="8dp"
         android:text="IMAGES"
         android:textAlignment="center"
-        android:textSize="9dp" />
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:textSize="11sp" />
 
     <TextView
-        android:id="@+id/tvImage"
+        android:id="@+id/tvCategories"
         android:layout_width="100dp"
         android:layout_height="10dp"
+        android:layout_alignBottom="@+id/tvImages"
+        android:layout_below="@+id/ibHistorical"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="3dp"
         android:text="CATEGORIES"
-        android:textSize="9dp"
-        android:layout_alignBottom="@+id/ibCalendar"
-        android:layout_toStartOf="@+id/swAnonymous" />
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:textSize="11sp" />
 
     <TextView
         android:text="Title"
@@ -74,55 +80,62 @@
         android:id="@+id/tvDate"
         android:layout_width="95dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/etStoryBody"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_alignTop="@+id/ibCalendar"
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
         android:id="@+id/ibCalendar"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_above="@+id/swAnonymous"
+        android:layout_marginBottom="-10dp"
+        android:layout_toStartOf="@+id/tvDate"
         android:backgroundTint="@android:color/transparent"
-        android:paddingTop="10dp"
+        android:cropToPadding="true"
+        android:paddingTop="-4dp"
         android:scaleType="fitXY"
         android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/calendar_dark"
-        android:layout_alignBottom="@+id/tvDate"
-        android:layout_toStartOf="@+id/tvDate" />
+        app:srcCompat="@drawable/calendar_dark" />
 
     <Switch
         android:id="@+id/swAnonymous"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/ibCalendar"
-        android:text="Anonymous?"  />
+        android:layout_alignTop="@+id/tvCategories"
+        android:layout_toEndOf="@+id/ibFictional"
+        android:paddingLeft="18dp"
+        android:text="ANONYMOUS?"
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:textSize="11sp" />
 
     <ImageButton
         android:id="@+id/btImportPhoto"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_above="@+id/textView2"
-        android:layout_toEndOf="@+id/btTakePhoto"
         android:backgroundTint="@android:color/transparent"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
         android:tint="@color/colorAccent"
         android:visibility="visible"
-        app:srcCompat="@drawable/import_image_dark" />
+        app:srcCompat="@drawable/import_image_dark"
+        android:layout_above="@+id/tvImages"
+        android:layout_toEndOf="@+id/btTakePhoto" />
 
     <ImageButton
         android:id="@+id/btTakePhoto"
         android:layout_width="29dp"
         android:layout_height="20dp"
-        android:layout_alignTop="@+id/btImportPhoto"
         android:background="@android:color/transparent"
         android:backgroundTint="@color/colorWhite"
         android:scaleType="fitCenter"
         android:tint="@color/colorAccent"
         android:visibility="visible"
-        app:srcCompat="@drawable/take_photo" />
+        app:srcCompat="@drawable/take_photo"
+        android:layout_alignTop="@+id/btImportPhoto"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/ivPreview"
@@ -156,20 +169,21 @@
             android:scaleType="fitCenter"
             android:tint="@color/colorPrimaryDark"
             app:srcCompat="@drawable/personal"
-            android:layout_above="@+id/tvImage"
-            android:layout_toStartOf="@+id/ibHistorical" />
+            android:layout_below="@+id/etStoryBody"
+            android:layout_toStartOf="@+id/tvCategories" />
 
         <ImageButton
             android:id="@+id/ibHistorical"
             android:layout_width="30dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="6dp"
             android:background="@drawable/color_accent"
             android:scaleType="centerInside"
             android:tint="@color/colorPrimaryDark"
             app:srcCompat="@drawable/historical"
-            android:layout_above="@+id/tvImage"
-            android:layout_alignStart="@+id/tvImage" />
+            android:layout_marginStart="11dp"
+            android:layout_below="@+id/etStoryBody"
+            android:layout_toEndOf="@+id/ibPersonal" />
 
         <ImageButton
             android:id="@+id/ibFictional"
@@ -180,9 +194,8 @@
             android:tint="@color/colorWhite"
             app:srcCompat="@drawable/fictional"
             android:layout_weight="2.60"
-            android:layout_alignTop="@+id/ibHistorical"
-            android:layout_toStartOf="@+id/ibCalendar"
-            android:layout_marginEnd="10dp" />
+            android:layout_below="@+id/etStoryBody"
+            android:layout_toStartOf="@+id/ibCalendar" />
 
 
 

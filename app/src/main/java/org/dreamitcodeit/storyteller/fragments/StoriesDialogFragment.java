@@ -1,6 +1,7 @@
 package org.dreamitcodeit.storyteller.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -71,6 +72,9 @@ public class StoriesDialogFragment extends DialogFragment {
             });
         }
 
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Bold.ttf");
+        btPlus.setTypeface(typeface);
+
         btPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +91,8 @@ public class StoriesDialogFragment extends DialogFragment {
                 }
             }
         });
+
+
     }
 
 }
