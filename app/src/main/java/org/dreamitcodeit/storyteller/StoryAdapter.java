@@ -82,12 +82,11 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             //holder.tvIsCheckedIn.setVisibility(View.INVISIBLE);
         }
 
-        currPosition = stories.indexOf(story);
-        if (currPosition%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
-        if (currPosition%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
-        if (currPosition%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
-        if (currPosition%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
-        if (currPosition%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
+        if (position%5 == 1) holder.ivStoryImage.setBackgroundResource(R.drawable.color1);
+        if (position%5 == 2) holder.ivStoryImage.setBackgroundResource(R.drawable.color2);
+        if (position%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
+        if (position%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
+        if (position%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
 
 
         try {
