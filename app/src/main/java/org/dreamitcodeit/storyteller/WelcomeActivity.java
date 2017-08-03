@@ -48,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_welcome);
 
-        mAuth = FirebaseAuth.getInstance();
+         mAuth = FirebaseAuth.getInstance();
 
         if (AccessToken.getCurrentAccessToken() == null) {
             goLoginScreen();

@@ -76,6 +76,8 @@ public class AuthorActivity extends AppCompatActivity {
     private ImageButton btImportPhoto;
     private ImageView ivPreview;
     private String title;
+    private TextView tvImages;
+    private TextView tvCategories;
 
     private boolean isPersonal = false;
     private boolean isHistorical = false;
@@ -110,7 +112,7 @@ public class AuthorActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         btSave = (Button) findViewById(R.id.btSave);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/QuattrocentoSans-Bold.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         btSave.setTypeface(typeface);
         etStoryBody = (EditText) findViewById(R.id.etStoryBody);
@@ -133,7 +135,12 @@ public class AuthorActivity extends AppCompatActivity {
         ibFictional.setColorFilter(notPressed, PorterDuff.Mode.SRC_IN);
 
         swAnonymous = (Switch) findViewById(R.id.swAnonymous);
+        swAnonymous.setTypeface(typeface);
 
+        tvImages = (TextView) findViewById(R.id.tvImages);
+        tvCategories = (TextView) findViewById(R.id.tvCategories);
+        tvImages.setTypeface(typeface);
+        tvCategories.setTypeface(typeface);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy");
         String today = dateFormat.format(Calendar.getInstance().getTime());
