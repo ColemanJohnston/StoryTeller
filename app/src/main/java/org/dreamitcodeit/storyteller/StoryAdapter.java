@@ -56,8 +56,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
 
-
-
         Story story = stories.get(position);
         holder.currentStory = story; //Possible privacy leak TODO: make copy constructor for story class.
         holder.tvTitle.setText(story.getTitle());
@@ -87,7 +85,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         if (position%5 == 3) holder.ivStoryImage.setBackgroundResource(R.drawable.color3);
         if (position%5 == 4) holder.ivStoryImage.setBackgroundResource(R.drawable.color4);
         if (position%5 == 0) holder.ivStoryImage.setBackgroundResource(R.drawable.color5);
-
 
         try {
             // get a reference to the storage bucket!
