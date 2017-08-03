@@ -14,6 +14,8 @@
         android:layout_height="20dp"
         android:layout_alignEnd="@+id/btImportPhoto"
         android:layout_below="@+id/ibPersonal"
+        android:paddingLeft="0dp"
+        android:paddingRight="8dp"
         android:text="IMAGES"
         android:textAlignment="center"
         android:textColor="@color/com_facebook_button_background_color_focused_disabled"
@@ -26,6 +28,7 @@
         android:layout_alignBottom="@+id/tvImages"
         android:layout_below="@+id/ibHistorical"
         android:layout_centerHorizontal="true"
+        android:paddingTop="3dp"
         android:text="CATEGORIES"
         android:textColor="@color/com_facebook_button_background_color_focused_disabled"
         android:textSize="11sp" />
@@ -98,13 +101,15 @@
 
     <Switch
         android:id="@+id/swAnonymous"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:text="Anonymous?"
-        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-        android:textSize="11sp"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tvCategories"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/ibFictional"
+        android:paddingLeft="18dp"
+        android:text="ANONYMOUS?"
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:textSize="11sp" />
 
     <ImageButton
         android:id="@+id/btImportPhoto"
