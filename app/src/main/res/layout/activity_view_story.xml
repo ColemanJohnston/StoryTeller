@@ -45,15 +45,17 @@
         android:id="@+id/tvStoryBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/ivImage"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:fastScrollEnabled="true"
         android:lineSpacingExtra="4sp"
         android:maxLines="40"
         android:scrollbars="vertical"
         android:text="TextView"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:id="@+id/ibFav"

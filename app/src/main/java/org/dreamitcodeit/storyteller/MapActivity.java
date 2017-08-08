@@ -555,7 +555,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             flag = false;
             Notification notify=new Notification.Builder
                     (getApplicationContext())
-                    .setContentTitle("There are " + closeStories + " stories near your location!")
+                    .setContentTitle("There are " + closeStories + " memories near your location!")
                     .setContentText("Click here to see and read them.")
                     .setContentIntent(pIntent)
                     .setSmallIcon(R.mipmap.logo)
@@ -732,7 +732,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 MapActivityPermissionsDispatcher.startLocationUpdatesWithCheck(this); //Pretty sure this is needed, but still don't know
                 flag = true;
                 if (mCurrentLocation != null) {
-                    Toast.makeText(this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
                     LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                     map.animateCamera(cameraUpdate);
@@ -790,7 +790,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     // MapActivityPermissionsDispatcher.getMyLocationWithCheck(this); // TODO I need this but it's making everything crash
                     flag = true;
                     if (currLoc != null) {
-                        Toast.makeText(MapActivity.this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MapActivity.this, "Zooming in to stories near you!", Toast.LENGTH_SHORT).show();
                         LatLng latLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                         map.animateCamera(cameraUpdate);
