@@ -26,9 +26,9 @@ Time spent: **5 weeks** in total.
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
-- [Google Maps API] (https://developers.google.com/maps/)
-- [Firebase] (https://firebase.google.com/) - Managing backend, and authorization.
-- [Sliding Up Panel] (https://github.com/umano/AndroidSlidingUpPanel) - Implement panel for switching between map and memory cards
+- [Google Maps API](https://developers.google.com/maps/)
+- [Firebase](https://firebase.google.com/) - Managing backend, and authorization.
+- [Sliding Up Panel](https://github.com/umano/AndroidSlidingUpPanel) - Implement panel for switching between map and memory cards
 
 
 
