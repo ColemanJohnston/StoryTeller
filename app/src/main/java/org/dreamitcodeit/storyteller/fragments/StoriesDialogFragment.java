@@ -95,4 +95,9 @@ public class StoriesDialogFragment extends DialogFragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        rvStories.setAdapter(null);//TODO: test if this lets the RecyclerView go. (I just did what stack overflow told me to)
+        super.onDestroyView();
+    }
 }

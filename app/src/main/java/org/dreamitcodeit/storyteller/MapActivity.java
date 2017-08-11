@@ -555,7 +555,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             flag = false;
             Notification notify=new Notification.Builder
                     (getApplicationContext())
-                    .setContentTitle("There are " + closeStories + " stories near your location!")
+                    .setContentTitle("There are " + closeStories + " memories near your location!")
                     .setContentText("Click here to see and read them.")
                     .setContentIntent(pIntent)
                     .setSmallIcon(R.mipmap.logo)

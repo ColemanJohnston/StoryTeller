@@ -22,7 +22,7 @@ public class AllStoriesPagerAdapter extends SmartFragmentStatePagerAdapter {
 
     public AllStoriesPagerAdapter(FragmentManager fm, Context context, String query){
         super(fm);
-        this.context = context;
+        //this.context = context; TODO:Maybe this helps with the memory leak?? im not sure
         this.query = query;
     }
 
