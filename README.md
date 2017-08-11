@@ -21,7 +21,7 @@ Time spent: **5 weeks** in total.
 * [x]	User can **explore other peoples' profiles** to see their public stories and their favorites
 
 ## Video Walkthrough
-
+https://youtu.be/4VQk7aly_dg
 ## Libraries used
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
