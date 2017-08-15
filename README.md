@@ -24,7 +24,7 @@ Time spent: **5 weeks** in total.
 https://youtu.be/rI4aaIFoNlM
 
 ## Screenshots of App
-<img src='screenshot1.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='screenshot1.png' title='Video Walkthrough' width='' alt='Video Walkthrough' style="width: 200px;" />
 <img src='screenshot2.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='screenshot3.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='screenshot4.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
