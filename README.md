@@ -22,8 +22,10 @@ Time spent: **5 weeks** in total.
 
 ## Video Walkthrough
 https://youtu.be/rI4aaIFoNlM
-## Libraries used
 
+## Screenshots of App
+<img src='screenshot1.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+## Libraries used
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
 - [Google Maps API](https://developers.google.com/maps/)
