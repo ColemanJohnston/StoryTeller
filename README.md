@@ -23,6 +23,13 @@ Time spent: **5 weeks** in total.
 ## Video Walkthrough
 https://youtu.be/rI4aaIFoNlM
 
+## Libraries used
+- [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
+- [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
+- [Google Maps API](https://developers.google.com/maps/) - Load map and drop pins
+- [Firebase](https://firebase.google.com/) - Managing backend, and authorization.
+- [Sliding Up Panel](https://github.com/umano/AndroidSlidingUpPanel) - Implement panel for switching between map and memory cards
+
 ## Screenshots of App
 <img src='screenshot1.png' title='Video Walkthrough' width='' alt='Video Walkthrough' style="width: 200px;" />
 <img src='screenshot2.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
@@ -31,12 +38,7 @@ https://youtu.be/rI4aaIFoNlM
 <img src='screenshot5.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='screenshot6.png' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-## Libraries used
-- [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
-- [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
-- [Google Maps API](https://developers.google.com/maps/)
-- [Firebase](https://firebase.google.com/) - Managing backend, and authorization.
-- [Sliding Up Panel](https://github.com/umano/AndroidSlidingUpPanel) - Implement panel for switching between map and memory cards
+
 
 
 
